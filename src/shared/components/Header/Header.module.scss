@@ -1,0 +1,15 @@
+.root {
+  background-color: var(--blue);
+  padding: 10px 0px;
+  nav {
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      list-style: none;
+
+      color: var(--orange);
+      text-decoration: none;
+    }
+  }
+}
