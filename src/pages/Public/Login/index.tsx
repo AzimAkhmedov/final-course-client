@@ -1,9 +1,76 @@
-import React from 'react'
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
+import { useFormik } from "formik";
+import { ILoginProps } from "../../../types";
+import { Login } from "../../../store/user";
 
-const Login = () => {
-  return (
-    <div>Login</div>
-  )
-}
+import { Button, Checkbox, Input } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import s from "./Login.module.scss";
+import { useNavigate } from "react-router-dom";
+const LoginPage = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loader } = useAppSelector((state) => state.user);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit({ password, username }) {
+      const newUser: ILoginProps = {
+        username,
+        password,
+      };
+      console.log(newUser);
 
-export default Login
+      dispatch(Login(newUser)).then((res) => {
+        if (res.meta.requestStatus == "fulfilled") {
+          navigate("/profile");
+        }
+      });
+    },
+  });
+  return loader ? (
+    <>Loading</>
+  ) : (
+    <div className={"container " + s.root}>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="field">
+          <Button variant="outlined" color="secondary">
+            <GoogleIcon />
+            Continue with Google
+          </Button>
+        </div>
+        <div className={s.field}>or</div>
+        <div className={s.field}>
+          <Input
+            placeholder="Your Username"
+            id="username"
+            onChange={formik.handleChange}
+            required
+          />
+          <Input
+            placeholder="Password"
+            id="password"
+            onChange={formik.handleChange}
+            required
+          />
+          <div className="checkbox">
+            <Checkbox
+              onChange={(e) => {
+                console.log(e.target.checked);
+              }}
+            />
+            <span>Stay Signed</span>
+          </div>
+          <Button type="submit" variant="contained">
+            Log in
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default LoginPage;

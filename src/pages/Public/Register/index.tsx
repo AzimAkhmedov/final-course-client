@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./Register.module.scss";
 import { Button, Checkbox, Input } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -6,8 +5,9 @@ import { useFormik } from "formik";
 import { useAppDispatch } from "../../../shared/hooks";
 import { Registration } from "../../../store/user";
 import { IAuthProps } from "../../../types";
-import api from "../../../shared/api";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
@@ -22,8 +22,11 @@ const Register = () => {
       };
       console.log(newUser);
 
-      dispatch(Registration(newUser));
-      // const res = api.registration(newUser).then((res) => console.log(res));
+      dispatch(Registration(newUser)).then((res) => {
+        if (res.meta.requestStatus == "fulfilled") {
+          navigate("/profile");
+        }
+      });
     },
   });
   return (
@@ -50,11 +53,15 @@ const Register = () => {
             required
           />
           <div className="checkbox">
-            <Checkbox />
+            <Checkbox
+              onChange={(e) => {
+                console.log(e.target.checked);
+              }}
+            />
             <span>Stay Signed</span>
           </div>
           <Button type="submit" variant="contained">
-            Submit
+            Create Profile
           </Button>
         </div>
       </form>

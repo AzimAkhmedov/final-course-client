@@ -1,4 +1,4 @@
-import { IAuthProps } from "../../types"
+import { IAuthProps, ILoginProps } from "../../types"
 import { instance } from "./instance"
 
 const api = {
@@ -6,7 +6,7 @@ const api = {
         return instance.post('auth/registration', user).then(res => res)
     },
 
-    async login(user: IAuthProps) {
+    async login(user: ILoginProps) {
         return await instance.post('auth/login', user).then((res) => res)
     }
     ,
