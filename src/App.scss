@@ -5,12 +5,19 @@
   margin: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: "Robotto";
+  src: url(assets/fonts/Roboto-Regular.ttf);
+}
 :root {
   --light-blue: #4f709c;
   --light-gray: #f5efe7;
   --gold-gray: #d8c4b6;
   --blue: #213555;
   --orange: #f29727;
+}
+body {
+  font-family: "Robotto";
 }
 .container {
   max-width: 1440px;
