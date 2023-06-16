@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  justify-content: space-around;
+
+  padding: 40px 0;
+  aside {
+    line-height: 32px;
+    a {
+      color: var(--orange);
+      text-decoration: none;
+      font-size: 20px;
+      transition: 0.3s;
+      &:hover {
+        color: #fbab4a;
+        // border-bottom: 1px solid var(--orange);
+        text-decoration: underline;
+      }
+    }
+  }
+}

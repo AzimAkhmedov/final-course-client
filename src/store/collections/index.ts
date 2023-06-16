@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ICollection, ICollectionState, IItem } from "../../types";
 import api from "../../shared/api";
+import { toast } from "react-toastify";
 
 const initialState: ICollectionState = {
     collections: [],
@@ -9,7 +10,7 @@ const initialState: ICollectionState = {
     loading: true
 }
 
-const getCollections = createAsyncThunk('getCollections', async (username: string, __thunkAPI) => {
+export const getCollections = createAsyncThunk('getCollections', async (username: string, __thunkAPI) => {
     try {
         const { data } = await api.getUserCollection(username)
         return data
@@ -17,7 +18,7 @@ const getCollections = createAsyncThunk('getCollections', async (username: strin
         return __thunkAPI.rejectWithValue(e)
     }
 })
-const getCurrentCollection = createAsyncThunk('getCurrentCollection', async (props: any, __thunkAPI) => {
+export const getCurrentCollection = createAsyncThunk('getCurrentCollection', async (props: any, __thunkAPI) => {
     const { username, collection } = props
     try {
         const { data } = await api.getCurrentCollection(username, collection)
@@ -26,7 +27,7 @@ const getCurrentCollection = createAsyncThunk('getCurrentCollection', async (pro
         return __thunkAPI.rejectWithValue(e)
     }
 })
-const createCollection = createAsyncThunk('createCollection', async (collection: ICollection, __thunkAPI) => {
+export const createCollection = createAsyncThunk('createCollection', async (collection: ICollection, __thunkAPI) => {
     try {
         const { data } = await api.createNewCollection(collection)
         return data
@@ -34,7 +35,7 @@ const createCollection = createAsyncThunk('createCollection', async (collection:
         return __thunkAPI.rejectWithValue(e)
     }
 })
-const addToCollection = createAsyncThunk("addToCollection", async (item: IItem, __thunkAPI) => {
+export const addToCollection = createAsyncThunk("addToCollection", async (item: IItem, __thunkAPI) => {
     try {
         const { data } = await api.addToCollection(item)
         return data
@@ -42,10 +43,13 @@ const addToCollection = createAsyncThunk("addToCollection", async (item: IItem, 
         return __thunkAPI.rejectWithValue(e)
     }
 })
-const deleteCollection = createAsyncThunk('deleteCollection', async (props: any, __thunkAPI) => {
+export const deleteCollection = createAsyncThunk('deleteCollection', async (props: any, __thunkAPI) => {
     const { username, collection } = props
     try {
         const { data } = await api.deleteCollection(username, collection)
+        if (data) {
+            toast(collection + " был удален", { type: 'success' })
+        }
         return collection
     } catch (e) {
         return __thunkAPI.rejectWithValue(e)
@@ -69,10 +73,10 @@ const slice = createSlice({
             state.currentCollection = [...state.currentCollection, action.payload]
         })
         builder.addCase(deleteCollection.fulfilled, (state, action) => {
-            state.collections = state.collections.filter(e => e.collectionName != action.payload)
+            state.collections = state.collections.filter(e => e.collectionName !== action.payload)
         })
     }
 })
 
-export const { } = slice.actions
+// export const { } = slice.actions
 export default slice.reducer

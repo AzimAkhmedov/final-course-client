@@ -1,13 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import ProfilePage from "./Profile";
+import NewCollectionPage from "./NewCollection";
 
 const PrivateRoutes = () => {
-  console.log('say hi');
   
   return (
     <>
       <Routes>
         <Route path="/" element={<ProfilePage />} />
+        <Route path="/createCollection" element={<NewCollectionPage />} />
       </Routes>
     </>
   );

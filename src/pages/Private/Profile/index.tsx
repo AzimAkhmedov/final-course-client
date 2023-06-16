@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../../shared/hooks";
-import api from "../../../shared/api";
-
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
+import { getCollections } from "../../../store/collections";
+import { NavLink } from "react-router-dom";
+import s from "./Profile.module.scss";
 const ProfilePage = () => {
-  const [collections, setCollections] = useState<any>({
-    collection: [],
-    username: "",
-  });
+  const { collections } = useAppSelector((state) => state.collections);
   const { username } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    if (username != "") {
- 
+    if (username !== "") {
+      dispatch(getCollections(username));
     }
   }, [username]);
-  useEffect(() => {
-    console.log(collections);
-  }, [collections]);
   return (
-    <div>
-      <h1>Мои коллекции:</h1>
-      {collections.collection.length == 0 ? (
-        <>У вас нету коллекций, создайте и они появяться </>
-      ) : (
-        collections.collection.map((e: any) => <>{e.collectionName}</>)
-      )}
+    <div className={"container " + s.root}>
+      <aside>
+        <h1 className="title">Мои коллекции:</h1>
+        {collections.length === 0 ? (
+          <>
+            У вас нету коллекций,{" "}
+            <NavLink to={"/profile/createCollection"}>создайте</NavLink> и они
+            появяться{" "}
+          </>
+        ) : (
+          collections.map((e: any, i) => <h3 key={i}>{e.collectionName}</h3>)
+        )}
+      </aside>
+      <div className={s.profile}>
+        <h3>{username}</h3>
+        {/* био */}
+      </div>
     </div>
   );
 };
