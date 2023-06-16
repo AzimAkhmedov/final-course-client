@@ -8,7 +8,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/*" element={<PublicRoutes />} />
       {isAdmin ? <Route path="/admin/*" element={<>Admin Page</>} /> : <></>}
-      {isAuth ? <Route path="/*" element={<PrivateRoutes />} /> : <></>}
+      {isAuth ? <Route path="/profile/*" element={<PrivateRoutes />} /> : <></>}
     </Routes>
   );
 };

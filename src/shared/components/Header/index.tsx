@@ -14,7 +14,13 @@ const Header = () => {
             <li className="search">
               <input type="text" name="" id="" />
             </li>
-            <li>{isAuth ? <>{username}</> : <BasicMenu />}</li>
+            <li>
+              {isAuth ? (
+                <NavLink to={"/profile"}>{username}</NavLink>
+              ) : (
+                <BasicMenu />
+              )}
+            </li>
           </ul>
         </nav>
       </div>

@@ -5,11 +5,12 @@ import api from "../../shared/api"
 import jwtDecode from "jwt-decode"
 
 const initialState: IUserReducer = {
-    username: "",
+    // @ts-ignore
+    username: localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')).username : "",
     role: "User",
     token: "",
     loader: false,
-    isAuth: false
+    isAuth: localStorage.getItem('token') ? true : false
 }
 export const Registration = createAsyncThunk('Registration', async (user: IAuthProps, __thunkAPI) => {
     try {
@@ -57,7 +58,6 @@ const userSlice = createSlice({
             state.isAuth = true
             state.loader = false
             state.username = action.payload.user.username
-
         })
         builder.addCase(Registration.pending, (state, action) => {
             state.loader = true

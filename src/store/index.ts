@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import user from "./user";
+import app from './app'
 const store = configureStore({
     reducer: {
-        user
+        user,
+        app
     }
 })
 export default store

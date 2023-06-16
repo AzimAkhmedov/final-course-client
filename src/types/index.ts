@@ -5,6 +5,9 @@ export interface IUserReducer {
     isAuth: boolean
     loader: boolean
 }
+export interface IAppReducer {
+    lang: 'Ru' | 'En'
+}
 export interface IAuthProps {
     username: string
     password: string
@@ -13,4 +16,20 @@ export interface IAuthProps {
 export interface ILoginProps {
     username: string
     password: string
+}
+export interface ICollection {
+    username: string
+    collectionName: string
+    params: any[]
+}
+export interface IItem {
+    username: string
+    collectionName: string
+    params: any
+}
+export interface ICollectionState {
+    collections: Array<ICollection>
+    loading: boolean
+    error: boolean | string
+    currentCollection: Array<IItem>
 }
