@@ -13,6 +13,11 @@
     .collectionName {
       width: 50%;
     }
+    .darCollectionName {
+      width: 50%;
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
     .tools {
       width: 100%;
       display: flex;
@@ -21,8 +26,22 @@
       width: 100%;
       .input {
         width: 45% !important;
+        // border: 2px solid red;
       }
       padding: 20px 0;
+    }
+    .darkTools {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 20px 0;
+      .input {
+        width: 45% !important;
+        color: #fff;
+        border-bottom: 1px solid #fff;
+      }
     }
     .params {
       width: 100%;

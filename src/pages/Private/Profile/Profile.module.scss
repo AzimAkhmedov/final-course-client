@@ -1,10 +1,13 @@
 .root {
   display: flex;
   justify-content: space-around;
-
+  aside {
+    width: 60%;
+    // flex: 1 0;
+    //  width: 100%;
+  }
   padding: 40px 0;
   aside {
-    line-height: 32px;
     a {
       color: var(--orange);
       text-decoration: none;
@@ -12,8 +15,19 @@
       transition: 0.3s;
       &:hover {
         color: #fbab4a;
-        // border-bottom: 1px solid var(--orange);
         text-decoration: underline;
+      }
+    }
+  }
+  .profile {
+    p {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover {
+        color: var(--orange);
       }
     }
   }

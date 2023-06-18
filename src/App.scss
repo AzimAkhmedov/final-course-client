@@ -5,6 +5,13 @@
   margin: 0;
   box-sizing: border-box;
 }
+.darkMode {
+  color: #fff;
+  background: black;
+}
+body {
+  transition: 0.5s;
+}
 @font-face {
   font-family: "Robotto";
   src: url(assets/fonts/Roboto-Regular.ttf);

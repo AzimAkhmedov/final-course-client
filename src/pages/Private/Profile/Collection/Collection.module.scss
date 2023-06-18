@@ -1,0 +1,16 @@
+.root {
+
+  padding-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  h3{
+    &:hover{
+        
+    }
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+}

@@ -11,6 +11,7 @@ const NewCollectionPage = () => {
   const [input, setInput] = useState<string>("");
   const [params, setParams] = useState<Array<string>>([]);
   const { username } = useAppSelector((state) => state.user);
+  const { darkMode, lang } = useAppSelector((state) => state.app);
   const initialValues = {
     collectionName: "",
     username,
@@ -35,12 +36,12 @@ const NewCollectionPage = () => {
     },
   });
 
-  return (
+  return lang === "Ru" ? (
     <div className={"container " + s.root}>
       <h1>Создать Коллекцию</h1>
       <form onSubmit={formik.handleSubmit}>
         <Input
-          className={s.collectionName}
+          className={darkMode ? s.darCollectionName : s.collectionName}
           placeholder="Имя Коллекции"
           id="collectionName"
           required
@@ -70,41 +71,184 @@ const NewCollectionPage = () => {
             </p>
           ))}
         </div>
-        <div className={s.tools}>
-          <Input
-            value={input}
-            placeholder="Введите имя параметра"
-            className={s.input}
-            onChange={(e) => {
-              setInput(e.target.value);
-            }}
-          />
-          <Button
-            type="button"
-            variant="contained"
-            onClick={() => {
-              if (input === "") {
-                toast("Вы должны заполнить поле параметра", {
-                  type: "warning",
-                });
-                return;
-              }
-              const a = params.find((e) => e === input);
-              if (a !== undefined) {
-                toast("Похоже вы уже ввели такой параметр", {
-                  type: "warning",
-                });
+        {darkMode ? (
+          <div className={s.darkTools}>
+            <Input
+              value={input}
+              placeholder="Введите имя параметра"
+              className={s.input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => {
+                if (input === "") {
+                  toast("Вы должны заполнить поле параметра", {
+                    type: "warning",
+                  });
+                  return;
+                }
+                const a = params.find((e) => e === input);
+                if (a !== undefined) {
+                  toast("Похоже вы уже ввели такой параметр", {
+                    type: "warning",
+                  });
 
-                return;
-              }
-              setParams([...params, input]);
-              setInput("");
-            }}
-          >
-            +
-          </Button>
-        </div>
+                  return;
+                }
+                setParams([...params, input]);
+                setInput("");
+              }}
+            >
+              +
+            </Button>
+          </div>
+        ) : (
+          <div className={s.tools}>
+            <Input
+              value={input}
+              placeholder="Введите имя параметра"
+              className={s.input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => {
+                if (input === "") {
+                  toast("Вы должны заполнить поле параметра", {
+                    type: "warning",
+                  });
+                  return;
+                }
+                const a = params.find((e) => e === input);
+                if (a !== undefined) {
+                  toast("Похоже вы уже ввели такой параметр", {
+                    type: "warning",
+                  });
+
+                  return;
+                }
+                setParams([...params, input]);
+                setInput("");
+              }}
+            >
+              +
+            </Button>
+          </div>
+        )}
         <button type="submit">Создать Коллекцию</button>
+      </form>
+    </div>
+  ) : (
+    <div className={"container " + s.root}>
+      <h1>Create Collection</h1>
+      <form onSubmit={formik.handleSubmit}>
+        <Input
+          className={darkMode ? s.darCollectionName : s.collectionName}
+          placeholder="Collection Name"
+          id="collectionName"
+          required
+          onChange={formik.handleChange}
+        />
+
+        <div className={s.params}>
+          {params.length === 0 ? (
+            <h2>Add Params of your future collection</h2>
+          ) : (
+            <h2>Params of your future Collection</h2>
+          )}
+          {params.map((e, i) => (
+            <p key={i}>
+              <span>{e}</span>{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setParams(params.filter((e, index) => i !== index));
+                }}
+              >
+                Delete
+              </button>
+            </p>
+          ))}
+        </div>
+        {darkMode ? (
+          <div className={s.darkTools}>
+            <Input
+              value={input}
+              placeholder="Type param"
+              className={s.input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => {
+                if (input === "") {
+                  toast("You must enter param", {
+                    type: "warning",
+                  });
+                  return;
+                }
+                const a = params.find((e) => e === input);
+                if (a !== undefined) {
+                  toast("Seems you already have such param", {
+                    type: "warning",
+                  });
+
+                  return;
+                }
+                setParams([...params, input]);
+                setInput("");
+              }}
+            >
+              +
+            </Button>
+          </div>
+        ) : (
+          <div className={s.tools}>
+            <Input
+              value={input}
+              placeholder="Type param"
+              className={s.input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => {
+                if (input === "") {
+                  toast("You must enter param", {
+                    type: "warning",
+                  });
+                  return;
+                }
+                const a = params.find((e) => e === input);
+                if (a !== undefined) {
+                  toast("Seems you already have such param", {
+                    type: "warning",
+                  });
+
+                  return;
+                }
+                setParams([...params, input]);
+                setInput("");
+              }}
+            >
+              +
+            </Button>
+          </div>
+        )}
+        <button type="submit">Create Collection</button>
       </form>
     </div>
   );
