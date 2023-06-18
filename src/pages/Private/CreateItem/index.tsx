@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getCollectionParams } from "../../../store/collections";
 import s from "./CreateItem.module.scss";
+import { Input } from "@mui/material";
 
 const CreateItem = () => {
   const { collection } = useParams();
@@ -25,7 +26,7 @@ const CreateItem = () => {
         <h2>Свойства</h2>
         <div className="params">
           {collectionParams.map((e) => (
-            <input placeholder={e} required />
+            <Input placeholder={e} required />
           ))}
         </div>
         <button type="submit">Создать</button>
