@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const initialState: ICollectionState = {
     collections: [],
     currentCollection: [],
+    collectionParams: [],
     error: false,
     loading: true
 }
@@ -34,6 +35,16 @@ export const createCollection = createAsyncThunk('createCollection', async (coll
     } catch (e) {
         return __thunkAPI.rejectWithValue(e)
     }
+})
+export const getCollectionParams = createAsyncThunk('getCollectionParams', async (params: any, __thunkAPI) => {
+    const { username, collection } = params
+    try {
+        const { data } = await api.getCollectionParams(username, collection)
+        return data
+    } catch (e) {
+        return __thunkAPI.rejectWithValue(e)
+    }
+
 })
 export const addToCollection = createAsyncThunk("addToCollection", async (item: IItem, __thunkAPI) => {
     try {
@@ -75,8 +86,15 @@ const slice = createSlice({
         builder.addCase(deleteCollection.fulfilled, (state, action) => {
             state.collections = state.collections.filter(e => e.collectionName !== action.payload)
         })
+
+        builder.addCase(getCollectionParams.fulfilled, (state, action) => {
+            state.collectionParams = action.payload
+            state.loading = false
+
+        }).addCase(getCollectionParams.pending, (state) => {
+            state.loading = true
+        })
     }
 })
 
-// export const { } = slice.actions
 export default slice.reducer

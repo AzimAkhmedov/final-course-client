@@ -25,6 +25,9 @@ const api = {
     },
     async getCurrentCollection(username: string, collection: string) {
         return await instance.get('collection/' + username + "/" + collection).then(res => res)
+    },
+    async getCollectionParams(username: string, collection: string) {
+        return await instance.get('collection/params/' + username + "/" + collection).then(res => res)
     }
 }
 

@@ -30,6 +30,7 @@ export interface IItem {
 }
 export interface ICollectionState {
     collections: Array<ICollection>
+    collectionParams: Array<any>
     loading: boolean
     error: boolean | string
     currentCollection: Array<IItem>
