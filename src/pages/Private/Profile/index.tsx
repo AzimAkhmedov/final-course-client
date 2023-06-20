@@ -4,7 +4,8 @@ import { getCollections } from "../../../store/collections";
 import { NavLink, useNavigate } from "react-router-dom";
 import s from "./Profile.module.scss";
 import Collection from "./Collection";
-import { Add } from "@mui/icons-material";
+import { Add, ExitToApp } from "@mui/icons-material";
+import { logOut } from "../../../store/user";
 const ProfilePage = () => {
   const { collections } = useAppSelector((state) => state.collections);
   const { username } = useAppSelector((state) => state.user);
@@ -30,6 +31,7 @@ const ProfilePage = () => {
           ) : (
             collections.map((e, i) => (
               <Collection
+                description=""
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
@@ -51,7 +53,16 @@ const ProfilePage = () => {
             Создать новую коллекцию <Add />
           </p>
         )}
-        {/* био */}
+        <button
+          onClick={() => {
+            dispatch(logOut());
+            localStorage.removeItem("token");
+            navigate("/");
+          }}
+        >
+          <ExitToApp />
+          Выйти
+        </button>
       </div>
     </div>
   ) : (
@@ -68,6 +79,7 @@ const ProfilePage = () => {
           ) : (
             collections.map((e, i) => (
               <Collection
+                description=""
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
@@ -86,10 +98,13 @@ const ProfilePage = () => {
               navigate("/profile/createCollection");
             }}
           >
-           Create New Collection <Add />
+            Create New Collection <Add />
           </p>
         )}
-        {/* био */}
+        <p>
+          <ExitToApp />
+          Log out
+        </p>
       </div>
     </div>
   );

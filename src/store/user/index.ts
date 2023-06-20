@@ -50,6 +50,10 @@ const userSlice = createSlice({
             const obj: any = jwtDecode(action.payload)
             state.username = obj.username
             console.log(obj);
+        },
+        logOut(state) {
+            state.isAuth = false
+            state.token = ""
         }
 
     }, extraReducers: (builder) => {
@@ -75,5 +79,5 @@ const userSlice = createSlice({
 })
 
 
-export const { getToken } = userSlice.actions
+export const { getToken ,logOut} = userSlice.actions
 export default userSlice.reducer

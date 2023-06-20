@@ -14,6 +14,7 @@ const NewCollectionPage = () => {
   const { darkMode, lang } = useAppSelector((state) => state.app);
   const initialValues = {
     collectionName: "",
+    description: "",
     username,
   };
   const formik = useFormik({
@@ -44,6 +45,13 @@ const NewCollectionPage = () => {
           className={darkMode ? s.darCollectionName : s.collectionName}
           placeholder="Имя Коллекции"
           id="collectionName"
+          required
+          onChange={formik.handleChange}
+        />
+        <Input
+          className={darkMode ? s.darCollectionName : s.collectionName}
+          placeholder="Описание"
+          id="description"
           required
           onChange={formik.handleChange}
         />
@@ -156,7 +164,13 @@ const NewCollectionPage = () => {
           required
           onChange={formik.handleChange}
         />
-
+        <Input
+          className={darkMode ? s.darCollectionName : s.collectionName}
+          placeholder="Description "
+          id="description"
+          required
+          onChange={formik.handleChange}
+        />
         <div className={s.params}>
           {params.length === 0 ? (
             <h2>Add Params of your future collection</h2>

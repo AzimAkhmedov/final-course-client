@@ -7,6 +7,7 @@ const initialState: ICollectionState = {
     collections: [],
     currentCollection: [],
     collectionParams: [],
+    lastCollections: [],
     error: false,
     loading: true
 }
@@ -66,6 +67,11 @@ export const deleteCollection = createAsyncThunk('deleteCollection', async (prop
         return __thunkAPI.rejectWithValue(e)
     }
 })
+export const getLastCollections = createAsyncThunk('getLastCollections', async (page: number) => {
+    const { data } = await api.getLastCollections(page)
+    return data
+})
+
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -73,6 +79,10 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getCollections.fulfilled, (state, action) => {
             state.collections = action.payload
+        }).addCase(getCollections.pending, (state, action) => {
+            state.loading = true
+        }).addCase(getCollections.rejected, (state) => {
+            state.error = true
         })
         builder.addCase(getCurrentCollection.fulfilled, (state, action) => {
             state.currentCollection = action.payload
@@ -90,9 +100,11 @@ const slice = createSlice({
         builder.addCase(getCollectionParams.fulfilled, (state, action) => {
             state.collectionParams = action.payload
             state.loading = false
-
         }).addCase(getCollectionParams.pending, (state) => {
             state.loading = true
+        })
+        builder.addCase(getLastCollections.fulfilled, (state, action) => {
+            state.lastCollections = action.payload
         })
     }
 })

@@ -22,6 +22,7 @@ export interface ICollection {
     username: string
     collectionName: string
     params: any[]
+    description: string
 }
 export interface IItem {
     username: string
@@ -34,4 +35,5 @@ export interface ICollectionState {
     loading: boolean
     error: boolean | string
     currentCollection: Array<IItem>
+    lastCollections: Array<ICollection>
 }
