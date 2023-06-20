@@ -19,6 +19,7 @@ export interface ILoginProps {
     password: string
 }
 export interface ICollection {
+    _id?: string
     username: string
     collectionName: string
     params: any[]

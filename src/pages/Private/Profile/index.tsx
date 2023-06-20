@@ -31,10 +31,12 @@ const ProfilePage = () => {
           ) : (
             collections.map((e, i) => (
               <Collection
+                key={i}
                 description=""
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
+                _id={e._id}
               />
             ))
           )}

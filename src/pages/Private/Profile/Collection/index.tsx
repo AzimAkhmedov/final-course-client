@@ -5,7 +5,13 @@ import s from "./Collection.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../shared/hooks";
 import { deleteCollection } from "../../../../store/collections";
-const Collection = ({ collectionName, params, username, description }: ICollection) => {
+const Collection = ({
+  collectionName,
+  params,
+  username,
+  description,
+  _id,
+}: ICollection) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   return (
@@ -14,9 +20,9 @@ const Collection = ({ collectionName, params, username, description }: ICollecti
       <div className={s.actions}>
         <Button
           onClick={() => {
-            dispatch(
-              deleteCollection({ username, collection: collectionName })
-            );
+            dispatch(deleteCollection(String(_id)));
+            console.log(_id);
+            
           }}
           variant="contained"
           color="warning"

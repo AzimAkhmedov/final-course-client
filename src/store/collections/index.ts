@@ -33,7 +33,7 @@ export const createCollection = createAsyncThunk('createCollection', async (coll
     try {
         const { data } = await api.createNewCollection(collection)
         return data
-    } catch (e) {
+    } catch (e) {                                                                                       
         return __thunkAPI.rejectWithValue(e)
     }
 })
@@ -55,14 +55,14 @@ export const addToCollection = createAsyncThunk("addToCollection", async (item: 
         return __thunkAPI.rejectWithValue(e)
     }
 })
-export const deleteCollection = createAsyncThunk('deleteCollection', async (props: any, __thunkAPI) => {
-    const { username, collection } = props
+export const deleteCollection = createAsyncThunk('deleteCollection', async (_id: string, __thunkAPI) => {
+    // const { username, collection } = props
     try {
-        const { data } = await api.deleteCollection(username, collection)
+        const { data } = await api.deleteCollection(_id)
         if (data) {
-            toast(collection + " был удален", { type: 'success' })
+            toast("Коллекция  была удаленена", { type: 'success' })
         }
-        return collection
+        return _id
     } catch (e) {
         return __thunkAPI.rejectWithValue(e)
     }
@@ -79,6 +79,8 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getCollections.fulfilled, (state, action) => {
             state.collections = action.payload
+            state.loading = false
+
         }).addCase(getCollections.pending, (state, action) => {
             state.loading = true
         }).addCase(getCollections.rejected, (state) => {
@@ -86,15 +88,22 @@ const slice = createSlice({
         })
         builder.addCase(getCurrentCollection.fulfilled, (state, action) => {
             state.currentCollection = action.payload
+            state.loading = false
+
         })
         builder.addCase(createCollection.fulfilled, (state, action) => {
             state.collections = [...state.collections, action.payload]
+            state.loading = false
+
         })
         builder.addCase(addToCollection.fulfilled, (state, action) => {
             state.currentCollection = [...state.currentCollection, action.payload]
+            state.loading = false
+
         })
         builder.addCase(deleteCollection.fulfilled, (state, action) => {
-            state.collections = state.collections.filter(e => e.collectionName !== action.payload)
+            state.collections = state.collections.filter(e => e._id !== action.payload)
+            state.loading = false
         })
 
         builder.addCase(getCollectionParams.fulfilled, (state, action) => {
@@ -105,6 +114,7 @@ const slice = createSlice({
         })
         builder.addCase(getLastCollections.fulfilled, (state, action) => {
             state.lastCollections = action.payload
+            state.loading = false
         })
     }
 })
