@@ -18,7 +18,7 @@ const Home = () => {
       {list.map(({ collectionName, description, params, username }, i) => (
         <Collection
           collectionName={collectionName}
-          description=""
+          description={description}
           params={params}
           username={username}
           key={i}

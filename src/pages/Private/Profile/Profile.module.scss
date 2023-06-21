@@ -20,15 +20,10 @@
     }
   }
   .profile {
-    p {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-      &:hover {
-        color: var(--orange);
-      }
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    button {
     }
   }
 }

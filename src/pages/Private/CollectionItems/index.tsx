@@ -5,7 +5,7 @@ import { getCollectionParams } from "../../../store/collections";
 import s from "./CreateItem.module.scss";
 import { Box, Input } from "@mui/material";
 import { getItems } from "../../../store/items";
-
+import Toolbar from "./Toolbar";
 const CreateItem = () => {
   const { collection } = useParams();
   const dispatch = useAppDispatch();
@@ -21,18 +21,20 @@ const CreateItem = () => {
     <>Загрузка</>
   ) : (
     <div className={"container " + s.root}>
-      <h1>{collection}</h1>
-
       {items.length === 0 ? (
         <Box sx={{ maxWidth: 420 }}>
+          <h1>{collection}</h1>
           <p>
             Кажется тут пока пусто, добавьте в вашу коллекцию новые предметы и
             они появяться тут
           </p>
         </Box>
       ) : (
-        <></>
+        <Box sx={{ maxWidth: "50%" }}>
+          <h1>{collection}</h1>
+        </Box>
       )}
+      <Toolbar />
     </div>
   );
 };

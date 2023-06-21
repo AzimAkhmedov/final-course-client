@@ -17,7 +17,7 @@ import s from "./NewCollection.module.scss";
 const NewCollectionPage = () => {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState<string>("");
-  const [select, setSelect] = useState<string>("text");
+  const [type, setType] = useState<string>("text");
   const [selectedTheme, setTheme] = useState("");
   const [params, setParams] = useState<Array<any>>([]);
   const { username } = useAppSelector((state) => state.user);
@@ -35,7 +35,6 @@ const NewCollectionPage = () => {
         toast("Добавьте хоть 1 параметр", { type: "warning" });
         return;
       }
-      console.log({ ...val, params });
       dispatch(createCollection({ ...val, params })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast("Успешно добавлено", { type: "success" });
@@ -53,8 +52,9 @@ const NewCollectionPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log(type);
     console.log(params);
-  }, [params]);
+  }, [type]);
   return lang === "Ru" ? (
     <div className={"container " + s.root}>
       <h1>Создать Коллекцию</h1>
@@ -87,9 +87,10 @@ const NewCollectionPage = () => {
             >
               {themes.map((e, i) => (
                 <MenuItem key={i} value={e.theme}>
-                  {e.theme}
+                  {e.themeRu}
                 </MenuItem>
               ))}
+              <MenuItem value={"Others"}>Другое</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -104,7 +105,7 @@ const NewCollectionPage = () => {
           )}
           {params.map((e, i) => (
             <p key={i}>
-              <span>{e}</span>{" "}
+              <span>{e.name}</span>{" "}
               <button
                 type="button"
                 onClick={() => {
@@ -126,6 +127,19 @@ const NewCollectionPage = () => {
                 setInput(e.target.value);
               }}
             />
+            <Select
+              labelId="demo-simple-select-label-param"
+              id="demo-simple-select-param"
+              value={type}
+              onChange={(e) => {
+                setType(e.target.value);
+              }}
+              label="Выберите тип вашего параметра"
+            >
+              <MenuItem value={"text"}>Текст</MenuItem>
+              <MenuItem value={"number"}>Число</MenuItem>
+              <MenuItem value={"color"}>Цвет</MenuItem>
+            </Select>
             <Button
               type="button"
               variant="contained"
@@ -143,11 +157,11 @@ const NewCollectionPage = () => {
                   });
                   return;
                 }
-                console.log([...params, { name: input, type: select }]);
-                setParams([...params, { name: input, type: select }]);
+                console.log([...params, { name: input, type }]);
+                setParams([...params, { name: input, type }]);
 
                 setInput("");
-                console.log(params);
+                // console.log(params);
               }}
             >
               +
@@ -174,9 +188,9 @@ const NewCollectionPage = () => {
                 <Select
                   labelId="demo-simple-select-label-param"
                   id="demo-simple-select-param"
-                  value={select}
+                  value={type}
                   onChange={(e) => {
-                    setSelect(e.target.value);
+                    setType(e.target.value);
                   }}
                   label="Выберите тип вашего параметра"
                 >
@@ -204,7 +218,8 @@ const NewCollectionPage = () => {
 
                   return;
                 }
-                setParams([...params, input]);
+                setParams([...params, { name: input, type }]);
+
                 setInput("");
               }}
             >

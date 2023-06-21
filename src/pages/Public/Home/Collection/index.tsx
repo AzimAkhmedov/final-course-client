@@ -1,5 +1,7 @@
 import React from "react";
 import { ICollection } from "../../../../types";
+import { Box, Button } from "@mui/material";
+import { ArrowRightAlt } from "@mui/icons-material";
 
 const Collection = ({
   collectionName,
@@ -8,11 +10,16 @@ const Collection = ({
   description,
 }: ICollection) => {
   return (
-    <div>
-      <h2>{collectionName}</h2>
-      <p>Author: {username}</p>
-      <p>{description}</p>
-    </div>
+    <Box>
+      <div className="collection">
+        <h2>{collectionName}</h2>
+        <p>Author: {username}</p>
+        <p>{description}</p>
+      </div>
+      <Button variant="contained" color="warning">
+        <ArrowRightAlt />
+      </Button>
+    </Box>
   );
 };
 

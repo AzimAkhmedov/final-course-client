@@ -6,6 +6,7 @@ import s from "./Profile.module.scss";
 import Collection from "./Collection";
 import { Add, ExitToApp } from "@mui/icons-material";
 import { logOut } from "../../../store/user";
+import { Button } from "@mui/material";
 const ProfilePage = () => {
   const { collections } = useAppSelector((state) => state.collections);
   const { username } = useAppSelector((state) => state.user);
@@ -47,15 +48,17 @@ const ProfilePage = () => {
         {collections.length === 0 ? (
           <></>
         ) : (
-          <p
+          <Button
             onClick={() => {
               navigate("/profile/createCollection");
             }}
           >
             Создать новую коллекцию <Add />
-          </p>
+          </Button>
         )}
-        <button
+        <Button
+          color="error"
+          variant="contained"
           onClick={() => {
             dispatch(logOut());
             localStorage.removeItem("token");
@@ -64,7 +67,7 @@ const ProfilePage = () => {
         >
           <ExitToApp />
           Выйти
-        </button>
+        </Button>
       </div>
     </div>
   ) : (
@@ -95,18 +98,26 @@ const ProfilePage = () => {
         {collections.length === 0 ? (
           <></>
         ) : (
-          <p
+          <Button
             onClick={() => {
               navigate("/profile/createCollection");
             }}
           >
             Create New Collection <Add />
-          </p>
+          </Button>
         )}
-        <p>
+        <Button
+          onClick={() => {
+            dispatch(logOut());
+            localStorage.removeItem("token");
+            navigate("/");
+          }}
+          color="error"
+          variant="contained"
+        >
           <ExitToApp />
           Log out
-        </p>
+        </Button>
       </div>
     </div>
   );
