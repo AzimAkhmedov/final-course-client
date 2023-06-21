@@ -30,6 +30,11 @@ export interface IItem {
     collectionName: string
     params: any
 }
+
+export interface ITheme {
+    theme: string
+    themeRu: string
+}
 export interface ICollectionState {
     collections: Array<ICollection>
     collectionParams: Array<any>
@@ -37,4 +42,32 @@ export interface ICollectionState {
     error: boolean | string
     currentCollection: Array<IItem>
     lastCollections: Array<ICollection>
+    themes: Array<ITheme>
+}
+export interface IItem {
+    username: string
+    collectionName: string
+    param: Object
+    itemName: string
+}
+export interface IComment {
+    username: string
+    collectionName: string
+    itemId: string
+    authorName: string
+    comment: string
+    time: string
+}
+export interface ILike {
+    username: string
+    collectionName: string
+    itemId: string
+    wholikes: string
+}
+export interface IItemState {
+    items: Array<IItem>
+    likes: Array<ILike>
+    comments: Array<IComment>
+    itemsLoader: boolean
+    error: boolean | string
 }

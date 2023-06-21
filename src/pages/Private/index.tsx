@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import ProfilePage from "./Profile";
 import NewCollectionPage from "./NewCollection";
-import CreateItem from "./CreateItem";
+import CreateItem from "./CollectionItems";
 
 const PrivateRoutes = () => {
   return (

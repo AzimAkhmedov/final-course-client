@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 const initialState: ICollectionState = {
     collections: [],
+    themes: [],
     currentCollection: [],
     collectionParams: [],
     lastCollections: [],
@@ -33,7 +34,7 @@ export const createCollection = createAsyncThunk('createCollection', async (coll
     try {
         const { data } = await api.createNewCollection(collection)
         return data
-    } catch (e) {                                                                                       
+    } catch (e) {
         return __thunkAPI.rejectWithValue(e)
     }
 })
@@ -71,7 +72,14 @@ export const getLastCollections = createAsyncThunk('getLastCollections', async (
     const { data } = await api.getLastCollections(page)
     return data
 })
-
+export const getThemes = createAsyncThunk('getThemes', async (_, thunkAPI) => {
+    try {
+        const { data } = await api.getCollectionThemes()
+        return data
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -116,6 +124,10 @@ const slice = createSlice({
             state.lastCollections = action.payload
             state.loading = false
         })
+        builder.addCase(getThemes.fulfilled, (state, action) => {
+            state.themes = action.payload
+        })
+        
     }
 })
 

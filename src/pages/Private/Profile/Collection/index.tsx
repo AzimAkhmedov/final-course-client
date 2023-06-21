@@ -1,5 +1,5 @@
 import { ICollection } from "../../../../types";
-import { Delete, Add } from "@mui/icons-material";
+import { Delete, Add, Visibility } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import s from "./Collection.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,6 @@ const Collection = ({
           onClick={() => {
             dispatch(deleteCollection(String(_id)));
             console.log(_id);
-            
           }}
           variant="contained"
           color="warning"
@@ -36,7 +35,7 @@ const Collection = ({
           variant="contained"
           color="warning"
         >
-          <Add />
+          <Visibility />
         </Button>
       </div>
     </div>

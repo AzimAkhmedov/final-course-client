@@ -36,6 +36,8 @@ const api = {
     },
     async getLastCollections(page: number) {
         return await instance.get('collection/getpages/' + page).then(res => res)
+    }, async getCollectionThemes() {
+        return await instance.get('theme/').then(res => res)
     }
 }
 
