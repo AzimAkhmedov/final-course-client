@@ -44,12 +44,6 @@ export interface ICollectionState {
     lastCollections: Array<ICollection>
     themes: Array<ITheme>
 }
-export interface IItem {
-    username: string
-    collectionName: string
-    param: Object
-    itemName: string
-}
 export interface IComment {
     username: string
     collectionName: string

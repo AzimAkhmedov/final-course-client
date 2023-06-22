@@ -11,6 +11,7 @@ const CreateItem = () => {
   const dispatch = useAppDispatch();
   const username = useAppSelector((state) => state.user.username);
   const { itemsLoader, items } = useAppSelector((state) => state.items);
+  const { lang } = useAppSelector((state) => state.app);
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
@@ -19,7 +20,7 @@ const CreateItem = () => {
   }, [items]);
   return itemsLoader ? (
     <>Загрузка</>
-  ) : (
+  ) : lang === "Ru" ? (
     <div className={"container " + s.root}>
       {items.length === 0 ? (
         <Box sx={{ maxWidth: 420 }}>
@@ -34,7 +35,24 @@ const CreateItem = () => {
           <h1>{collection}</h1>
         </Box>
       )}
-      <Toolbar />
+      <Toolbar collection={collection} />
+    </div>
+  ) : (
+    <div className={"container " + s.root}>
+      {items.length === 0 ? (
+        <Box sx={{ maxWidth: 420 }}>
+          <h1>{collection}</h1>
+          <p>
+            It seems that your collection is empty, create new items and they
+            will apear here
+          </p>
+        </Box>
+      ) : (
+        <Box sx={{ maxWidth: "50%" }}>
+          <h1>{collection}</h1>
+        </Box>
+      )}
+      <Toolbar collection={collection} />
     </div>
   );
 };

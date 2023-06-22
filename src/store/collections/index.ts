@@ -48,14 +48,6 @@ export const getCollectionParams = createAsyncThunk('getCollectionParams', async
     }
 
 })
-export const addToCollection = createAsyncThunk("addToCollection", async (item: IItem, __thunkAPI) => {
-    try {
-        const { data } = await api.addToCollection(item)
-        return data
-    } catch (e) {
-        return __thunkAPI.rejectWithValue(e)
-    }
-})
 export const deleteCollection = createAsyncThunk('deleteCollection', async (_id: string, __thunkAPI) => {
     // const { username, collection } = props
     try {
@@ -104,11 +96,11 @@ const slice = createSlice({
             state.loading = false
 
         })
-        builder.addCase(addToCollection.fulfilled, (state, action) => {
-            state.currentCollection = [...state.currentCollection, action.payload]
-            state.loading = false
+        // builder.addCase(addToCollection.fulfilled, (state, action) => {
+        //     state.currentCollection = [...state.currentCollection, action.payload]
+        //     state.loading = false
 
-        })
+        // })
         builder.addCase(deleteCollection.fulfilled, (state, action) => {
             state.collections = state.collections.filter(e => e._id !== action.payload)
             state.loading = false
