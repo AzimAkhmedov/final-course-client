@@ -34,6 +34,10 @@ const slice = createSlice({
     }, extraReducers: (builder) => {
         builder.addCase(getItems.fulfilled, (state, action) => {
             state.items = action.payload
+            state.itemsLoader = false
+
+        }).addCase(getItems.pending, (state) => {
+            state.itemsLoader = true
         })
         builder.addCase(addToCollection.fulfilled, (state, action) => {
             state.items = [...state.items, action.payload]

@@ -10,7 +10,7 @@ import { getToken } from "./store/user";
 function App() {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
-  const darkMode = useAppSelector((state) => state.app.darkMode);
+  const {darkMode} = useAppSelector((state) => state.app);
   useEffect(() => {
     if (token) {
       dispatch(getToken(token));

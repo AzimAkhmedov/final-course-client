@@ -38,7 +38,11 @@ const api = {
         return await instance.get('collection/getpages/' + page).then(res => res)
     }, async getCollectionThemes() {
         return await instance.get('theme/').then(res => res)
+    },
+    async getNumberOfPages() {
+        return (await instance.get('collection/pages/amount')).data
     }
+
 }
 
 export default api

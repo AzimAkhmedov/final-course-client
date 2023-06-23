@@ -14,6 +14,7 @@ const Toolbar = ({ collection }: any) => {
   const username = useAppSelector((state) => state.user.username);
   const [toggle, setToggle] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState({});
+
   const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues,
@@ -24,7 +25,7 @@ const Toolbar = ({ collection }: any) => {
         params: val,
       };
       console.log(val);
-      
+
       dispatch(addToCollection(newItem)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast(
@@ -65,7 +66,7 @@ const Toolbar = ({ collection }: any) => {
     <aside>
       <div>
         <Button onClick={toggleDrawer(true)}>
-          Create New Item
+          {lang === "Ru" ? "Создать Новый Предмет" : "Create New Item"}
           <Add />
         </Button>
       </div>
@@ -79,7 +80,6 @@ const Toolbar = ({ collection }: any) => {
         <Box
           sx={{
             width: 300,
-            background: darkMode ? "rgba(0, 0, 0, 0.685)" : "",
             padding: "20px 20px",
           }}
           role="presentation"
@@ -104,7 +104,9 @@ const Toolbar = ({ collection }: any) => {
                 onChange={formik.handleChange}
               />
             ))}
-            <Button type="submit">Создать</Button>
+            <Button type="submit">
+              {lang === "Ru" ? "Создать" : "Create"}
+            </Button>
           </form>
         </Box>
       </SwipeableDrawer>

@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import { useParams } from "react-router-dom";
 
 const CollectionPage = () => {
+  const params = useParams();
   return (
-    <div>CollectionPage</div>
-  )
-}
+    <div>
+      {params.username} {params.collectionName}
+    </div>
+  );
+};
 
-export default CollectionPage
+export default CollectionPage;

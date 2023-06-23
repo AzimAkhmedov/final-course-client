@@ -1,0 +1,10 @@
+.root {
+  .layout {
+    min-height: 80vh;
+  }
+  .pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

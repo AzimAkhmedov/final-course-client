@@ -1,18 +1,13 @@
 .root {
   padding: 60px 0;
-
-  form {
-    padding: 20px 0;
+  h1 {
+    margin-bottom: 50px;
+  }
+  .parent {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      width: 50%;
-    }
+    width: 100%;
+    
   }
 }

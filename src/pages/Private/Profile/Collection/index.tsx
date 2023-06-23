@@ -17,6 +17,7 @@ const Collection = ({
   return (
     <div className={s.root}>
       <h3>{collectionName}</h3>
+      <p>{description}</p>
       <div className={s.actions}>
         <Button
           onClick={() => {

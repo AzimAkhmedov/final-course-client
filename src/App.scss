@@ -9,8 +9,22 @@
   color: #fff;
   background: black;
 }
+.layout {
+  display: flex;
+  // justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
 body {
   transition: 0.5s;
+}
+main {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  aside {
+    width: 20%;
+  }
 }
 @font-face {
   font-family: "Robotto";

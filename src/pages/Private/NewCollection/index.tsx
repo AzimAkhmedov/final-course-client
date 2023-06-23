@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { createCollection, getThemes } from "../../../store/collections";
 import s from "./NewCollection.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const NewCollectionPage = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ const NewCollectionPage = () => {
   const { username } = useAppSelector((state) => state.user);
   const { darkMode, lang } = useAppSelector((state) => state.app);
   const themes = useAppSelector((state) => state.collections.themes);
+  const navigate = useNavigate();
   const initialValues = {
     collectionName: "",
     description: "",
@@ -38,6 +40,7 @@ const NewCollectionPage = () => {
       dispatch(createCollection({ ...val, params })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast("Успешно добавлено", { type: "success" });
+          navigate('/profile')
         } else {
           toast("Произошла ошибка, Убедитесь что у вас нет такой коллекции", {
             type: "error",

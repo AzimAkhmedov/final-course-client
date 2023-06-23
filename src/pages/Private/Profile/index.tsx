@@ -7,8 +7,9 @@ import Collection from "./Collection";
 import { Add, ExitToApp } from "@mui/icons-material";
 import { logOut } from "../../../store/user";
 import { Button } from "@mui/material";
+import Loading from "../../../shared/components/Loading";
 const ProfilePage = () => {
-  const { collections } = useAppSelector((state) => state.collections);
+  const { collections, loading } = useAppSelector((state) => state.collections);
   const { username } = useAppSelector((state) => state.user);
   const lang = useAppSelector((state) => state.app.lang);
   const navigate = useNavigate();
@@ -18,7 +19,9 @@ const ProfilePage = () => {
       dispatch(getCollections(username));
     }
   }, [username]);
-  return lang === "Ru" ? (
+  return loading ? (
+    <Loading />
+  ) : lang === "Ru" ? (
     <div className={"container " + s.root}>
       <aside>
         <h1 className="title">Мои коллекции:</h1>
@@ -33,7 +36,7 @@ const ProfilePage = () => {
             collections.map((e, i) => (
               <Collection
                 key={i}
-                description=""
+                description={e.description}
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
@@ -84,7 +87,7 @@ const ProfilePage = () => {
           ) : (
             collections.map((e, i) => (
               <Collection
-                description=""
+                description={e.description}
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
