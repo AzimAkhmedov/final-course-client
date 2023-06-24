@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
+
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import s from "./CreateItem.module.scss";
@@ -155,35 +156,33 @@ const CreateItem = () => {
                   }
                 />
                 <CardContent>
-                  {Object.keys(e.params).map((key) =>
-                    key === "name" ? (
-                      <></>
+                  {Object.keys(e.params).map((a) =>
+                    a === "name" ? (
+                      <Fragment key={a + i}></Fragment>
                     ) : (
                       <Typography
-                        key={key + i}
+                        key={a + i}
                         sx={{
                           fontSize: 14,
                         }}
                         gutterBottom
                       >
-                        {key}:
+                        {a}:
                         <span
                           style={
-                            e.params[key][0] === "#" &&
-                            e.params[key].length === 7
+                            e.params[a][0] === "#" && e.params[a].length === 7
                               ? {
-                                  background: e.params[key],
-                                  color: e.params[key],
+                                  background: e.params[a],
+                                  color: e.params[a],
 
                                   width: 60,
                                 }
                               : {}
                           }
                         >
-                          {e.params[key][0] === "#" &&
-                          e.params[key].length === 7
+                          {e.params[a][0] === "#" && e.params[a].length === 7
                             ? "color "
-                            : e.params[key]}
+                            : e.params[a]}
                         </span>
                       </Typography>
                     )

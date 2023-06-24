@@ -47,6 +47,7 @@ export interface ICollectionState {
     currentCollection: Array<IItem>
     lastCollections: Array<IItem>
     themes: Array<ITheme>
+    tags: Array<ITags>
 }
 export interface IComment {
     username: string
@@ -55,6 +56,9 @@ export interface IComment {
     authorName: string
     comment: string
     time: string
+}
+export interface ITags {
+    tag: string
 }
 export interface ILike {
     username: string
@@ -68,5 +72,5 @@ export interface IItemState {
     comments: Array<IComment>
     itemsLoader: boolean
     error: boolean | string
-    currentItem: IItem 
+    currentItem: IItem
 }

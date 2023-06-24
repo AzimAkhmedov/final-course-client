@@ -50,6 +50,10 @@ const api = {
     },
     async getCurrentItem(id: string) {
         return await instance.get('/items/get/' + id).then(res => res)
+    },
+    async getTags() {
+        return await instance.get('/collection/tags').then(res => res)
+
     }
 
 }

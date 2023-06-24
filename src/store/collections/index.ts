@@ -9,6 +9,7 @@ const initialState: ICollectionState = {
     currentCollection: [],
     collectionParams: [],
     lastCollections: [],
+    tags: [],
     error: false,
     loading: true
 }
@@ -49,7 +50,6 @@ export const getCollectionParams = createAsyncThunk('getCollectionParams', async
 
 })
 export const deleteCollection = createAsyncThunk('deleteCollection', async (_id: string, __thunkAPI) => {
-    // const { username, collection } = props
     try {
         const { data } = await api.deleteCollection(_id)
         if (data) {
@@ -80,6 +80,14 @@ export const getPagesByTheme = createAsyncThunk('getPagesByTheme', async (params
         return __thunkAPI.rejectWithValue(error)
     }
 })
+export const getTags = createAsyncThunk('getTags', async (_, thunkAPI) => {
+    try {
+        const { data } = await api.getTags()
+        return data
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e)
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -104,11 +112,6 @@ const slice = createSlice({
             state.loading = false
 
         })
-        // builder.addCase(addToCollection.fulfilled, (state, action) => {
-        //     state.currentCollection = [...state.currentCollection, action.payload]
-        //     state.loading = false
-
-        // })
         builder.addCase(deleteCollection.fulfilled, (state, action) => {
             state.collections = state.collections.filter(e => e._id !== action.payload)
             state.loading = false
@@ -129,6 +132,9 @@ const slice = createSlice({
         })
         builder.addCase(getPagesByTheme.fulfilled, (state, action) => {
             state.lastCollections = action.payload
+        })
+        builder.addCase(getTags.fulfilled, (state, action) => {
+            state.tags = action.payload
         })
     }
 })
