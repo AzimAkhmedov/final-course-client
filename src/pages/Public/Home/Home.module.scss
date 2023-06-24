@@ -1,4 +1,8 @@
 .root {
+  padding-top: 50px;
+  h1 {
+    margin-bottom: 50px;
+  }
   .layout {
     min-height: 80vh;
   }
@@ -6,5 +10,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    p {
+      padding: 3px 6px;
+      border-radius: 10px;
+    }
+    .active {
+      background: var(--light-blue);
+      color: #fff;
+    }
   }
 }

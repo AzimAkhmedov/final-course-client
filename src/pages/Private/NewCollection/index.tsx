@@ -37,16 +37,18 @@ const NewCollectionPage = () => {
         toast("Добавьте хоть 1 параметр", { type: "warning" });
         return;
       }
-      dispatch(createCollection({ ...val, params })).then((res) => {
-        if (res.meta.requestStatus === "fulfilled") {
-          toast("Успешно добавлено", { type: "success" });
-          navigate('/profile')
-        } else {
-          toast("Произошла ошибка, Убедитесь что у вас нет такой коллекции", {
-            type: "error",
-          });
+      dispatch(createCollection({ ...val, params, theme: selectedTheme })).then(
+        (res) => {
+          if (res.meta.requestStatus === "fulfilled") {
+            toast("Успешно добавлено", { type: "success" });
+            navigate("/profile");
+          } else {
+            toast("Произошла ошибка, Убедитесь что у вас нет такой коллекции", {
+              type: "error",
+            });
+          }
         }
-      });
+      );
     },
   });
 

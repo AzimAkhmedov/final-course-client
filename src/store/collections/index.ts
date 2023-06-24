@@ -72,6 +72,14 @@ export const getThemes = createAsyncThunk('getThemes', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(error)
     }
 })
+export const getPagesByTheme = createAsyncThunk('getPagesByTheme', async (params: any, __thunkAPI) => {
+    try {
+        const { data } = await api.getPagesByTheme(params.theme, params.page)
+        return data
+    } catch (error) {
+        return __thunkAPI.rejectWithValue(error)
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -119,7 +127,9 @@ const slice = createSlice({
         builder.addCase(getThemes.fulfilled, (state, action) => {
             state.themes = action.payload
         })
-        
+        builder.addCase(getPagesByTheme.fulfilled, (state, action) => {
+            state.lastCollections = action.payload
+        })
     }
 })
 

@@ -24,11 +24,15 @@ export interface ICollection {
     collectionName: string
     params: any[]
     description: string
+    theme?: string
 }
 export interface IItem {
+    _id?: string
     username: string
     collectionName: string
-    params: any
+    params: any,
+    tag: string
+
 }
 
 export interface ITheme {
@@ -41,7 +45,7 @@ export interface ICollectionState {
     loading: boolean
     error: boolean | string
     currentCollection: Array<IItem>
-    lastCollections: Array<ICollection>
+    lastCollections: Array<IItem>
     themes: Array<ITheme>
 }
 export interface IComment {
@@ -64,4 +68,5 @@ export interface IItemState {
     comments: Array<IComment>
     itemsLoader: boolean
     error: boolean | string
+    currentItem: IItem 
 }

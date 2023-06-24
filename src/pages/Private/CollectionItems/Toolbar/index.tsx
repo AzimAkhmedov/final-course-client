@@ -23,6 +23,7 @@ const Toolbar = ({ collection }: any) => {
         username,
         collectionName: collection,
         params: val,
+        tag: "test",
       };
       console.log(val);
 

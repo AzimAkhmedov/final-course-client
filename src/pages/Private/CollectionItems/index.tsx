@@ -1,19 +1,44 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { getCollectionParams } from "../../../store/collections";
 import s from "./CreateItem.module.scss";
-import { Box, Card, CardContent, Input, Typography } from "@mui/material";
-import { getItems } from "../../../store/items";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Input,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { getItems, removeFromCollection } from "../../../store/items";
 import Toolbar from "./Toolbar";
 import Loading from "../../../shared/components/Loading";
+import { MoreVert } from "@mui/icons-material";
+import { toast } from "react-toastify";
 const CreateItem = () => {
   const { collection } = useParams();
+  const [anchorEl, setAnchorEl] = useState<Array<HTMLElement | null>>([]);
 
   const dispatch = useAppDispatch();
   const username = useAppSelector((state) => state.user.username);
   const { itemsLoader, items } = useAppSelector((state) => state.items);
   const { lang, darkMode } = useAppSelector((state) => state.app);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => (i: number) => {
+    let newArr = new Array(items.length).fill(null);
+
+    newArr[i] = event.currentTarget;
+
+    setAnchorEl(newArr);
+    console.log(anchorEl);
+  };
+  const handleClose = () => {
+    setAnchorEl(new Array(items.length).fill(null));
+    console.log(anchorEl);
+  };
+
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
@@ -25,7 +50,6 @@ const CreateItem = () => {
   ) : (
     <div className={"container " + s.root}>
       <h1>{collection}</h1>
-
       {items.length === 0 ? (
         <Box sx={{ maxWidth: 420 }}>
           <p>
@@ -39,6 +63,7 @@ const CreateItem = () => {
               <>It seems that this collection is empty</>
             )}
           </p>
+          <Toolbar collection={collection} />
         </Box>
       ) : (
         <div className={s.parent}>
@@ -63,14 +88,103 @@ const CreateItem = () => {
                 color={""}
                 variant="outlined"
               >
+                <CardHeader
+                  title={e.params.name}
+                  action={
+                    <>
+                      <IconButton
+                        aria-controls={
+                          Boolean(anchorEl[i])
+                            ? "demo-positioned-menu" + i
+                            : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={
+                          Boolean(anchorEl[i]) ? "true" : undefined
+                        }
+                        onClick={(e) => {
+                          handleClick(e)(i);
+                        }}
+                      >
+                        <MoreVert />
+                      </IconButton>
+                      <Menu
+                        id={"demo-positioned-menu" + i}
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl[i]}
+                        open={Boolean(anchorEl[i])}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                      >
+                        <MenuItem
+                          onClick={() => {
+                            dispatch(removeFromCollection(String(e._id))).then(
+                              (res) => {
+                                if (res.meta.requestStatus === "fulfilled") {
+                                  toast(
+                                    lang === "Ru"
+                                      ? "Успешно удалено"
+                                      : "Deleted Successfuly",
+                                    { type: "success" }
+                                  );
+                                } else {
+                                  toast(lang === "Ru" ? "Ошибка" : "Error ", {
+                                    type: "error",
+                                  });
+                                }
+                              }
+                            );
+
+                            handleClose();
+                          }}
+                        >
+                          {lang === "Ru" ? "Удалить" : "Delete"}
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          {lang === "Ru" ? "Изменить" : "Update"}
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  }
+                />
                 <CardContent>
-                  <h3>{e.params.name}</h3>
                   {Object.keys(e.params).map((key) =>
                     key === "name" ? (
                       <></>
                     ) : (
-                      <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        {key}: {e.params[key]}
+                      <Typography
+                        key={key + i}
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        gutterBottom
+                      >
+                        {key}:
+                        <span
+                          style={
+                            e.params[key][0] === "#" &&
+                            e.params[key].length === 7
+                              ? {
+                                  background: e.params[key],
+                                  color: e.params[key],
+
+                                  width: 60,
+                                }
+                              : {}
+                          }
+                        >
+                          {e.params[key][0] === "#" &&
+                          e.params[key].length === 7
+                            ? "color "
+                            : e.params[key]}
+                        </span>
                       </Typography>
                     )
                   )}

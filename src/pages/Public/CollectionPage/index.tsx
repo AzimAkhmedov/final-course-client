@@ -5,7 +5,7 @@ const CollectionPage = () => {
   const params = useParams();
   return (
     <div>
-      {params.username} {params.collectionName}
+      {params.username} {params._id}
     </div>
   );
 };

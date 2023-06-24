@@ -41,6 +41,15 @@ const api = {
     },
     async getNumberOfPages() {
         return (await instance.get('collection/pages/amount')).data
+    },
+    async getPagesByTheme(theme: string, page: number) {
+        return await instance.get('collection/getgapes/' + page + "/" + theme).then(res => res)
+    },
+    async deleteFromCollection(id: string) {
+        return await instance.delete('/collection/' + id).then(res => res)
+    },
+    async getCurrentItem(id: string) {
+        return await instance.get('/items/get/' + id).then(res => res)
     }
 
 }
