@@ -55,7 +55,7 @@ export interface IComment {
     itemId: string
     authorName: string
     comment: string
-    time: string
+    time?: string
 }
 export interface ITags {
     tag: string

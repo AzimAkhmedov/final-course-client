@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { IItem, IItemState } from "../../types"
+import { IComment, IItem, IItemState } from "../../types"
 import api from "../../shared/api"
 
 
@@ -47,6 +47,23 @@ export const getSingleItem = createAsyncThunk('getSingleItem', async (_id: strin
     const { data } = await api.getCurrentItem(_id)
     return { data }
 })
+export const getComments = createAsyncThunk('getComments', async (_id: string, __thunkAPI) => {
+    try {
+        const { data } = await api.getComments(_id)
+        return data
+    } catch (error) {
+        return __thunkAPI.rejectWithValue(error)
+    }
+})
+export const writeComment = createAsyncThunk('writeComment', async (arg: IComment, __thunkAPI) => {
+    try {
+        const { data } = await api.writeComment(arg)
+        return data
+
+    } catch (error) {
+        return __thunkAPI.rejectWithValue(error)
+    }
+})
 
 const slice = createSlice({
     initialState, name: "ItemSlice", reducers: {
@@ -74,6 +91,12 @@ const slice = createSlice({
         })
         builder.addCase(getSingleItem.fulfilled, (state, action) => {
             state.currentItem = action.payload.data
+        })
+        builder.addCase(getComments.fulfilled, (state, action) => {
+            state.comments = action.payload
+        })
+        builder.addCase(writeComment.fulfilled, (state, action) => {
+            state.comments = [...state.comments, action.payload]
         })
     }
 })

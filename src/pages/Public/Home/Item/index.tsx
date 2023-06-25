@@ -24,14 +24,14 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
       sx={{
         transition: ".5s",
         width: 320,
-        maxHeight: 220,
+        maxHeight: 320,
         background: darkMode ? "black" : "",
         color: darkMode ? "#fff" : "",
         border: darkMode ? "solid 1px #fff" : "",
       }}
     >
       <CardHeader title={params.name} subheader={collectionName} />
-      <CardContent>
+      <CardContent sx={{ maxHeight: "220px" }}>
         <Typography variant="body2">{username} </Typography>
         <Typography variant="body2">{tags[0]} </Typography>
         {Object.keys(params).map((key) =>

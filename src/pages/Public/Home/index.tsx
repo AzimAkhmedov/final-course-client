@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import {
   getLastCollections,
   getPagesByTheme,
-  getThemes,
+  getTags,
 } from "../../../store/collections";
 import Item from "./Item";
 import api from "../../../shared/api";
@@ -12,7 +12,7 @@ import { Box, Button } from "@mui/material";
 import Loading from "../../../shared/components/Loading";
 const Home = () => {
   const list = useAppSelector((state) => state.collections.lastCollections);
-  const tags = useAppSelector((state) => state.collections.themes);
+  const tags = useAppSelector((state) => state.collections.tags);
   const loading = useAppSelector((state) => state.collections.loading);
   const [active, setActive] = useState<string>("");
   const [pages, setPages] = useState<number>(1);
@@ -22,7 +22,7 @@ const Home = () => {
   const { darkMode, lang } = useAppSelector((state) => state.app);
   useEffect(() => {
     dispatch(getLastCollections(currentPage));
-    dispatch(getThemes());
+    dispatch(getTags());
     api.getNumberOfPages().then((res) => {
       const arr = new Array(res.pages).fill(0);
       setPages(res.pages);
@@ -67,15 +67,15 @@ const Home = () => {
           <Box>
             {tags.map((e) => (
               <Button
-                variant={active === e.theme ? "contained" : "outlined"}
+                variant={active === e.tag ? "contained" : "outlined"}
                 onClick={() => {
                   dispatch(
-                    getPagesByTheme({ page: currentPage, theme: e.theme })
+                    getPagesByTheme({ page: currentPage, theme: e.tag })
                   );
-                  setActive(e.theme);
+                  setActive(e.tag);
                 }}
               >
-                {lang === "Ru" ? e.themeRu : e.theme}
+                {e.tag}
               </Button>
             ))}
             <Button

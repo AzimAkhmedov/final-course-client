@@ -1,4 +1,4 @@
-import { IAuthProps, ICollection, IItem, ILoginProps } from "../../types"
+import { IAuthProps, ICollection, IComment, IItem, ILoginProps } from "../../types"
 import { instance } from "./instance"
 
 const api = {
@@ -53,8 +53,16 @@ const api = {
     },
     async getTags() {
         return await instance.get('/collection/tags/item').then(res => res)
+    },
+    async getComments(_id: string) {
+        return await instance.get('/items/comments/get/' + _id).then(res => res)
+    },
+    //  username, collectionName, itemId, authorName, comment 
+    async writeComment(arg: IComment) {
+        return await instance.post('/items/comments/create', arg).then(res => res)
+    },
 
-    }
+
 
 }
 
