@@ -43,9 +43,9 @@ const CreateItem = () => {
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
+  // useEffect(() => {
+  //   console.log();
+  // }, [items]);
   return itemsLoader ? (
     <Loading />
   ) : (

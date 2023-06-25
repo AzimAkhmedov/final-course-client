@@ -52,7 +52,7 @@ const api = {
         return await instance.get('/items/get/' + id).then(res => res)
     },
     async getTags() {
-        return await instance.get('/collection/tags').then(res => res)
+        return await instance.get('/collection/tags/item').then(res => res)
 
     }
 

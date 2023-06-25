@@ -33,8 +33,8 @@ const Home = () => {
     dispatch(getLastCollections(currentPage));
   }, [currentPage]);
   useEffect(() => {
-    console.log(list);
-  }, [list]);
+    console.log("tags", tags);
+  }, [tags]);
   return loading ? (
     <Loading />
   ) : (
@@ -47,12 +47,12 @@ const Home = () => {
 
       <main>
         <div className={"layout " + s.layout}>
-          {list.map(({ collectionName, username, params, tag, _id }, i) => (
+          {list.map(({ collectionName, username, params, tags, _id }, i) => (
             <Item
               collectionName={collectionName}
               params={params}
               username={username}
-              tag={tag}
+              tags={tags}
               _id={_id}
               key={i}
             />

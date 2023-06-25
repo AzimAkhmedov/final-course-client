@@ -31,7 +31,7 @@ export interface IItem {
     username: string
     collectionName: string
     params: any,
-    tag: string
+    tags: Array<string>
 
 }
 

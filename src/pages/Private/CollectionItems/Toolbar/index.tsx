@@ -27,6 +27,9 @@ const Toolbar = ({ collection }: any) => {
   const [initialValues, setInitialValues] = useState({});
   const [initialTags, setInitialTags] = useState<Array<string>>([]);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    console.log("tags", tags);
+  }, [tags]);
   const formik = useFormik({
     initialValues,
     onSubmit: (val) => {
@@ -34,7 +37,7 @@ const Toolbar = ({ collection }: any) => {
         username,
         collectionName: collection,
         params: val,
-        tag: "test",
+        tags: ["test", "test2"],
       };
 
       dispatch(addToCollection(newItem)).then((res) => {

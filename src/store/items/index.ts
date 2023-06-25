@@ -37,7 +37,7 @@ const initialState: IItemState = {
     currentItem: {
         collectionName: "",
         params: {},
-        tag: "",
+        tags: [],
         username: "",
         _id: ""
     },
@@ -66,7 +66,7 @@ const slice = createSlice({
 
         })
         builder.addCase(removeFromCollection.fulfilled, (state, action) => {
-            state.items = state.items.filter(e => e._id != action.payload.id)
+            state.items = state.items.filter(e => e._id !== action.payload.id)
             state.itemsLoader = false
 
         }).addCase(removeFromCollection.pending, (state) => {
@@ -81,5 +81,5 @@ const slice = createSlice({
 
 
 
-export const { } = slice.actions
+// export const { } = slice.actions
 export default slice.reducer
