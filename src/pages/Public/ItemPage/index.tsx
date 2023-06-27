@@ -2,12 +2,13 @@ import { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getComments, getSingleItem, writeComment } from "../../../store/items";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import { AccountCircle, Telegram } from "@mui/icons-material";
 import Loading from "../../../shared/components/Loading";
 import { useFormik } from "formik";
 import s from "./Item.module.scss";
+import { toast } from "react-toastify";
 const ItemPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const ItemPage = () => {
   );
   const { lang, darkMode } = useAppSelector((state) => state.app);
   const authorName = useAppSelector((state) => state.user.username);
+  const isAuth = useAppSelector((state) => state.user.isAuth);
   const { handleSubmit, handleChange } = useFormik({
     initialValues: {
       username: String(params.username),
@@ -25,10 +27,18 @@ const ItemPage = () => {
       itemId: String(params._id),
     },
     onSubmit: (val) => {
-      dispatch(
-        writeComment({ ...val, collectionName: currentItem.collectionName })
-      );
-      console.log({ ...val, collectionName: currentItem.collectionName });
+      if (val.comment.length !== 0) {
+        dispatch(
+          writeComment({ ...val, collectionName: currentItem.collectionName })
+        );
+      } else {
+        toast(
+          lang === "En"
+            ? "Bro is trying to send empty comment 💀"
+            : "Нельзя отправить пустой коммент",
+          { type: "error" }
+        );
+      }
     },
   });
 
@@ -40,24 +50,24 @@ const ItemPage = () => {
     <Loading />
   ) : (
     <div className={"container " + s.root}>
-      <h1>{currentItem.params.name}</h1>
+      <Typography variant="h2">{currentItem.params.name}</Typography>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
 
-      <Box width={"50%"}>
+      <Box sx={{ mb: "150px" }} width={"50%"}>
         {Object.keys(currentItem.params).map((key, i) =>
           key === "name" ? (
             <Fragment key={key + i}></Fragment>
           ) : (
-            <p key={key + i}>
+            <Typography variant="body1" key={key + i}>
               {key} : {currentItem.params[key]}
-            </p>
+            </Typography>
           )
         )}
       </Box>
-      <Box>
+      <Box className={s.fill}>
         <h2>{lang === "En" ? "Сomments" : "Коментраии"}</h2>
-        <form onSubmit={handleSubmit}>
+        <form className={s.form} onSubmit={handleSubmit}>
           <Textarea
             placeholder={
               lang === "Ru" ? "Ваш коментраий..." : "Your comments..."
@@ -66,11 +76,22 @@ const ItemPage = () => {
             name="comment"
             onChange={handleChange}
             minRows={2}
+            sx={{ width: "70%" }}
             variant="outlined"
           />
-          <IconButton type="submit">
+          <Button
+            variant="contained"
+            color="warning"
+            sx={{
+              color: darkMode ? "#fff" : "",
+              background: darkMode ? "gray" : "",
+            }}
+            className={s.btn}
+            disabled={!isAuth}
+            type="submit"
+          >
             <Telegram />
-          </IconButton>
+          </Button>
         </form>
         {comments.map((e: any) => (
           <div className={s.comment} key={e._id}>

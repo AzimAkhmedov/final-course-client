@@ -1,6 +1,23 @@
 .root {
   padding-top: 70px;
 
+  .fill {
+    .form {
+      display: flex;
+      justify-content: space-between;
+      .btn {
+        width: 70px;
+        border-radius: 10px;
+      }
+      .input {
+        width: 60%;
+      }
+      margin-bottom: 100px;
+    }
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
   .comment {
     position: relative;
     .subtitle {
