@@ -27,9 +27,9 @@ const Toolbar = ({ collection }: any) => {
   const [initialValues, setInitialValues] = useState({});
   const [initialTags, setInitialTags] = useState<Array<string>>([]);
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    console.log("tags", tags);
-  }, [tags]);
+  // useEffect(() => {
+  //   console.log("tags", tags);
+  // }, [tags]);
   const formik = useFormik({
     initialValues,
     onSubmit: (val) => {
@@ -37,7 +37,7 @@ const Toolbar = ({ collection }: any) => {
         username,
         collectionName: collection,
         params: val,
-        tags: ["test", "test2"],
+        tags: initialTags,
       };
 
       dispatch(addToCollection(newItem)).then((res) => {
@@ -130,6 +130,7 @@ const Toolbar = ({ collection }: any) => {
                     onDelete={(e) => {
                       getTagProps({ index }).onDelete(e);
                     }}
+                    key={index}
                   />
                 ))
               }
@@ -140,10 +141,8 @@ const Toolbar = ({ collection }: any) => {
                   label={lang === "Ru" ? "Теги" : "Tags"}
                 />
               )}
-              onChange={(e) => {
-                // @ts-ignore
-                setInitialTags([...initialTags, e.target.value]);
-                // @ts-ignore
+              onChange={(e, a) => {
+                setInitialTags(a);
               }}
             />
             <Button type="submit">

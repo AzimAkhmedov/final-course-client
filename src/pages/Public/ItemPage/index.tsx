@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getComments, getSingleItem, writeComment } from "../../../store/items";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Textarea } from "@mui/joy";
-import { Telegram } from "@mui/icons-material";
+import { AccountCircle, Telegram } from "@mui/icons-material";
 import Loading from "../../../shared/components/Loading";
 import { useFormik } from "formik";
+import s from "./Item.module.scss";
 const ItemPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -38,17 +39,17 @@ const ItemPage = () => {
   return itemsLoader ? (
     <Loading />
   ) : (
-    <div className="container">
+    <div className={"container " + s.root}>
       <h1>{currentItem.params.name}</h1>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
 
       <Box width={"50%"}>
-        {Object.keys(currentItem.params).map((key) =>
+        {Object.keys(currentItem.params).map((key, i) =>
           key === "name" ? (
-            <Fragment key={key}></Fragment>
+            <Fragment key={key + i}></Fragment>
           ) : (
-            <p>
+            <p key={key + i}>
               {key} : {currentItem.params[key]}
             </p>
           )
@@ -71,8 +72,15 @@ const ItemPage = () => {
             <Telegram />
           </IconButton>
         </form>
-        {comments.map((e) => (
-          <p>{e.authorName}</p>
+        {comments.map((e: any) => (
+          <div className={s.comment} key={e._id}>
+            <h4 className={s.subtitle}>
+              <AccountCircle />
+              {e.authorName}
+            </h4>
+            <h3 className={s.content}>{e.comment}</h3>
+            <p className={s.time}>{e.time} </p>
+          </div>
         ))}
         {comments.length === 0 ? (
           <h3>

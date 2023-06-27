@@ -1,0 +1,24 @@
+.root {
+  padding-top: 70px;
+
+  .comment {
+    position: relative;
+    .subtitle {
+      color: rgb(113, 113, 113);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .content {
+      font-size: 18px;
+      min-height: 100px;
+    }
+    .time {
+      font-size: 10px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 20px;
+    }
+  }
+}

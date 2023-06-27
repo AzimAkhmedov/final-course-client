@@ -59,7 +59,6 @@ export const writeComment = createAsyncThunk('writeComment', async (arg: ICommen
     try {
         const { data } = await api.writeComment(arg)
         return data
-
     } catch (error) {
         return __thunkAPI.rejectWithValue(error)
     }
@@ -96,7 +95,7 @@ const slice = createSlice({
             state.comments = action.payload
         })
         builder.addCase(writeComment.fulfilled, (state, action) => {
-            state.comments = [...state.comments, action.payload]
+            state.comments = [action.payload, ...state.comments]
         })
     }
 })
