@@ -46,7 +46,7 @@ const api = {
         return await instance.get('collection/getgapes/' + page + "/" + theme).then(res => res)
     },
     async deleteFromCollection(id: string) {
-        return await instance.delete('/collection/' + id).then(res => res)
+        return await instance.delete('/collection/item/' + id).then(res => res)
     },
     async getCurrentItem(id: string) {
         return await instance.get('/items/get/' + id).then(res => res)

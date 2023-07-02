@@ -19,7 +19,7 @@ const Home = () => {
   const [display, setDisplay] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const dispatch = useAppDispatch();
-  const { darkMode, lang } = useAppSelector((state) => state.app);
+  const { lang } = useAppSelector((state) => state.app);
   useEffect(() => {
     dispatch(getLastCollections(currentPage));
     dispatch(getTags());
@@ -32,15 +32,16 @@ const Home = () => {
   useEffect(() => {
     dispatch(getLastCollections(currentPage));
   }, [currentPage]);
-  useEffect(() => {
-    console.log("tags", tags);
-  }, [tags]);
   return loading ? (
     <Loading />
   ) : (
     <div className={"container " + s.root}>
       <h1>
-        {lang === "Ru"
+        {active != ""
+          ? lang === "Ru"
+            ? "Последние предметы с тегом " + active
+            : "Last items by tag " + active
+          : lang === "Ru"
           ? "Самые последние предметы"
           : "Latest items on the page"}
       </h1>
@@ -54,7 +55,7 @@ const Home = () => {
               username={username}
               tags={tags}
               _id={_id}
-              key={i}
+              key={_id}
             />
           ))}
         </div>
@@ -65,15 +66,18 @@ const Home = () => {
               : "See collections by tags"}
           </h2>
           <Box>
-            {tags.map((e) => (
+            {tags.map((e, i) => (
               <Button
+                sx={{ minWidth: 120 }}
                 variant={active === e.tag ? "contained" : "outlined"}
+                color="warning"
                 onClick={() => {
                   dispatch(
                     getPagesByTheme({ page: currentPage, theme: e.tag })
                   );
                   setActive(e.tag);
                 }}
+                key={i}
               >
                 {e.tag}
               </Button>

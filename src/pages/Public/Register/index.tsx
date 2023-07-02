@@ -18,7 +18,7 @@ const Register = () => {
       const newUser: IAuthProps = {
         username,
         password,
-        role: "User",
+        role: "Admin",
       };
       console.log(newUser);
 

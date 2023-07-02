@@ -24,6 +24,7 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
       sx={{
         transition: ".5s",
         width: 320,
+        minHeight: 300,
         maxHeight: 320,
         background: darkMode ? "black" : "",
         color: darkMode ? "#fff" : "",
@@ -31,18 +32,21 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
       }}
     >
       <CardHeader title={params.name} subheader={collectionName} />
-      <CardContent sx={{ maxHeight: "220px" }}>
+      <CardContent sx={{ minHeight: 180 }}>
         <Typography variant="body2">{username} </Typography>
         <Typography variant="body2">{tags[0]} </Typography>
-        {Object.keys(params).map((key) =>
+        {Object.keys(params).map((key, I) =>
           key === "name" ? (
-            <></>
+            <React.Fragment key={key + I}></React.Fragment>
+          ) : I > 2 ? (
+            <React.Fragment key={key + I}></React.Fragment>
           ) : (
             <Typography
               sx={{
                 fontSize: 14,
               }}
               gutterBottom
+              key={key + I}
             >
               {key}:
               <span
@@ -58,11 +62,22 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
                 }
               >
                 {params[key][0] === "#" && params[key].length === 7
-                  ? "color "
+                  ? "    "
                   : params[key]}
               </span>
             </Typography>
           )
+        )}
+        {Object.keys(params).length > 3 ? (
+          <Typography
+            sx={{
+              fontSize: 20,
+            }}
+          >
+            ...
+          </Typography>
+        ) : (
+          <></>
         )}
       </CardContent>
       <CardActions
@@ -81,7 +96,6 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
           {" "}
           <ArrowRightAlt />
         </IconButton>
-        {/* <Button variant="contained" color="warning"></Button> */}
       </CardActions>
     </Card>
   );

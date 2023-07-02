@@ -3,12 +3,13 @@ import PublicRoutes from "./Public";
 import PrivateRoutes from "./Private";
 const AppRoutes = () => {
   const isAuth = true;
-  const isAdmin = true;
+  const isAdmin = false;
   return (
     <Routes>
       <Route path="/*" element={<PublicRoutes />} />
       {isAdmin ? <Route path="/admin/*" element={<>Admin Page</>} /> : <></>}
       {isAuth ? <Route path="/profile/*" element={<PrivateRoutes />} /> : <></>}
+     
     </Routes>
   );
 };

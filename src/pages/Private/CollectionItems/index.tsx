@@ -33,19 +33,14 @@ const CreateItem = () => {
     newArr[i] = event.currentTarget;
 
     setAnchorEl(newArr);
-    console.log(anchorEl);
   };
   const handleClose = () => {
     setAnchorEl(new Array(items.length).fill(null));
-    console.log(anchorEl);
   };
 
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
-  // useEffect(() => {
-  //   console.log();
-  // }, [items]);
   return itemsLoader ? (
     <Loading />
   ) : (

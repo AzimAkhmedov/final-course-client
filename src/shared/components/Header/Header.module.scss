@@ -12,8 +12,19 @@
       text-decoration: none;
     }
   }
-  a{
+  a {
     text-decoration: none;
     color: inherit;
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    nav {
+      // display: none;
+      ul {
+        font-size: 10px;
+      }
+    }
   }
 }

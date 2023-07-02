@@ -1,10 +1,12 @@
 .root {
-  padding-top: 50px;
+  padding-top: 10px;
   h1 {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
   .layout {
     min-height: 80vh;
+    width: 80%;
+    margin-bottom: 30px;
   }
   .pages {
     display: flex;
@@ -12,8 +14,14 @@
     justify-content: center;
     gap: 10px;
     p {
-      padding: 3px 6px;
-      border-radius: 10px;
+      width: 25px;
+      height: 25px;
+
+      border-radius: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .active {
       background: var(--light-blue);

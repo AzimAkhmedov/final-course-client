@@ -98,7 +98,7 @@ const Toolbar = ({ collection }: any) => {
             <TextField
               id="name"
               onChange={formik.handleChange}
-              label="Имя предмета"
+              label={lang === "Ru" ? "Имя предмета" : "Name of item"}
               variant="filled"
               fullWidth
             />

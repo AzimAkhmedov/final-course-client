@@ -8,6 +8,7 @@
 .darkMode {
   color: #fff;
   background: black;
+  transition: 0.5s;
 }
 .layout {
   display: flex;
@@ -16,7 +17,6 @@
   gap: 30px;
 }
 body {
-  transition: 0.5s;
 }
 main {
   display: flex;
@@ -57,5 +57,17 @@ body {
 @media (max-width: 1024px) {
   .container {
     max-width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    max-width: 320px;
   }
 }
