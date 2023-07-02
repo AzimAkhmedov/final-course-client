@@ -1,18 +1,24 @@
 import { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { getComments, getSingleItem, writeComment } from "../../../store/items";
+import {
+  getComments,
+  getLikes,
+  getSingleItem,
+  writeComment,
+} from "../../../store/items";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Textarea } from "@mui/joy";
-import { AccountCircle, Telegram } from "@mui/icons-material";
+import { AccountCircle, Favorite, Telegram } from "@mui/icons-material";
 import Loading from "../../../shared/components/Loading";
 import { useFormik } from "formik";
 import s from "./Item.module.scss";
 import { toast } from "react-toastify";
+import api from "../../../shared/api";
 const ItemPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { currentItem, itemsLoader, comments } = useAppSelector(
+  const { currentItem, itemsLoader, comments, likes } = useAppSelector(
     (state) => state.items
   );
   const { lang, darkMode } = useAppSelector((state) => state.app);
@@ -44,6 +50,7 @@ const ItemPage = () => {
 
   useEffect(() => {
     dispatch(getSingleItem(String(params._id)));
+    dispatch(getLikes(String(params._id)));
     dispatch(getComments(String(params._id)));
   }, []);
   return itemsLoader ? (
@@ -53,6 +60,9 @@ const ItemPage = () => {
       <Typography variant="h2">{currentItem.params.name}</Typography>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
+      <IconButton>
+        {likes.length} <Favorite />
+      </IconButton>
 
       <Box sx={{ mb: "150px" }} width={"50%"}>
         {Object.keys(currentItem.params).map((key, i) =>

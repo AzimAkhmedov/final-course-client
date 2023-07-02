@@ -63,7 +63,14 @@ export const writeComment = createAsyncThunk('writeComment', async (arg: ICommen
         return __thunkAPI.rejectWithValue(error)
     }
 })
-
+export const getLikes = createAsyncThunk('getLikes', async (itemId: string, thunkAPI) => {
+    try {
+        const { data } = await api.getLikes(itemId)
+        return data
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
 const slice = createSlice({
     initialState, name: "ItemSlice", reducers: {
     }, extraReducers: (builder) => {
@@ -96,6 +103,9 @@ const slice = createSlice({
         })
         builder.addCase(writeComment.fulfilled, (state, action) => {
             state.comments = [action.payload, ...state.comments]
+        })
+        builder.addCase(getLikes.fulfilled, (state, action) => {
+            state.likes = action.payload
         })
     }
 })

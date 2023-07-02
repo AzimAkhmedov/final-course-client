@@ -80,11 +80,24 @@ const NewCollectionPage = () => {
         />
         <Box sx={{ minWidth: 220 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Выберите тему</InputLabel>
+            <InputLabel
+              id="demo-simple-select-label"
+              sx={{
+                color: darkMode ? "#fff " : "",
+                borderColor: darkMode ? "#fff" : "",
+              }}
+            >
+              Выберите тему
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={selectedTheme}
+              sx={{
+                color: darkMode ? "#fff " : "",
+              }}
+              color={darkMode ? "warning" : "primary"}
+              
               onChange={(e) => {
                 setTheme(e.target.value);
               }}

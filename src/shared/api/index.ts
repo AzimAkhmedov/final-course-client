@@ -61,6 +61,9 @@ const api = {
     async writeComment(arg: IComment) {
         return await instance.post('/items/comments/create', arg).then(res => res)
     },
+    async getLikes(itemId: string) {
+        return await instance.get('/items/likes/' + itemId).then(res => res)
+    }
 
 
 

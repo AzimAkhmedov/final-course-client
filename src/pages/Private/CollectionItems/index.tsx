@@ -89,6 +89,9 @@ const CreateItem = () => {
                   action={
                     <>
                       <IconButton
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
                         aria-controls={
                           Boolean(anchorEl[i])
                             ? "demo-positioned-menu" + i
