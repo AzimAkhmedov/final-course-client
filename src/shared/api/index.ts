@@ -11,6 +11,9 @@ const api = {
     async tokenCheck() {
 
     },
+    async isAdmin(username: string) {
+        return await instance.get('auth/' + username).then(res => res)
+    },
     async getUsers() {
         return await instance.get('auth/users').then((res) => res)
     },

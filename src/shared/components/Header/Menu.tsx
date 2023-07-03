@@ -3,9 +3,11 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks";
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { lang } = useAppSelector((state) => state.app);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +27,7 @@ export default function BasicMenu() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Enter to App
+        {lang === "En" ? "Enter to app" : "Войти"}
       </Button>
       <Menu
         id="basic-menu"
@@ -42,7 +44,8 @@ export default function BasicMenu() {
             navigate("/register");
           }}
         >
-          Sign Up
+          {" "}
+          {lang === "En" ? "Register" : "Регистрация"}
         </MenuItem>
         <MenuItem
           onClick={(e) => {
@@ -50,7 +53,7 @@ export default function BasicMenu() {
             navigate("/login");
           }}
         >
-          Sign In
+          {lang === "En" ? "Have a profile?" : "Есть профиль?"}
         </MenuItem>
       </Menu>
     </div>

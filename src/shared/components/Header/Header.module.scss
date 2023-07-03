@@ -1,6 +1,9 @@
 .root {
   background-color: var(--blue);
   padding: 10px 0px;
+  .burger {
+    display: none;
+  }
   nav {
     ul {
       display: flex;
@@ -20,8 +23,18 @@
 
 @media (max-width: 768px) {
   .root {
+    position: relative;
+    height: 40px;
+    padding: 0;
+    .burger {
+      display: block;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
     nav {
-      // display: none;
+      display: none;
       ul {
         font-size: 10px;
       }

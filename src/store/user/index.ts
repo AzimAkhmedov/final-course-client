@@ -28,6 +28,11 @@ export const Registration = createAsyncThunk('Registration', async (user: IAuthP
         return __thunkAPI.rejectWithValue(error)
     }
 })
+export const isAdmin = createAsyncThunk('isAdmin', async (username: string) => {
+    const { data } = await api.isAdmin(username)
+    return data
+
+})
 export const Login = createAsyncThunk('Login', async (user: ILoginProps, __thunkAPI) => {
     try {
         const { data } = await api.login(user)
@@ -55,7 +60,6 @@ const userSlice = createSlice({
             state.isAuth = false
             state.token = ""
         }
-
     }, extraReducers: (builder) => {
         builder.addCase(Registration.fulfilled, (state, action) => {
             state.token = action.payload.data.token
@@ -75,9 +79,15 @@ const userSlice = createSlice({
             state.loader = false
             state.username = action.payload.user.username
         })
+        builder.addCase(Login.rejected, (state) => {
+            state.loader = false
+        })
+        builder.addCase(isAdmin.fulfilled, (state, action) => {
+            state.role = action.payload.isAdmin ? "Admin" : "User"
+        })
     }
 })
 
 
-export const { getToken ,logOut} = userSlice.actions
+export const { getToken, logOut } = userSlice.actions
 export default userSlice.reducer
