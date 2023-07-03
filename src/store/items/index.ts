@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { IComment, IItem, IItemState } from "../../types"
+import { IComment, IItem, IItemState, ILike } from "../../types"
 import api from "../../shared/api"
 
 
@@ -34,6 +34,7 @@ const initialState: IItemState = {
     error: false,
     itemsLoader: false,
     items: [],
+    isLiked: false,
     currentItem: {
         collectionName: "",
         params: {},
@@ -66,6 +67,27 @@ export const writeComment = createAsyncThunk('writeComment', async (arg: ICommen
 export const getLikes = createAsyncThunk('getLikes', async (itemId: string, thunkAPI) => {
     try {
         const { data } = await api.getLikes(itemId)
+        console.log('likes', data);
+
+
+        return data
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+export const pressLike = createAsyncThunk('pressLike', async (like: ILike, thunkAPI) => {
+    try {
+        const { data } = await api.pressLike(like)
+        console.log(like);
+
+        return { data, wholikes: like.wholikes }
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+export const getIsLiked = createAsyncThunk('getIsLiked', async (arg: any, thunkAPI) => {
+    try {
+        const { data } = await api.isLiked(arg.itemId, arg.wholikes)
         return data
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -77,7 +99,6 @@ const slice = createSlice({
         builder.addCase(getItems.fulfilled, (state, action) => {
             state.items = action.payload
             state.itemsLoader = false
-
         }).addCase(getItems.pending, (state) => {
             state.itemsLoader = true
         })
@@ -86,7 +107,6 @@ const slice = createSlice({
             state.itemsLoader = false
         }).addCase(addToCollection.pending, (state) => {
             state.itemsLoader = true
-
         })
         builder.addCase(removeFromCollection.fulfilled, (state, action) => {
             state.items = state.items.filter(e => e._id !== action.payload.id)
@@ -106,6 +126,29 @@ const slice = createSlice({
         })
         builder.addCase(getLikes.fulfilled, (state, action) => {
             state.likes = action.payload
+            state.itemsLoader = false
+
+        })
+        builder.addCase(pressLike.fulfilled, (state, action) => {
+            state.likes = state.isLiked ? state.likes.filter(e => e.wholikes !== action.payload.wholikes) : [...state.likes, action.payload.data]
+            state.itemsLoader = false
+
+        })
+        builder.addCase(getIsLiked.fulfilled, (state, action) => {
+            state.isLiked = action.payload
+            state.itemsLoader = false
+
+        })
+        builder.addCase(getIsLiked.pending, (state) => {
+            state.itemsLoader = true
+        })
+
+        builder.addCase(pressLike.pending, (state) => {
+            state.itemsLoader = true
+        })
+
+        builder.addCase(getLikes.pending, (state) => {
+            state.itemsLoader = true
         })
     }
 })
@@ -113,5 +156,4 @@ const slice = createSlice({
 
 
 
-// export const { } = slice.actions
 export default slice.reducer

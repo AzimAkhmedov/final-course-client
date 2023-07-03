@@ -69,6 +69,7 @@ export interface ILike {
 export interface IItemState {
     items: Array<IItem>
     likes: Array<ILike>
+    isLiked: boolean
     comments: Array<IComment>
     itemsLoader: boolean
     error: boolean | string

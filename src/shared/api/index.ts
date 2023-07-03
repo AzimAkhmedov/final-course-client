@@ -1,4 +1,4 @@
-import { IAuthProps, ICollection, IComment, IItem, ILoginProps } from "../../types"
+import { IAuthProps, ICollection, IComment, IItem, ILike, ILoginProps } from "../../types"
 import { instance } from "./instance"
 
 const api = {
@@ -57,12 +57,18 @@ const api = {
     async getComments(_id: string) {
         return await instance.get('/items/comments/get/' + _id).then(res => res)
     },
-    //  username, collectionName, itemId, authorName, comment 
     async writeComment(arg: IComment) {
         return await instance.post('/items/comments/create', arg).then(res => res)
     },
     async getLikes(itemId: string) {
         return await instance.get('/items/likes/' + itemId).then(res => res)
+    },
+    async isLiked(itemId: string, wholikes: string) {
+        return await instance.get('/items/likes/' + itemId + '/' + wholikes).then(res => res)
+    },
+    async pressLike(like: ILike) {
+        // wholikes, itemId, username, collectionName
+        return await instance.post('/items/likes', like).then(res => res)
     }
 
 

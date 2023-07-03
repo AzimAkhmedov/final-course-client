@@ -3,22 +3,28 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import {
   getComments,
+  getIsLiked,
   getLikes,
   getSingleItem,
+  pressLike,
   writeComment,
 } from "../../../store/items";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Textarea } from "@mui/joy";
-import { AccountCircle, Favorite, Telegram } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Favorite,
+  FavoriteBorder,
+  Telegram,
+} from "@mui/icons-material";
 import Loading from "../../../shared/components/Loading";
 import { useFormik } from "formik";
 import s from "./Item.module.scss";
 import { toast } from "react-toastify";
-import api from "../../../shared/api";
 const ItemPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { currentItem, itemsLoader, comments, likes } = useAppSelector(
+  const { currentItem, itemsLoader, comments, likes, isLiked } = useAppSelector(
     (state) => state.items
   );
   const { lang, darkMode } = useAppSelector((state) => state.app);
@@ -27,7 +33,6 @@ const ItemPage = () => {
   const { handleSubmit, handleChange } = useFormik({
     initialValues: {
       username: String(params.username),
-      // collectionName: currentItem.collectionName,
       authorName,
       comment: "",
       itemId: String(params._id),
@@ -53,6 +58,10 @@ const ItemPage = () => {
     dispatch(getLikes(String(params._id)));
     dispatch(getComments(String(params._id)));
   }, []);
+  useEffect(() => {
+    dispatch(getIsLiked({ itemId: params._id, wholikes: authorName }));
+    console.log(likes);
+  }, [likes]);
   return itemsLoader ? (
     <Loading />
   ) : (
@@ -60,8 +69,23 @@ const ItemPage = () => {
       <Typography variant="h2">{currentItem.params.name}</Typography>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
-      <IconButton>
-        {likes.length} <Favorite />
+      <IconButton
+        sx={{
+          color: isLiked ? "red" : "",
+        }}
+        onClick={(e) => {
+          dispatch(
+            pressLike({
+              collectionName: currentItem.collectionName,
+              itemId: String(currentItem._id),
+              username: currentItem.username,
+              wholikes: authorName,
+            })
+          );
+        }}
+      >
+        {isLiked ? <Favorite /> : <FavoriteBorder />}
+        {likes.length}
       </IconButton>
 
       <Box sx={{ mb: "150px" }} width={"50%"}>

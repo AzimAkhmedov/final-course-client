@@ -97,7 +97,6 @@ const NewCollectionPage = () => {
                 color: darkMode ? "#fff " : "",
               }}
               color={darkMode ? "warning" : "primary"}
-              
               onChange={(e) => {
                 setTheme(e.target.value);
               }}
@@ -266,6 +265,39 @@ const NewCollectionPage = () => {
           required
           onChange={formik.handleChange}
         />
+        <Box sx={{ minWidth: 220 }}>
+          <FormControl fullWidth>
+            <InputLabel
+              id="demo-simple-select-label"
+              sx={{
+                color: darkMode ? "#fff " : "",
+                borderColor: darkMode ? "#fff" : "",
+              }}
+            >
+              Choose the theme
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedTheme}
+              sx={{
+                color: darkMode ? "#fff " : "",
+              }}
+              color={darkMode ? "warning" : "primary"}
+              onChange={(e) => {
+                setTheme(e.target.value);
+              }}
+              label="Choose the theme"
+            >
+              {themes.map((e, i) => (
+                <MenuItem key={i} value={e.theme}>
+                  {e.theme}
+                </MenuItem>
+              ))}
+              <MenuItem value={"Others"}>Other</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <div className={s.params}>
           {params.length === 0 ? (
             <h2>Add Params of your future collection</h2>
