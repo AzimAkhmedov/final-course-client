@@ -8,6 +8,7 @@ export interface IUserReducer {
 export interface IAppReducer {
     lang: 'Ru' | 'En'
     darkMode: boolean
+    adminSidebar: boolean
 }
 export interface IAuthProps {
     username: string

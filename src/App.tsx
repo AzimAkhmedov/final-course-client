@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import "./App.scss";
 import AppRoutes from "./pages";
-import { Header } from "./shared/components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "./shared/hooks";
@@ -42,7 +41,6 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      <Header />
       <AppRoutes />
     </div>
   );

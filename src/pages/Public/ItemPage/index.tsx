@@ -69,24 +69,6 @@ const ItemPage = () => {
       <Typography variant="h2">{currentItem.params.name}</Typography>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
-      <IconButton
-        sx={{
-          color: isLiked ? "red" : "",
-        }}
-        onClick={(e) => {
-          dispatch(
-            pressLike({
-              collectionName: currentItem.collectionName,
-              itemId: String(currentItem._id),
-              username: currentItem.username,
-              wholikes: authorName,
-            })
-          );
-        }}
-      >
-        {isLiked ? <Favorite /> : <FavoriteBorder />}
-        {likes.length}
-      </IconButton>
 
       <Box sx={{ mb: "150px" }} width={"50%"}>
         {Object.keys(currentItem.params).map((key, i) =>
@@ -98,6 +80,24 @@ const ItemPage = () => {
             </Typography>
           )
         )}
+        <IconButton
+          sx={{
+            color: isLiked ? "red" : "",
+          }}
+          onClick={(e) => {
+            dispatch(
+              pressLike({
+                collectionName: currentItem.collectionName,
+                itemId: String(currentItem._id),
+                username: currentItem.username,
+                wholikes: authorName,
+              })
+            );
+          }}
+        >
+          {isLiked ? <Favorite /> : <FavoriteBorder />}
+          {likes.length}
+        </IconButton>
       </Box>
       <Box className={s.fill}>
         <h2>{lang === "En" ? "Сomments" : "Коментраии"}</h2>

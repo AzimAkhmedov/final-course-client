@@ -3,7 +3,8 @@ import { IAppReducer } from "../../types";
 
 const initialState: IAppReducer = {
     lang: "Ru",
-    darkMode: false
+    darkMode: false,
+    adminSidebar: false
 }
 
 const slice = createSlice({
@@ -16,9 +17,12 @@ const slice = createSlice({
         }
         , changeMode(state) {
             state.darkMode = state.darkMode ? false : true
+        },
+        handleSidebar(state) {
+            state.adminSidebar = !state.adminSidebar
         }
     }
 })
 
-export const { changeLang, setLang, changeMode } = slice.actions
+export const { changeLang, setLang, changeMode, handleSidebar } = slice.actions
 export default slice.reducer

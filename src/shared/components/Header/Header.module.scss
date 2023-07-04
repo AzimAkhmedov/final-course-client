@@ -31,6 +31,7 @@
       position: absolute;
       right: 20px;
       top: 50%;
+      z-index: 100;
       transform: translateY(-50%);
     }
     nav {
@@ -39,5 +40,44 @@
         font-size: 10px;
       }
     }
+    .open {
+      background-color: #fff;
+      width: 40vw;
+      height: 100vh;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 90;
+      animation: opening 0.5s ease-in-out;
+
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10%;
+        height: 100%;
+        font-size: 18px;
+      }
+    }
+    .bc {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      background-color: #3636365a;
+    }
+  }
+}
+
+@keyframes opening {
+  0% {
+    transform: translateX(2000px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

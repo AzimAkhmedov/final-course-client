@@ -8,7 +8,7 @@ import {
 } from "../../../store/collections";
 import Item from "./Item";
 import api from "../../../shared/api";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Loading from "../../../shared/components/Loading";
 const Home = () => {
   const list = useAppSelector((state) => state.collections.lastCollections);
@@ -119,6 +119,14 @@ const Home = () => {
           <></>
         )}
       </div>
+      <Box>
+        <Typography variant="h4">
+          {lang === "En"
+            ? "The largest 5 collections"
+            : "Самые большые 5 коллекции"}
+        </Typography>
+        <Box></Box>
+      </Box>
     </div>
   );
 };
