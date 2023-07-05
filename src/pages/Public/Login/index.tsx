@@ -8,10 +8,13 @@ import { Button, Checkbox, Input } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import s from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { loader } = useAppSelector((state) => state.user);
+  const { lang } = useAppSelector((state) => state.app);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -27,6 +30,16 @@ const LoginPage = () => {
       dispatch(Login(newUser)).then((res) => {
         if (res.meta.requestStatus == "fulfilled") {
           navigate("/profile");
+          toast(lang === "En" ? "Welcome " : "Добро пожаловать " + username, {
+            type: "success",
+          });
+        } else {
+          toast(
+            lang === "En"
+              ? " Error, credentials are wrong   "
+              : " Ошибка, данные не правильные ",
+            { type: "error" }
+          );
         }
       });
     },

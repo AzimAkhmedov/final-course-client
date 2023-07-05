@@ -47,6 +47,7 @@ export interface ICollectionState {
     error: boolean | string
     currentCollection: Array<IItem>
     lastCollections: Array<IItem>
+    largestCollections: Array<ICollection>
     themes: Array<ITheme>
     tags: Array<ITags>
 }

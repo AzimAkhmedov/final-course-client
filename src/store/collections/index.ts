@@ -9,6 +9,7 @@ const initialState: ICollectionState = {
     currentCollection: [],
     collectionParams: [],
     lastCollections: [],
+    largestCollections: [],
     tags: [],
     error: false,
     loading: true
@@ -88,6 +89,14 @@ export const getTags = createAsyncThunk('getTags', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(e)
     }
 })
+export const getLargestFive = createAsyncThunk('getLargestFive', async () => {
+    try {
+        const { data } = await api.getLargestFive()
+        return data
+    } catch (error) {
+        return error
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -135,6 +144,9 @@ const slice = createSlice({
         })
         builder.addCase(getTags.fulfilled, (state, action) => {
             state.tags = action.payload
+        })
+        builder.addCase(getLargestFive.fulfilled, (state, action) => {
+            state.largestCollections = action.payload
         })
     }
 })

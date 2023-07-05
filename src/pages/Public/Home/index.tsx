@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import s from "./Home.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import {
+  getLargestFive,
   getLastCollections,
   getPagesByTheme,
   getTags,
@@ -12,6 +13,10 @@ import { Box, Button, Typography } from "@mui/material";
 import Loading from "../../../shared/components/Loading";
 const Home = () => {
   const list = useAppSelector((state) => state.collections.lastCollections);
+  const largest = useAppSelector(
+    (state) => state.collections.largestCollections
+  );
+
   const tags = useAppSelector((state) => state.collections.tags);
   const loading = useAppSelector((state) => state.collections.loading);
   const [active, setActive] = useState<string>("");
@@ -23,6 +28,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getLastCollections(currentPage));
     dispatch(getTags());
+    dispatch(getLargestFive());
     api.getNumberOfPages().then((res) => {
       const arr = new Array(res.pages).fill(0);
       setPages(res.pages);
@@ -125,7 +131,14 @@ const Home = () => {
             ? "The largest 5 collections"
             : "Самые большые 5 коллекции"}
         </Typography>
-        <Box></Box>
+        <Box>
+          {largest.map((e) => (
+            <div>
+              <h3>{e.collectionName}</h3>
+              <p>{lang === "En" ? "by " : "от " + e.username}</p>
+            </div>
+          ))}
+        </Box>
       </Box>
     </div>
   );

@@ -3,6 +3,7 @@ import { IAuthProps, ILoginProps, IUserReducer } from "../../types"
 import { toast } from 'react-toastify'
 import api from "../../shared/api"
 import jwtDecode from "jwt-decode"
+import { error } from "console"
 
 const initialState: IUserReducer = {
     // @ts-ignore
@@ -37,13 +38,12 @@ export const Login = createAsyncThunk('Login', async (user: ILoginProps, __thunk
     try {
         const { data } = await api.login(user)
         if (data.token) {
-            toast('Welcome ' + user.username, { type: "success" })
             localStorage.setItem('token', data.token)
+        } else {
+            toast(data.message)
         }
         return { data, user }
     } catch (e) {
-        toast('Login error ', { type: "error" })
-
         return __thunkAPI.rejectWithValue(e)
     }
 })

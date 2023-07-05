@@ -70,8 +70,10 @@ const api = {
         return await instance.get('/items/likes/' + itemId + '/' + wholikes).then(res => res)
     },
     async pressLike(like: ILike) {
-        // wholikes, itemId, username, collectionName
         return await instance.post('/items/likes', like).then(res => res)
+    },
+    async getLargestFive() {
+        return await instance.get('collection/largest/mostFive/').then(res => res)
     }
 
 
