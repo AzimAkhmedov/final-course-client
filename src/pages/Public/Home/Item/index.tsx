@@ -83,8 +83,7 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
       <CardActions
         sx={{ cursor: "pointer" }}
         onClick={() => {
-          console.log("click");
-          navigate("/" + username + "/" + _id);
+          navigate("/item/" + username + "/" + _id);
         }}
       >
         {lang === "En" ? "See collection " : "Посмотреть коллекцию"}{" "}
