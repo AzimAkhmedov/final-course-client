@@ -1,11 +1,7 @@
 .root {
   padding: 70px 0;
-  h1 {
-    // text-align: center;
-  }
   form {
     padding: 70px 0;
-
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -23,10 +19,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      // width: 100%;
       .input {
         width: 20% !important;
-        // border: 2px solid red;
       }
       padding: 20px 0;
     }
@@ -35,13 +29,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      padding: 20px 0;
+      color: #fff;
       .input {
-        width: 45% !important;
+        width: 20% !important;
+
         color: #fff;
         border-bottom: 1px solid #fff;
       }
+      padding: 20px 0;
     }
     .params {
       width: 100%;

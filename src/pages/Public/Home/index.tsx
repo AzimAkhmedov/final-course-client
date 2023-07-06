@@ -107,6 +107,7 @@ const Home = () => {
               key={i}
               onClick={() => {
                 setCurrentPage(i + 1);
+                setActive("");
               }}
               className={currentPage === i + 1 ? s.active : ""}
             >

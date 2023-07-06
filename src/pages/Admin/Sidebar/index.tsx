@@ -33,15 +33,12 @@ const SideBar = () => {
               <IconButton>
                 <Add />
               </IconButton>
-              <span className={styles.link_name}>
-                {" "}
-                Добавить  коллекцию
-              </span>
+              <span className={styles.link_name}> Добавить коллекцию</span>
             </NavLink>
             <ul className={`${styles.subMenu} ${styles.blank}`}>
               <li>
                 <NavLink to="/admin/add" className={styles.link_name}>
-                  Добавить  коллекцию
+                  Добавить коллекцию
                 </NavLink>
               </li>
             </ul>
@@ -51,7 +48,7 @@ const SideBar = () => {
               className={({ isActive }) =>
                 isActive ? styles.activeNavLink : ""
               }
-              to={"/admin/catalogs"}
+              to={"/admin/collections"}
             >
               <IconButton>
                 <List />
@@ -60,28 +57,8 @@ const SideBar = () => {
             </NavLink>
             <ul className={`${styles.subMenu} ${styles.blank}`}>
               <li>
-                <NavLink to="/admin/catalogs" className={styles.link_name}>
+                <NavLink to="/admin/collections" className={styles.link_name}>
                   Посмотреть коллекции
-                </NavLink>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? styles.activeNavLink : ""
-              }
-              to={"/admin/newDetail"}
-            >
-              <IconButton>
-                <People />
-              </IconButton>
-              <span className={styles.link_name}>Посмотреть пользователей</span>
-            </NavLink>
-            <ul className={`${styles.subMenu} ${styles.blank}`}>
-              <li>
-                <NavLink to="/admin/newDetail" className={styles.link_name}>
-                  Посмотреть пользователей
                 </NavLink>
               </li>
             </ul>
@@ -94,13 +71,33 @@ const SideBar = () => {
               to={"/admin/"}
             >
               <IconButton>
+                <People />
+              </IconButton>
+              <span className={styles.link_name}>Посмотреть пользователей</span>
+            </NavLink>
+            <ul className={`${styles.subMenu} ${styles.blank}`}>
+              <li>
+                <NavLink to="/admin/" className={styles.link_name}>
+                  Посмотреть пользователей
+                </NavLink>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : ""
+              }
+              to={"/admin/items"}
+            >
+              <IconButton>
                 <InsertDriveFile />
               </IconButton>
               <span className={styles.link_name}>Все предметы</span>
             </NavLink>
             <ul className={`${styles.subMenu} ${styles.blank}`}>
               <li>
-                <NavLink to="/admin/" className={styles.link_name}>
+                <NavLink to="/admin/items" className={styles.link_name}>
                   Все Предметы
                 </NavLink>
               </li>

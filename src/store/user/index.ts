@@ -10,6 +10,7 @@ const initialState: IUserReducer = {
     username: localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')).username : "",
     role: "User",
     token: "",
+    adminToken: "",
     loader: false,
     isAuth: localStorage.getItem('token') ? true : false
 }
@@ -17,7 +18,6 @@ export const Registration = createAsyncThunk('Registration', async (user: IAuthP
     try {
         const res = await api.registration(user)
         console.log(res.data);
-
         if (res.data.token) {
             toast('Welcome ' + user.username, { type: "success" })
             localStorage.setItem('token', res.data.token)
@@ -29,10 +29,12 @@ export const Registration = createAsyncThunk('Registration', async (user: IAuthP
         return __thunkAPI.rejectWithValue(error)
     }
 })
-export const isAdmin = createAsyncThunk('isAdmin', async (username: string) => {
-    const { data } = await api.isAdmin(username)
+export const isAdmin = createAsyncThunk('isAdmin', async (arg: any) => {
+    const { data } = await api.isAdmin(arg)
+    if (data.token) {
+        localStorage.setItem('admin', data.token)
+    }
     return data
-
 })
 export const Login = createAsyncThunk('Login', async (user: ILoginProps, __thunkAPI) => {
     try {
@@ -54,7 +56,11 @@ const userSlice = createSlice({
             state.token = action.payload
             const obj: any = jwtDecode(action.payload)
             state.username = obj.username
-            console.log(obj);
+
+        },
+        getAdminToken(state, action) {
+            state.role = 'Admin'
+            state.adminToken = action.payload
         },
         logOut(state) {
             state.isAuth = false
@@ -84,10 +90,11 @@ const userSlice = createSlice({
         })
         builder.addCase(isAdmin.fulfilled, (state, action) => {
             state.role = action.payload.isAdmin ? "Admin" : "User"
+            state.adminToken = action.payload.token
         })
     }
 })
 
 
-export const { getToken, logOut } = userSlice.actions
+export const { getToken, logOut, getAdminToken } = userSlice.actions
 export default userSlice.reducer

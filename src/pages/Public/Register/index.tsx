@@ -1,11 +1,12 @@
 import s from "./Register.module.scss";
-import { Button, Checkbox, Input } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useFormik } from "formik";
 import { useAppDispatch } from "../../../shared/hooks";
 import { Registration } from "../../../store/user";
 import { IAuthProps } from "../../../types";
 import { useNavigate } from "react-router-dom";
+import { LangHandler } from "../../../utils/checkLang";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const Register = () => {
       console.log(newUser);
 
       dispatch(Registration(newUser)).then((res) => {
-        if (res.meta.requestStatus == "fulfilled") {
+        if (res.meta.requestStatus === "fulfilled") {
           navigate("/profile");
         }
       });
@@ -41,27 +42,20 @@ const Register = () => {
         <div className={s.field}>or</div>
         <div className={s.field}>
           <Input
-            placeholder="Your Username"
+            placeholder={LangHandler("Ваш юзернейм", "Your username")}
             id="username"
             onChange={formik.handleChange}
             required
           />
           <Input
-            placeholder="Password"
+            placeholder={LangHandler("Ваш пароль", "Your password")}
+            type="password"
             id="password"
             onChange={formik.handleChange}
             required
           />
-          <div className="checkbox">
-            <Checkbox
-              onChange={(e) => {
-                console.log(e.target.checked);
-              }}
-            />
-            <span>Stay Signed</span>
-          </div>
           <Button type="submit" variant="contained">
-            Create Profile
+            {LangHandler("Создать", "Create")}
           </Button>
         </div>
       </form>

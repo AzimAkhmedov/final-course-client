@@ -4,21 +4,27 @@ import AppRoutes from "./pages";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "./shared/hooks";
-import { getToken, isAdmin } from "./store/user";
+import { getAdminToken, getToken, isAdmin } from "./store/user";
+import jwtDecode from "jwt-decode";
 
 function App() {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
+  const adminToken = localStorage.getItem("admin");
   const { darkMode } = useAppSelector((state) => state.app);
   const { username, role } = useAppSelector((state) => state.user);
   useEffect(() => {
     if (token) {
       dispatch(getToken(token));
     }
+    if (adminToken) {
+      // @ts-ignore
+      if (jwtDecode(adminToken).role === "Admin") {
+        dispatch(getAdminToken(adminToken));
+      }
+    }
+    // }
   }, []);
-  useEffect(() => {
-    dispatch(isAdmin(username));
-  }, [username]);
 
   useEffect(() => {
     if (darkMode) {

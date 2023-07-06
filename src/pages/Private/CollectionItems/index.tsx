@@ -19,14 +19,24 @@ import Toolbar from "./Toolbar";
 import Loading from "../../../shared/components/Loading";
 import { MoreVert } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import EditBar from "./EditBar";
+import { IItem } from "../../../types";
 const CreateItem = () => {
   const { collection } = useParams();
   const [anchorEl, setAnchorEl] = useState<Array<HTMLElement | null>>([]);
+  const [currentEdit, setCurrentEdit] = useState<IItem>({
+    collectionName: "",
+    params: {},
+    tags: [],
+    username: "",
+    _id: "",
+  });
 
   const dispatch = useAppDispatch();
   const username = useAppSelector((state) => state.user.username);
   const { itemsLoader, items } = useAppSelector((state) => state.items);
   const { lang, darkMode } = useAppSelector((state) => state.app);
+  const [open, setOpen] = useState(false);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => (i: number) => {
     let newArr = new Array(items.length).fill(null);
 
@@ -146,7 +156,13 @@ const CreateItem = () => {
                         >
                           {lang === "Ru" ? "Удалить" : "Delete"}
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem
+                          onClick={() => {
+                            setCurrentEdit(e);
+                            setOpen(true);
+                            handleClose();
+                          }}
+                        >
                           {lang === "Ru" ? "Изменить" : "Update"}
                         </MenuItem>
                       </Menu>
@@ -192,6 +208,15 @@ const CreateItem = () => {
           </Box>
           <aside>
             <Toolbar collection={collection} />
+            <EditBar
+              collectionName={currentEdit.collectionName}
+              itemName={currentEdit.params.name}
+              params={currentEdit.params}
+              username={currentEdit.username}
+              _id={currentEdit._id}
+              open={open}
+              setOpen={setOpen}
+            />
           </aside>
         </div>
       )}

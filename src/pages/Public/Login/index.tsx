@@ -2,7 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { useFormik } from "formik";
 import { ILoginProps } from "../../../types";
-import { Login } from "../../../store/user";
+import { Login, isAdmin } from "../../../store/user";
 
 import { Button, Checkbox, Input } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -29,6 +29,7 @@ const LoginPage = () => {
 
       dispatch(Login(newUser)).then((res) => {
         if (res.meta.requestStatus == "fulfilled") {
+          dispatch(isAdmin({ username, password }));
           navigate("/profile");
           toast(lang === "En" ? "Welcome " : "Добро пожаловать " + username, {
             type: "success",

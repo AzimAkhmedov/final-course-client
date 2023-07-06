@@ -65,6 +65,8 @@ const ProfilePage = () => {
           onClick={() => {
             dispatch(logOut());
             localStorage.removeItem("token");
+            localStorage.removeItem("admin");
+
             navigate("/");
           }}
         >

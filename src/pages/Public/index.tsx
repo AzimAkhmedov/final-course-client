@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./Register";
 import Home from "./Home";
 import Login from "./Login";
-import CollectionPage from "./CollectionPage";
 import ItemPage from "./ItemPage";
 import { useAppSelector } from "../../shared/hooks";
 import { Header } from "../../shared/components";

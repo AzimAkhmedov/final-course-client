@@ -1,6 +1,7 @@
 export interface IUserReducer {
     username: string
     role: 'Admin' | 'User'
+    adminToken: string
     token: string
     isAuth: boolean
     loader: boolean
@@ -76,4 +77,19 @@ export interface IItemState {
     itemsLoader: boolean
     error: boolean | string
     currentItem: IItem
+}
+export interface IUser {
+    username: string
+    password: string
+    role: 'User' | 'Admin'
+    _id?: string
+}
+export interface IAdminState {
+    allCollections: Array<ICollection>
+    allUsers: Array<IUser>
+    allItems: Array<IItem>
+    admins: Array<IUser>
+    token: string
+    loading: boolean
+    error: boolean
 }

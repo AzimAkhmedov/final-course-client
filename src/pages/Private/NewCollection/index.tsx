@@ -144,19 +144,30 @@ const NewCollectionPage = () => {
                 setInput(e.target.value);
               }}
             />
-            <Select
-              labelId="demo-simple-select-label-param"
-              id="demo-simple-select-param"
-              value={type}
-              onChange={(e) => {
-                setType(e.target.value);
-              }}
-              label="Выберите тип вашего параметра"
-            >
-              <MenuItem value={"text"}>Текст</MenuItem>
-              <MenuItem value={"number"}>Число</MenuItem>
-              <MenuItem value={"color"}>Цвет</MenuItem>
-            </Select>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel
+                  sx={{ fontSize: 15, color: "#fff" }}
+                  id="demo-simple-select-label-param"
+                >
+                  Выберите тип вашего параметра
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label-param"
+                  id="demo-simple-select-param"
+                  sx={{ color: "#fff", borderTopColor: "#fff" }}
+                  value={type}
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                  label="Выберите тип вашего параметра"
+                >
+                  <MenuItem value={"text"}>Текст</MenuItem>
+                  <MenuItem value={"number"}>Число</MenuItem>
+                  <MenuItem value={"color"}>Цвет</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Button
               type="button"
               variant="contained"
@@ -327,7 +338,31 @@ const NewCollectionPage = () => {
               onChange={(e) => {
                 setInput(e.target.value);
               }}
-            />
+            />{" "}
+            <Box sx={{ minWidth: 120, color: "#fff" }}>
+              <FormControl fullWidth>
+                <InputLabel
+                  sx={{ fontSize: 15 }}
+                  id="demo-simple-select-label-param"
+                >
+                  Выберите тип вашего параметра
+                </InputLabel>
+                <Select
+                  sx={{ color: "#fff" }}
+                  labelId="demo-simple-select-label-param"
+                  id="demo-simple-select-param"
+                  value={type}
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                  label="Выберите тип вашего параметра"
+                >
+                  <MenuItem value={"text"}>Текст</MenuItem>
+                  <MenuItem value={"number"}>Число</MenuItem>
+                  <MenuItem value={"color"}>Цвет</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Button
               type="button"
               variant="contained"
@@ -362,7 +397,30 @@ const NewCollectionPage = () => {
               onChange={(e) => {
                 setInput(e.target.value);
               }}
-            />
+            />{" "}
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel
+                  sx={{ fontSize: 15 }}
+                  id="demo-simple-select-label-param"
+                >
+                  Pick a type of param
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label-param"
+                  id="demo-simple-select-param"
+                  value={type}
+                  onChange={(e) => {
+                    setType(e.target.value);
+                  }}
+                  label="Pick a type of param"
+                >
+                  <MenuItem value={"text"}>Text</MenuItem>
+                  <MenuItem value={"number"}>Number</MenuItem>
+                  <MenuItem value={"color"}>Color</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Button
               type="button"
               variant="contained"

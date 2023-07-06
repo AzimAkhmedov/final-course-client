@@ -81,6 +81,7 @@ const ItemPage = () => {
           )
         )}
         <IconButton
+          disabled={!isAuth}
           sx={{
             color: isLiked ? "red" : "",
           }}
@@ -145,7 +146,7 @@ const ItemPage = () => {
           </h3>
         ) : (
           <></>
-        )}  
+        )}
       </Box>
     </div>
   );

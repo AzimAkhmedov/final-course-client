@@ -73,7 +73,7 @@ const Toolbar = ({ collection }: any) => {
       setToggle(open);
     };
   return (
-    <aside>
+    <>
       <div>
         <Button onClick={toggleDrawer(true)}>
           {lang === "Ru" ? "Создать Новый Предмет" : "Create New Item"}
@@ -149,7 +149,7 @@ const Toolbar = ({ collection }: any) => {
           </form>
         </Box>
       </SwipeableDrawer>
-    </aside>
+    </>
   );
 };
 

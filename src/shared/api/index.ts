@@ -11,8 +11,8 @@ const api = {
     async tokenCheck() {
 
     },
-    async isAdmin(username: string) {
-        return await instance.get('auth/' + username).then(res => res)
+    async isAdmin(argv: any) {
+        return await instance.post('admin/', argv).then(res => res)
     },
     async getUsers() {
         return await instance.get('auth/users').then((res) => res)
@@ -74,8 +74,25 @@ const api = {
     },
     async getLargestFive() {
         return await instance.get('collection/largest/mostFive/').then(res => res)
+    },
+    async createAdmin(arg: any) {
+        return await instance.post('admin/create', arg).then(res => res)
+    },
+    async deleteAdmin(id: string, token: string) {
+        return await instance.delete("admin/removeFromAdmin/" + id + "/" + token).then(res => res)
+    },
+    async getAllUsers() {
+        return await instance.get('auth/users').then(res => res)
+    },
+    async getAllCollections() {
+        return await instance.get('admin/collections/').then(res => res)
+    },
+    async getCollectionPages() {
+        return await instance.get('admin/collections/amount/').then(res => res)
+    },
+    async updateItem(arg: IItem) {
+        return await instance.put('items/update', arg).then(res => res)
     }
-
 
 
 }

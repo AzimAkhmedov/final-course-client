@@ -3,12 +3,14 @@ import user from "./user";
 import app from './app'
 import collections from "./collections";
 import items from './items'
+import admin from './admin'
 const store = configureStore({
     reducer: {
         user,
         app,
         collections,
-        items
+        items,
+        admin
     }
 })
 export default store

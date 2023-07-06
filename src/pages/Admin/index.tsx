@@ -4,6 +4,7 @@ import styles from "./index.module.scss";
 import SideBar from "./Sidebar";
 import UsersPage from "./AllUsersPage";
 import Navbar from "./Navbar";
+import CollectionPage from "./CollectionsPage";
 
 const AdminRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AdminRoutes = () => {
           <div className={styles.routes}>
             <Routes>
               <Route path="/" element={<UsersPage />} />
+              <Route path="/collections" element={<CollectionPage />} />
             </Routes>
           </div>
         </div>

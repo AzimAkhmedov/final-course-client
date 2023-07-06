@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import BasicMenu from "./Menu";
 import s from "./Header.module.scss";
@@ -9,7 +9,7 @@ import { Close, Menu } from "@mui/icons-material";
 
 const Header = () => {
   const { isAuth, role } = useAppSelector((state) => state.user);
-  const { lang } = useAppSelector((state) => state.app);
+  const { lang, darkMode } = useAppSelector((state) => state.app);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -32,6 +32,14 @@ const Header = () => {
         </div>
         <nav className={open ? s.open : ""}>
           <ul>
+            <li
+              className={s.logo}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              prod by Az
+            </li>
             <li className="search">
               <input type="text" name="" id="" />
             </li>
@@ -44,7 +52,6 @@ const Header = () => {
                 <BasicMenu />
               )}
             </li>
-
             <li>
               <IconButton
                 onChange={() => {
@@ -73,6 +80,7 @@ const Header = () => {
                   <input
                     className="switch__input"
                     type="checkbox"
+                    defaultChecked={darkMode}
                     role="switch"
                   />
                   <span className="switch__icon switch__icon--dark">
@@ -88,6 +96,7 @@ const Header = () => {
             <li>
               Ру
               <Switch
+                defaultChecked={lang === "En"}
                 onClick={() => {
                   dispatch(changeLang());
                 }}
