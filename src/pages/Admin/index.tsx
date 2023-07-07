@@ -5,6 +5,7 @@ import SideBar from "./Sidebar";
 import UsersPage from "./AllUsersPage";
 import Navbar from "./Navbar";
 import CollectionPage from "./CollectionsPage";
+import Collection from "./Collection";
 
 const AdminRoutes = () => {
   return (
@@ -17,6 +18,10 @@ const AdminRoutes = () => {
             <Routes>
               <Route path="/" element={<UsersPage />} />
               <Route path="/collections" element={<CollectionPage />} />
+              <Route
+                path="/collections/:collection/:username"
+                element={<Collection />}
+              />
             </Routes>
           </div>
         </div>

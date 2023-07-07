@@ -92,6 +92,12 @@ const api = {
     },
     async updateItem(arg: IItem) {
         return await instance.put('items/update', arg).then(res => res)
+    },
+    async adminDeleteCollection(_id?: string, token?: string) {
+        return await instance.delete('admin/collections/delete/' + _id + '/' + token).then(res => res)
+    },
+    async deleteUser(_id: string, token: string) {
+        return await instance.delete('admin/deleteUser/' + _id + "/" + token).then(res => res)
     }
 
 

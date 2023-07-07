@@ -82,6 +82,7 @@ export interface IUser {
     username: string
     password: string
     role: 'User' | 'Admin'
+    status: "Banned" | "Not-Banned"
     _id?: string
 }
 export interface IAdminState {

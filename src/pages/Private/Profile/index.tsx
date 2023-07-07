@@ -66,7 +66,7 @@ const ProfilePage = () => {
             dispatch(logOut());
             localStorage.removeItem("token");
             localStorage.removeItem("admin");
-
+          
             navigate("/");
           }}
         >

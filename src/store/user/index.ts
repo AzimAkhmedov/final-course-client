@@ -65,6 +65,8 @@ const userSlice = createSlice({
         logOut(state) {
             state.isAuth = false
             state.token = ""
+            state.role = 'User'
+            state.adminToken = ''
         }
     }, extraReducers: (builder) => {
         builder.addCase(Registration.fulfilled, (state, action) => {
