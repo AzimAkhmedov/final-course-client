@@ -9,8 +9,9 @@ import {
 } from "../../../store/collections";
 import Item from "./Item";
 import api from "../../../shared/api";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Loading from "../../../shared/components/Loading";
+import { ArrowRightAlt } from "@mui/icons-material";
 const Home = () => {
   const list = useAppSelector((state) => state.collections.lastCollections);
   const largest = useAppSelector(
@@ -86,7 +87,7 @@ const Home = () => {
                   );
                   setActive(e.tag);
                 }}
-                key={i}
+                key={e.tag}
               >
                 {e.tag}
               </Button>
@@ -117,7 +118,7 @@ const Home = () => {
               {i + 1}
             </p>
           ) : (
-            <></>
+            <React.Fragment key={i}></React.Fragment>
           )
         )}
         {display.length >= 6 ? (
@@ -130,19 +131,27 @@ const Home = () => {
         )}
       </div>
       <Box>
-        <Typography variant="h4">
+        <h2
+          style={{
+            margin: "50px 0 50px 0",
+          }}
+        >
           {lang === "En"
             ? "The largest 5 collections"
             : "Самые большые 5 коллекции"}
-        </Typography>
-        <Box>
+        </h2>
+        <div className={s.largest}>
           {largest.map((e) => (
-            <div>
-              <h3>{e.collectionName}</h3>
+            <div key={e._id} className={s.large}>
+              <h4>{e.collectionName}</h4>
               <p>{lang === "En" ? "by " : "от " + e.username}</p>
+              <p>
+                {lang === "En" ? "See collection " : "Посмотреть Коллекцию "}
+                <ArrowRightAlt />
+              </p>
             </div>
           ))}
-        </Box>
+        </div>
       </Box>
     </div>
   );

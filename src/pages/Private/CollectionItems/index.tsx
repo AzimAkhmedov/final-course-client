@@ -51,6 +51,9 @@ const CreateItem = () => {
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
   return itemsLoader ? (
     <Loading />
   ) : (
@@ -95,7 +98,7 @@ const CreateItem = () => {
                 variant="outlined"
               >
                 <CardHeader
-                  title={e.params.name}
+                  title={e.itemName}
                   action={
                     <>
                       <IconButton
@@ -170,37 +173,33 @@ const CreateItem = () => {
                   }
                 />
                 <CardContent>
-                  {Object.keys(e.params).map((a) =>
-                    a === "name" ? (
-                      <Fragment key={a + i}></Fragment>
-                    ) : (
-                      <Typography
-                        key={a + i}
-                        sx={{
-                          fontSize: 14,
-                        }}
-                        gutterBottom
-                      >
-                        {a}:
-                        <span
-                          style={
-                            e.params[a][0] === "#" && e.params[a].length === 7
-                              ? {
-                                  background: e.params[a],
-                                  color: e.params[a],
+                  {Object.keys(e.params).map((a) => (
+                    <Typography
+                      key={a + i}
+                      sx={{
+                        fontSize: 14,
+                      }}
+                      gutterBottom
+                    >
+                      {a}:
+                      <span
+                        style={
+                          e.params[a][0] === "#" && e.params[a].length === 7
+                            ? {
+                                background: e.params[a],
+                                color: e.params[a],
 
-                                  width: 60,
-                                }
-                              : {}
-                          }
-                        >
-                          {e.params[a][0] === "#" && e.params[a].length === 7
-                            ? "color "
-                            : e.params[a]}
-                        </span>
-                      </Typography>
-                    )
-                  )}
+                                width: 60,
+                              }
+                            : {}
+                        }
+                      >
+                        {e.params[a][0] === "#" && e.params[a].length === 7
+                          ? "color "
+                          : e.params[a]}
+                      </span>
+                    </Typography>
+                  ))}
                   Посмотреть предмет
                 </CardContent>
               </Card>

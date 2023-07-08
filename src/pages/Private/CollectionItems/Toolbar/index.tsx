@@ -26,6 +26,7 @@ const Toolbar = ({ collection }: any) => {
   const [toggle, setToggle] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState({});
   const [initialTags, setInitialTags] = useState<Array<string>>([]);
+  const [itemName, setItemName] = useState("");
   const dispatch = useAppDispatch();
 
   const formik = useFormik({
@@ -36,8 +37,8 @@ const Toolbar = ({ collection }: any) => {
         collectionName: collection,
         params: val,
         tags: initialTags,
-        // @ts-ignore
-        itemName:''
+        //@ts-ignore
+        itemName: val.itemName,
       };
 
       dispatch(addToCollection(newItem)).then((res) => {
@@ -98,7 +99,8 @@ const Toolbar = ({ collection }: any) => {
         >
           <form onSubmit={formik.handleSubmit}>
             <TextField
-              id="itemName" required
+              id="itemName"
+              required
               onChange={formik.handleChange}
               label={lang === "Ru" ? "Имя предмета" : "Name of item"}
               variant="filled"

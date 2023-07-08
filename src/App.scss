@@ -59,6 +59,15 @@ body {
 @media (max-width: 1440px) {
   .container {
     max-width: 1024px;
+    h1 {
+      font-size: 25px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+    }
   }
 }
 

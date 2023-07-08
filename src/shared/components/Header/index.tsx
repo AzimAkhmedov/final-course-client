@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import BasicMenu from "./Menu";
 import s from "./Header.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { IconButton, Switch } from "@mui/material";
+import { Autocomplete, IconButton, Switch } from "@mui/material";
 import { changeLang, changeMode } from "../../../store/app";
 import { Close, Menu } from "@mui/icons-material";
 
@@ -41,7 +41,12 @@ const Header = () => {
               prod by Az
             </li>
             <li className="search">
-              <input type="text" name="" id="" />
+              <Autocomplete
+                placeholder="Type to search"
+                options={["Ez", "Searxc"]}
+                renderInput={(e) => <p>{e.id}</p>}
+                id=""
+              />
             </li>
             <li>
               {isAuth ? (

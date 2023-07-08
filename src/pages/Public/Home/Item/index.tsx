@@ -67,14 +67,14 @@ const Item = ({
                 }
               >
                 {params[key][0] === "#" && params[key].length === 7
-                  ? "    "
+                  ? "color"
                   : params[key]}
               </span>
             </Typography>
           )
         )}
         {Object.keys(params).length > 3 ? (
-          <Typography
+          <Typography 
             sx={{
               fontSize: 20,
             }}

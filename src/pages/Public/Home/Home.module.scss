@@ -28,4 +28,53 @@
       color: #fff;
     }
   }
+
+  .largest {
+    .large {
+      padding: 10px 20px;
+      border: 2px solid var(--orange);
+      h4 {
+        margin-bottom: 10px;
+      }
+      p {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 978px) {
+  .root {
+    main {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column-reverse;
+      aside {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        div {
+          display: flex;
+          gap: 5px;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          button {
+            width: 70px !important;
+            font-size: 15px;
+            max-width: 70px;
+          }
+        }
+      }
+      .layout {
+        width: 100%;
+        div {
+          width: 180px;
+          max-height: 200px;
+          min-height: 170px;
+        }
+      }
+    }
+  }
 }

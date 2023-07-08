@@ -52,6 +52,10 @@ export const getAllItems = createAsyncThunk('getAllItems', async (token: string)
     const { data } = await api.getAllItems(token)
     return data
 })
+export const deleteItem = createAsyncThunk('deleteItem', async (_id: string) => {
+    const { data } = await api.deleteFromCollection(_id)
+    return { data, _id }
+})
 const slice = createSlice({
     name: "admin", initialState, reducers: {}, extraReducers: (builder => {
         builder.addCase(getAllUsers.pending, (state) => {
@@ -97,6 +101,9 @@ const slice = createSlice({
         })
         builder.addCase(getAllItems.fulfilled, (state, action) => {
             state.allItems = action.payload
+        })
+        builder.addCase(deleteItem.fulfilled, (state, action) => {
+            state.allItems = state.allItems.filter(e => e._id !== action.payload._id)
         })
     })
 })

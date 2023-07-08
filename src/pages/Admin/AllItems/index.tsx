@@ -1,8 +1,9 @@
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { getAllItems } from "../../../store/admin";
+import { deleteItem, getAllItems } from "../../../store/admin";
 import { IItem } from "../../../types";
+import { Button } from "@mui/material";
 
 const columns: GridColDef[] = [
   { field: "_id", headerName: "_id", width: 220 },
@@ -16,6 +17,7 @@ const columns: GridColDef[] = [
   },
 ];
 const ItemsPage = () => {
+  const [selected, setSelected] = useState<Array<string>>([]);
   const { allItems } = useAppSelector((state) => state.admin);
   const token = useAppSelector((state) => state.user.adminToken);
   const { lang } = useAppSelector((state) => state.app);
@@ -31,9 +33,13 @@ const ItemsPage = () => {
   const handleGetRowId = (e: IItem) => {
     return String(e._id);
   };
-  useEffect(() => {
-    console.log(allItems);
-  }, [allItems]);
+  const handleDelete = (selected: Array<string>) => (e: React.MouseEvent) => {
+    if (window.confirm(lang === "En" ? "Delete?" : "Удалить?")) {
+      selected.forEach((e) => {
+        dispatch(deleteItem(e));
+      });
+    }
+  };
   return error ? (
     <div className="container">{lang === "En" ? "Error" : "Ошибка"}</div>
   ) : (
@@ -48,7 +54,19 @@ const ItemsPage = () => {
           },
         }}
         checkboxSelection
+        onRowSelectionModelChange={(e) => {
+          // @ts-ignore
+          setSelected(e);
+          console.log(e);
+        }}
       />
+      <Button
+        variant="contained"
+        disabled={!selected.length}
+        onClick={handleDelete(selected)}
+      >
+        {lang === "En" ? "Delete Items" : "Удалить Предметы"}
+      </Button>
     </div>
   );
 };

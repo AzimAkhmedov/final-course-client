@@ -36,7 +36,7 @@ const Toolbar = ({ collection, username }: any) => {
         params: val,
         tags: initialTags,
         // @ts-ignore
-        itemName: "",
+        itemName: val.itemName,
       };
 
       dispatch(addToCollection(newItem)).then((res) => {
