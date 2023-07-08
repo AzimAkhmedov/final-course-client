@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import CollectionPage from "./CollectionsPage";
 import Collection from "./Collection";
 import ItemsPage from "./AllItems";
+import NewCollectionPage from "./AddCollection";
 
 const AdminRoutes = () => {
   return (
@@ -22,6 +23,8 @@ const AdminRoutes = () => {
                 path="/collections/:collection/:username"
                 element={<Collection />}
               />
+              <Route path="/add" element={<NewCollectionPage />} />
+
               <Route path="/items" element={<ItemsPage />} />
             </Routes>
           </div>
