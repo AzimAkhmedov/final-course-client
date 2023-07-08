@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { deleteUser, getAllUsers } from "../../../store/admin";
+import { deleteUser, getAllUsers, setStatus } from "../../../store/admin";
 import Loading from "../../../shared/components/Loading";
 import {
   Button,
@@ -13,14 +13,19 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Block, Delete } from "@mui/icons-material";
+import { Block, Delete, Undo } from "@mui/icons-material";
 import { toast } from "react-toastify";
+import { IUser } from "../../../types";
+import { logOut } from "../../../store/user";
+import { useNavigate } from "react-router-dom";
 const UsersPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { allUsers, loading, error } = useAppSelector((state) => state.admin);
   const token = useAppSelector((state) => state.user.adminToken);
   const [filter, setFilter] = useState<"Admin" | "User" | "">("");
   const lang = useAppSelector((state) => state.app.lang);
+  const username = useAppSelector((state) => state.user.username);
   useEffect(() => {
     dispatch(getAllUsers());
   }, []);
@@ -36,7 +41,70 @@ const UsersPage = () => {
       });
     }
   };
-
+  const handleSetStatus =
+    (status: string, user: IUser) => (e: React.MouseEvent) => {
+      if (status === "Banned") {
+        dispatch(
+          setStatus({
+            status: "Not-Banned",
+            password: user.password,
+            role: user.role,
+            username: user.username,
+            token,
+          })
+        ).then((res) => {
+          if (res.meta.requestStatus === "fulfilled") {
+            dispatch(getAllUsers());
+          }
+        });
+      } else {
+        if (user.username === username) {
+          if (
+            window.confirm(
+              lang === "En"
+                ? "If you will ban yourself, you will logout, ar u sure?"
+                : "Забанив себя вы покинете приложение, уверены?"
+            )
+          ) {
+            dispatch(
+              setStatus({
+                status: "Banned",
+                password: user.password,
+                role: user.role,
+                username: user.username,
+                token,
+              })
+            ).then((res) => {
+              if (res.meta.requestStatus === "fulfilled") {
+                dispatch(getAllUsers());
+              }
+            });
+            dispatch(logOut());
+            navigate("/");
+          }
+          return;
+        }
+        if (
+          window.confirm(
+            lang === "En" ? "Are u sure to ban?" : "Уверен в бане?"
+          )
+        ) {
+          dispatch(
+            setStatus({
+              status: "Banned",
+              password: user.password,
+              role: user.role,
+              username: user.username,
+              token,
+            })
+          ).then((res) => {
+            if (res.meta.requestStatus === "fulfilled") {
+              dispatch(getAllUsers());
+            }
+          });
+        }
+      }
+    };
   return loading ? (
     <Loading />
   ) : (
@@ -77,8 +145,8 @@ const UsersPage = () => {
                       <IconButton onClick={handleDelete(e.username)}>
                         <Delete />
                       </IconButton>
-                      <IconButton>
-                        {e.status === "Banned" ? <></> : <Block />}
+                      <IconButton onClick={handleSetStatus(e.status, e)}>
+                        {e.status === "Banned" ? <Undo /> : <Block />}
                       </IconButton>
                     </TableCell>
                   </TableRow>

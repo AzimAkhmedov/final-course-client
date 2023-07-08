@@ -98,6 +98,12 @@ const api = {
     },
     async deleteUser(_id: string, token: string) {
         return await instance.delete('admin/deleteUser/' + _id + "/" + token).then(res => res)
+    },
+    async setStatus(arg: any) {
+        return await instance.put('admin/users/setStatus', arg).then(res => res)
+    },
+    async getAllItems(token: string) {
+        return await instance.get('admin/item/' + token).then(res => res)
     }
 
 

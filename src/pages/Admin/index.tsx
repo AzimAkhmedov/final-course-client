@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import styles from "./index.module.scss";
 import SideBar from "./Sidebar";
@@ -6,6 +5,7 @@ import UsersPage from "./AllUsersPage";
 import Navbar from "./Navbar";
 import CollectionPage from "./CollectionsPage";
 import Collection from "./Collection";
+import ItemsPage from "./AllItems";
 
 const AdminRoutes = () => {
   return (
@@ -22,6 +22,7 @@ const AdminRoutes = () => {
                 path="/collections/:collection/:username"
                 element={<Collection />}
               />
+              <Route path="/items" element={<ItemsPage />} />
             </Routes>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IAdminState } from "../../types";
+import { IAdminState, IUser } from "../../types";
 import api from "../../shared/api";
+import { toast } from "react-toastify";
 const initialState: IAdminState = {
     allUsers: [],
     allCollections: [],
@@ -39,6 +40,18 @@ export const deleteUser = createAsyncThunk('deleteUser', async (arg: any) => {
     const { data } = await api.deleteUser(arg.id, arg.token)
     return arg.id
 })
+export const setStatus = createAsyncThunk("setStatus", async (user: any, thunkAPI) => {
+    try {
+        const { data } = await api.setStatus(user)
+        return { data, user }
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+})
+export const getAllItems = createAsyncThunk('getAllItems', async (token: string) => {
+    const { data } = await api.getAllItems(token)
+    return data
+})
 const slice = createSlice({
     name: "admin", initialState, reducers: {}, extraReducers: (builder => {
         builder.addCase(getAllUsers.pending, (state) => {
@@ -76,6 +89,14 @@ const slice = createSlice({
         })
         builder.addCase(deleteUser.fulfilled, (state, action) => {
             state.allUsers = state.allUsers.filter(e => e.username !== action.payload)
+        })
+        builder.addCase(setStatus.fulfilled, (state, action) => {
+            state.allUsers = state.allUsers.
+                map(e => e._id != action.payload.user._id ? e :
+                    { password: e.password, role: e.role, status: 'Banned', username: e.username, _id: e._id })
+        })
+        builder.addCase(getAllItems.fulfilled, (state, action) => {
+            state.allItems = action.payload
         })
     })
 })
