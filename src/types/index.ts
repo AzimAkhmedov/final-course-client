@@ -29,6 +29,7 @@ export interface ICollection {
     theme?: string
 }
 export interface IItem {
+    itemName: string
     _id?: string
     username: string
     collectionName: string

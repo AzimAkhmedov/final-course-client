@@ -27,6 +27,7 @@ const CreateItem = () => {
     collectionName: "",
     params: {},
     tags: [],
+    itemName: "",
     username: "",
     _id: "",
   });

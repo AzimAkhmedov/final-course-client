@@ -10,8 +10,8 @@ const columns: GridColDef[] = [
   { field: "username", headerName: "Owner", width: 130 },
 
   {
-    field: "name",
-    headerName: "description",
+    field: "itemName",
+    headerName: "name",
     width: 320,
   },
 ];
@@ -31,7 +31,9 @@ const ItemsPage = () => {
   const handleGetRowId = (e: IItem) => {
     return String(e._id);
   };
-
+  useEffect(() => {
+    console.log(allItems);
+  }, [allItems]);
   return error ? (
     <div className="container">{lang === "En" ? "Error" : "Ошибка"}</div>
   ) : (

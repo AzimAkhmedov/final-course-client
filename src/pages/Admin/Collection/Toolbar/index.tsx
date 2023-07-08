@@ -35,6 +35,8 @@ const Toolbar = ({ collection, username }: any) => {
         collectionName: collection,
         params: val,
         tags: initialTags,
+        // @ts-ignore
+        itemName: "",
       };
 
       dispatch(addToCollection(newItem)).then((res) => {
@@ -95,7 +97,8 @@ const Toolbar = ({ collection, username }: any) => {
         >
           <form onSubmit={formik.handleSubmit}>
             <TextField
-              id="name"
+              id="itemName"
+              required
               onChange={formik.handleChange}
               label={lang === "Ru" ? "Имя предмета" : "Name of item"}
               variant="filled"

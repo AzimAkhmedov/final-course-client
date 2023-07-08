@@ -78,7 +78,7 @@ const NewCollectionPage = () => {
           className={darkMode ? s.darCollectionName : s.collectionName}
           placeholder="Описание"
           id="description"
-          requiredулщатм
+          required
           onChange={formik.handleChange}
         />
         <Box sx={{ minWidth: 220 }}>

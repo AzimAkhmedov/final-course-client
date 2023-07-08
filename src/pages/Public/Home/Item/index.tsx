@@ -16,7 +16,14 @@ import { ArrowRightAlt } from "@mui/icons-material";
 import { useAppSelector } from "../../../../shared/hooks";
 import { useNavigate } from "react-router-dom";
 
-const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
+const Item = ({
+  itemName,
+  collectionName,
+  params,
+  username,
+  tags,
+  _id,
+}: IItem) => {
   const { darkMode, lang } = useAppSelector((state) => state.app);
   const navigate = useNavigate();
   return (
@@ -31,14 +38,12 @@ const Item = ({ collectionName, params, username, tags, _id }: IItem) => {
         border: darkMode ? "solid 1px #fff" : "",
       }}
     >
-      <CardHeader title={params.name} subheader={collectionName} />
+      <CardHeader title={itemName} subheader={collectionName} />
       <CardContent sx={{ minHeight: 180 }}>
         <Typography variant="body2">{username} </Typography>
         <Typography variant="body2">{tags[0]} </Typography>
         {Object.keys(params).map((key, I) =>
-          key === "name" ? (
-            <React.Fragment key={key + I}></React.Fragment>
-          ) : I > 2 ? (
+          I > 2 ? (
             <React.Fragment key={key + I}></React.Fragment>
           ) : (
             <Typography

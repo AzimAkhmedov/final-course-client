@@ -36,6 +36,7 @@ const initialState: IItemState = {
     items: [],
     isLiked: false,
     currentItem: {
+        itemName: "",
         collectionName: "",
         params: {},
         tags: [],

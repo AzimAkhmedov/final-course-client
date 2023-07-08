@@ -27,6 +27,7 @@ const CreateItem = () => {
   const [currentEdit, setCurrentEdit] = useState<IItem>({
     collectionName: "",
     params: {},
+    itemName: "",
     tags: [],
     username: "",
     _id: "",

@@ -54,16 +54,19 @@ const Home = () => {
 
       <main>
         <div className={"layout " + s.layout}>
-          {list.map(({ collectionName, username, params, tags, _id }, i) => (
-            <Item
-              collectionName={collectionName}
-              params={params}
-              username={username}
-              tags={tags}
-              _id={_id}
-              key={_id}
-            />
-          ))}
+          {list.map(
+            ({ collectionName, username, params, tags, _id, itemName }, i) => (
+              <Item
+                itemName={itemName}
+                collectionName={collectionName}
+                params={params}
+                username={username}
+                tags={tags}
+                _id={_id}
+                key={_id}
+              />
+            )
+          )}
         </div>
         <aside>
           <h2>
