@@ -12,12 +12,13 @@ import api from "../../../shared/api";
 import { Box, Button } from "@mui/material";
 import Loading from "../../../shared/components/Loading";
 import { ArrowRightAlt } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const list = useAppSelector((state) => state.collections.lastCollections);
   const largest = useAppSelector(
     (state) => state.collections.largestCollections
   );
-
+  const navigate = useNavigate();
   const tags = useAppSelector((state) => state.collections.tags);
   const loading = useAppSelector((state) => state.collections.loading);
   const [active, setActive] = useState<string>("");
@@ -72,8 +73,8 @@ const Home = () => {
         <aside>
           <h2>
             {lang === "Ru"
-              ? "Посмотреть коллекции по тегам"
-              : "See collections by tags"}
+              ? "Посмотреть предметы по тегам"
+              : "See items by tags"}
           </h2>
           <Box>
             {tags.map((e, i) => (
@@ -145,7 +146,14 @@ const Home = () => {
             <div key={e._id} className={s.large}>
               <h4>{e.collectionName}</h4>
               <p>{lang === "En" ? "by " : "от " + e.username}</p>
-              <p>
+              <p
+                className={s.link}
+                onClick={() => {
+                  navigate(
+                    "/collection/" + e.username + "/" + e.collectionName
+                  );
+                }}
+              >
                 {lang === "En" ? "See collection " : "Посмотреть Коллекцию "}
                 <ArrowRightAlt />
               </p>

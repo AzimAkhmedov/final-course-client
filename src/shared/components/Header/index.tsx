@@ -3,20 +3,57 @@ import { NavLink, useNavigate } from "react-router-dom";
 import BasicMenu from "./Menu";
 import s from "./Header.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { Autocomplete, IconButton, Switch } from "@mui/material";
-import { changeLang, changeMode } from "../../../store/app";
+import {
+  Autocomplete,
+  Button,
+  Chip,
+  CircularProgress,
+  IconButton,
+  Switch,
+  TextField,
+} from "@mui/material";
+import { Search, changeLang, changeMode } from "../../../store/app";
 import { Close, Menu } from "@mui/icons-material";
 
 const Header = () => {
   const { isAuth, role } = useAppSelector((state) => state.user);
-  const { lang, darkMode } = useAppSelector((state) => state.app);
+  const { lang, darkMode, searchResult, loading } = useAppSelector(
+    (state) => state.app
+  );
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+
+  const [result, setResult] = useState<string[]>([]);
   const dispatch = useAppDispatch();
+  const handleResults = () => {
+    let resultc: Array<string> = [];
+    const commentMark = lang === "En" ? "-- comment" : "-- коммент";
+    const itemtMark = lang === "En" ? "-- item" : "-- предмет";
+    const collectiontMark = lang === "En" ? "-- коллекция" : "-- коллекция";
+
+    searchResult.resultItemParams.forEach((e) => {
+      resultc.push(e.itemName + " " + itemtMark);
+    });
+    searchResult.resultCollectionNames.forEach((e) => {
+      resultc.push(e.collectionName + " " + collectiontMark);
+    });
+    searchResult.resultCommentMessages.forEach((e) => {
+      resultc.push(e.comment + " " + commentMark);
+    });
+    searchResult.resultItemParams.forEach((e) => {
+      resultc.push(e.itemName + " " + itemtMark);
+    });
+    return resultc;
+  };
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     document.body.style.height = open ? "100vh" : "";
   }, [open]);
+
+  useEffect(() => {
+    setResult(handleResults());
+  }, [searchResult]);
+
   return (
     <header className={s.root}>
       <div className="container">
@@ -40,12 +77,43 @@ const Header = () => {
             >
               prod by Az
             </li>
-            <li className="search">
+            <li style={{ width: "230px" }} className="search">
               <Autocomplete
-                placeholder="Type to search"
-                options={["Ez", "Searxc"]}
-                renderInput={(e) => <p>{e.id}</p>}
-                id=""
+                disableClearable
+                freeSolo
+                onClose={(e) => {
+                  setResult([]);
+                }}
+                loading={loading}
+                options={result}
+                renderInput={(params) => (
+                  <TextField
+                    onChange={(e) => {
+                      if (e.target.value !== " " || e.target.value !== " ") {
+                        dispatch(Search(e.target.value));
+                      } else {
+                        setResult([]);
+                      }
+                    }}
+                    {...params}
+                    variant="filled"
+                    label={lang === "Ru" ? "Поиск" : "Search"}
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "search",
+                      endAdornment: (
+                        <>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : (
+                            <></>
+                          )}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
+                  />
+                )}
               />
             </li>
             <li>

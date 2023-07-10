@@ -39,6 +39,14 @@
       p {
         margin-bottom: 30px;
       }
+      .link {
+        display: flex;
+        align-items: center;
+        &:hover {
+          color: var(--orange);
+          cursor: pointer;
+        }
+      }
     }
   }
 }

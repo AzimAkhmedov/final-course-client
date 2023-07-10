@@ -178,36 +178,7 @@ const NewCollectionPage = () => {
               }}
             />
             <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel
-                  id="username-label"
-                  sx={{
-                    color: darkMode ? "#fff " : "",
-                    borderColor: darkMode ? "#fff" : "",
-                  }}
-                >
-                  Выберите юзера
-                </InputLabel>
-                <Select
-                  labelId="username-label"
-                  id="username-label"
-                  value={username}
-                  sx={{
-                    color: darkMode ? "#fff " : "",
-                  }}
-                  color={darkMode ? "warning" : "primary"}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
-                  label="Выберите юзера"
-                >
-                  {allUsers.map((e) => (
-                    <MenuItem key={e._id} value={e.username}>
-                      {e.username}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+             
               <FormControl fullWidth>
                 <InputLabel
                   sx={{ fontSize: 15, color: "#fff" }}

@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
+import { getCurrentCollection } from "../../../store/collections";
+import Item from "../Home/Item";
 
 const CollectionPage = () => {
-  const params = useParams();
+  const { username, collection } = useParams();
+  const dispatch = useAppDispatch();
+  const items = useAppSelector((state) => state.collections.currentCollection);
+  useEffect(() => {
+    dispatch(getCurrentCollection({ username, collection }));
+  }, []);
   return (
-    <div>
-      {params.username} {params._id}
+    <div className="container">
+      <h1>{collection}</h1>
+      <div className="layout">
+        {items.map((e) => (
+          <Item
+            collectionName={e.collectionName}
+            itemName={e.itemName}
+            params={e.params}
+            tags={e.tags}
+            username={e.username}
+            _id={e._id}
+            key={e._id}
+          />
+        ))} 
+      </div>
     </div>
   );
 };

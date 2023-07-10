@@ -91,7 +91,7 @@ const Item = ({
           navigate("/item/" + username + "/" + _id);
         }}
       >
-        {lang === "En" ? "See collection " : "Посмотреть коллекцию"}{" "}
+        {lang === "En" ? "See item " : "Посмотреть предмет "}{" "}
         <IconButton
           sx={{
             color: darkMode ? "#fff" : "",

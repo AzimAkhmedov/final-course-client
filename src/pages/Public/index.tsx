@@ -6,6 +6,7 @@ import Login from "./Login";
 import ItemPage from "./ItemPage";
 import { useAppSelector } from "../../shared/hooks";
 import { Header } from "../../shared/components";
+import CollectionPage from "./CollectionPage";
 
 const PublicRoutes = () => {
   const lang = useAppSelector((state) => state.app.lang);
@@ -18,6 +19,10 @@ const PublicRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/item/:username/:_id" element={<ItemPage />} />
+        <Route
+          path="/collection/:username/:collection"
+          element={<CollectionPage />}
+        />
         <Route
           path="/*"
           element={

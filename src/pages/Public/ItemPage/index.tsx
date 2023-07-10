@@ -66,7 +66,7 @@ const ItemPage = () => {
     <Loading />
   ) : (
     <div className={"container " + s.root}>
-      <Typography variant="h2">{currentItem.params.name}</Typography>
+      <Typography variant="h2">{currentItem.itemName}</Typography>
       <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
 

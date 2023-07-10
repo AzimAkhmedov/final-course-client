@@ -6,10 +6,19 @@ export interface IUserReducer {
     isAuth: boolean
     loader: boolean
 }
+interface ISearchResult {
+    resultItemNames: Array<IItem>
+    resultItemParams: Array<IItem>
+    resultCollectionNames: Array<ICollection>
+    resultCommentMessages: Array<IComment>
+}
 export interface IAppReducer {
     lang: 'Ru' | 'En'
     darkMode: boolean
+    loading: boolean
+    error: boolean
     adminSidebar: boolean
+    searchResult: ISearchResult
 }
 export interface IAuthProps {
     username: string

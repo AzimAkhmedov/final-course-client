@@ -104,6 +104,9 @@ const api = {
     },
     async getAllItems(token: string) {
         return await instance.get('admin/item/' + token).then(res => res)
+    },
+    async search(text:string){
+        return await instance.get('search/' + text).then(res => res)
     }
 
 
