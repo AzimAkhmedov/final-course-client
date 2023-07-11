@@ -60,7 +60,6 @@ const ItemPage = () => {
   }, []);
   useEffect(() => {
     dispatch(getIsLiked({ itemId: params._id, wholikes: authorName }));
-    console.log(likes);
   }, [likes]);
   return itemsLoader ? (
     <Loading />

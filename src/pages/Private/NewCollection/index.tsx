@@ -56,10 +56,6 @@ const NewCollectionPage = () => {
     dispatch(getThemes());
   }, []);
 
-  useEffect(() => {
-    console.log(type);
-    console.log(params);
-  }, [type]);
   return lang === "Ru" ? (
     <div className={"container " + s.root}>
       <h1>Создать Коллекцию</h1>
@@ -165,6 +161,8 @@ const NewCollectionPage = () => {
                   <MenuItem value={"text"}>Текст</MenuItem>
                   <MenuItem value={"number"}>Число</MenuItem>
                   <MenuItem value={"color"}>Цвет</MenuItem>
+                  <MenuItem value={"checkbox"}>Радио</MenuItem>
+                  <MenuItem value={"date"}>Дата</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -185,11 +183,9 @@ const NewCollectionPage = () => {
                   });
                   return;
                 }
-                console.log([...params, { name: input, type }]);
                 setParams([...params, { name: input, type }]);
 
                 setInput("");
-                // console.log(params);
               }}
             >
               +
@@ -225,6 +221,8 @@ const NewCollectionPage = () => {
                   <MenuItem value={"text"}>Текст</MenuItem>
                   <MenuItem value={"number"}>Число</MenuItem>
                   <MenuItem value={"color"}>Цвет</MenuItem>
+                  <MenuItem value={"checkbox"}>Радио</MenuItem>
+                  <MenuItem value={"date"}>Дата</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -357,9 +355,11 @@ const NewCollectionPage = () => {
                   }}
                   label="Выберите тип вашего параметра"
                 >
-                  <MenuItem value={"text"}>Текст</MenuItem>
-                  <MenuItem value={"number"}>Число</MenuItem>
-                  <MenuItem value={"color"}>Цвет</MenuItem>
+                  <MenuItem value={"text"}>Text</MenuItem>
+                  <MenuItem value={"number"}>Number</MenuItem>
+                  <MenuItem value={"color"}>Color</MenuItem>
+                  <MenuItem value={"checkbox"}>Radio</MenuItem>
+                  <MenuItem value={"date"}>Date</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -418,6 +418,8 @@ const NewCollectionPage = () => {
                   <MenuItem value={"text"}>Text</MenuItem>
                   <MenuItem value={"number"}>Number</MenuItem>
                   <MenuItem value={"color"}>Color</MenuItem>
+                  <MenuItem value={"checkbox"}>Radio</MenuItem>
+                  <MenuItem value={"date"}>Date</MenuItem>
                 </Select>
               </FormControl>
             </Box>

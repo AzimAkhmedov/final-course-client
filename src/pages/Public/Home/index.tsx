@@ -142,8 +142,8 @@ const Home = () => {
             : "Самые большые 5 коллекции"}
         </h2>
         <div className={s.largest}>
-          {largest.map((e) => (
-            <div key={e._id} className={s.large}>
+          {largest.map((e, i) => (
+            <div key={i} className={s.large}>
               <h4>{e.collectionName}</h4>
               <p>{lang === "En" ? "by " : "от " + e.username}</p>
               <p

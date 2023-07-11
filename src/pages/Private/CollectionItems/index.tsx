@@ -16,7 +16,7 @@ import {
 import { getItems, removeFromCollection } from "../../../store/items";
 import Toolbar from "./Toolbar";
 import Loading from "../../../shared/components/Loading";
-import { MoreVert } from "@mui/icons-material";
+import { Cancel, CheckRounded, MoreVert } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import EditBar from "./EditBar";
 import { IItem } from "../../../types";
@@ -51,9 +51,6 @@ const CreateItem = () => {
   useEffect(() => {
     dispatch(getItems({ username, collectionName: collection }));
   }, []);
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
   return itemsLoader ? (
     <Loading />
   ) : (
@@ -173,33 +170,47 @@ const CreateItem = () => {
                   }
                 />
                 <CardContent>
-                  {Object.keys(e.params).map((a) => (
-                    <Typography
-                      key={a + i}
-                      sx={{
-                        fontSize: 14,
-                      }}
-                      gutterBottom
-                    >
-                      {a}:
-                      <span
-                        style={
-                          e.params[a][0] === "#" && e.params[a].length === 7
-                            ? {
-                                background: e.params[a],
-                                color: e.params[a],
-
-                                width: 60,
-                              }
-                            : {}
-                        }
+                  {Object.keys(e.params).map((a) =>
+                    typeof e.params[a] === "boolean" ? (
+                      <Typography
+                        key={a + i}
+                        sx={{
+                          fontSize: 14,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                        gutterBottom
                       >
-                        {e.params[a][0] === "#" && e.params[a].length === 7
-                          ? "color "
-                          : e.params[a]}
-                      </span>
-                    </Typography>
-                  ))}
+                        {a}: {e.params[a] ? <CheckRounded /> : <Cancel />}
+                      </Typography>
+                    ) : (
+                      <Typography
+                        key={a + i}
+                        sx={{
+                          fontSize: 14,
+                        }}
+                        gutterBottom
+                      >
+                        {a}:
+                        <span
+                          style={
+                            e.params[a][0] === "#" && e.params[a].length === 7
+                              ? {
+                                  background: e.params[a],
+                                  color: e.params[a],
+
+                                  width: 60,
+                                }
+                              : {}
+                          }
+                        >
+                          {e.params[a][0] === "#" && e.params[a].length === 7
+                            ? "color "
+                            : e.params[a]}
+                        </span>
+                      </Typography>
+                    )
+                  )}
                   Посмотреть предмет
                 </CardContent>
               </Card>

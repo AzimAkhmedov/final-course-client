@@ -21,7 +21,6 @@ const Register = () => {
         password,
         role: "User",
       };
-      console.log(newUser);
 
       dispatch(Registration(newUser)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {

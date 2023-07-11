@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import BasicMenu from "./Menu";
 import s from "./Header.module.scss";
@@ -23,25 +23,48 @@ const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  const [result, setResult] = useState<string[]>([]);
+  const [result, setResult] = useState<any[]>([]);
   const dispatch = useAppDispatch();
+  const handleChangeMode = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeMode(e.target.checked));
+  };
+  const handleChangeLang = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeLang(e.target.checked));
+  };
   const handleResults = () => {
-    let resultc: Array<string> = [];
-    const commentMark = lang === "En" ? "-- comment" : "-- коммент";
-    const itemtMark = lang === "En" ? "-- item" : "-- предмет";
-    const collectiontMark = lang === "En" ? "-- коллекция" : "-- коллекция";
+    let resultc: Array<any> = [];
+    const commentMark = lang === "En" ? "-- comment в " : "-- в";
+    const itemtMark = lang === "En" ? "-- item by " : "-- предмет от ";
+    const collectiontMark =
+      lang === "En" ? "-- collection of" : "-- коллекция из";
 
     searchResult.resultItemParams.forEach((e) => {
-      resultc.push(e.itemName + " " + itemtMark);
+      resultc.push({
+        label: e.itemName + " " + itemtMark + e.username,
+        username: e.username,
+        itemId: e._id,
+      });
     });
     searchResult.resultCollectionNames.forEach((e) => {
-      resultc.push(e.collectionName + " " + collectiontMark);
+      resultc.push({
+        label: e.collectionName + " " + collectiontMark,
+        username: e.username,
+        itemId: e._id,
+      });
     });
     searchResult.resultCommentMessages.forEach((e) => {
-      resultc.push(e.comment + " " + commentMark);
+      resultc.push({
+        label: e.comment + " " + commentMark,
+        username: e.username,
+        itemId: e.itemId,
+      });
     });
-    searchResult.resultItemParams.forEach((e) => {
-      resultc.push(e.itemName + " " + itemtMark);
+    searchResult.resultItemNames.forEach((e) => {
+      resultc.push({
+        label: e.itemName + " " + itemtMark,
+        username: e.username,
+        itemId: e._id,
+      });
     });
     return resultc;
   };
@@ -49,7 +72,6 @@ const Header = () => {
     document.body.style.overflow = open ? "hidden" : "";
     document.body.style.height = open ? "100vh" : "";
   }, [open]);
-
   useEffect(() => {
     setResult(handleResults());
   }, [searchResult]);
@@ -79,6 +101,10 @@ const Header = () => {
             </li>
             <li style={{ width: "230px" }} className="search">
               <Autocomplete
+                sx={{
+                  background: "#fff",
+                  borderRadius: "5px",
+                }}
                 disableClearable
                 freeSolo
                 onClose={(e) => {
@@ -86,8 +112,23 @@ const Header = () => {
                 }}
                 loading={loading}
                 options={result}
+                getOptionLabel={(option) => option.label}
+                renderOption={(props, option) => (
+                  <span
+                    {...props}
+                    onClick={(e) => {
+                      navigate("item/" + option.username + "/" + option.itemId);
+                    }}
+                  >
+                    {option.label}
+                  </span>
+                )}
                 renderInput={(params) => (
                   <TextField
+                    sx={{
+                      background: "#fff",
+                      borderRadius: "5px",
+                    }}
                     onChange={(e) => {
                       if (e.target.value !== " " || e.target.value !== " ") {
                         dispatch(Search(e.target.value));
@@ -96,8 +137,8 @@ const Header = () => {
                       }
                     }}
                     {...params}
-                    variant="filled"
-                    label={lang === "Ru" ? "Поиск" : "Search"}
+                    variant="outlined"
+                    placeholder={lang === "Ru" ? "Поиск" : "Search"}
                     InputProps={{
                       ...params.InputProps,
                       type: "search",
@@ -126,11 +167,7 @@ const Header = () => {
               )}
             </li>
             <li>
-              <IconButton
-                onChange={() => {
-                  dispatch(changeMode());
-                }}
-              >
+              <IconButton>
                 <svg width="0" height="0">
                   <defs>
                     <clipPath id="moon">
@@ -153,7 +190,8 @@ const Header = () => {
                   <input
                     className="switch__input"
                     type="checkbox"
-                    defaultChecked={darkMode}
+                    checked={darkMode}
+                    onChange={handleChangeMode}
                     role="switch"
                   />
                   <span className="switch__icon switch__icon--dark">
@@ -168,12 +206,7 @@ const Header = () => {
             </li>
             <li>
               Ру
-              <Switch
-                defaultChecked={lang === "En"}
-                onClick={() => {
-                  dispatch(changeLang());
-                }}
-              />
+              <Switch checked={lang === "En"} onChange={handleChangeLang} />
               Eng
             </li>
             {role === "Admin" ? (

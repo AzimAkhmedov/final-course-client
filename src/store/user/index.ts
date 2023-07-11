@@ -17,11 +17,9 @@ const initialState: IUserReducer = {
 export const Registration = createAsyncThunk('Registration', async (user: IAuthProps, __thunkAPI) => {
     try {
         const res = await api.registration(user)
-        console.log(res.data);
         if (res.data.token) {
             toast('Welcome ' + user.username, { type: "success" })
             localStorage.setItem('token', res.data.token)
-            console.log(jwtDecode(res.data.token));
         }
         return { user, data: res.data }
     } catch (error) {

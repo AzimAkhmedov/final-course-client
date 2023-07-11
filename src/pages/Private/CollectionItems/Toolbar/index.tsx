@@ -4,9 +4,11 @@ import {
   Box,
   Button,
   Chip,
-  Drawer,
+  FormControl,
+  Input,
   SwipeableDrawer,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../shared/hooks";
@@ -15,7 +17,6 @@ import { getCollectionParams, getTags } from "../../../../store/collections";
 import { addToCollection } from "../../../../store/items";
 import { IItem } from "../../../../types";
 import { toast } from "react-toastify";
-// import TagInput from "../TagInput";
 
 const Toolbar = ({ collection }: any) => {
   const { collectionParams, tags } = useAppSelector(
@@ -25,6 +26,9 @@ const Toolbar = ({ collection }: any) => {
   const username = useAppSelector((state) => state.user.username);
   const [toggle, setToggle] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState({});
+  const [checkboxes, setCheckboxes] = useState<Array<boolean>>([]);
+  const [colors, setColors] = useState<Array<string>>([]);
+
   const [initialTags, setInitialTags] = useState<Array<string>>([]);
   const [itemName, setItemName] = useState("");
   const dispatch = useAppDispatch();
@@ -32,13 +36,20 @@ const Toolbar = ({ collection }: any) => {
   const formik = useFormik({
     initialValues,
     onSubmit: (val) => {
+      let params = val;
+      collectionParams.forEach((e: any, i) => {
+        if (e.type === "checkbox") {
+          params = { ...params, [e.name]: Boolean(checkboxes[i]) };
+        } else if (e.type === "color") {
+          params = { ...params, [e.name]: colors[i] };
+        }
+      });
       const newItem: IItem = {
         username,
         collectionName: collection,
-        params: val,
+        params,
         tags: initialTags,
-        //@ts-ignore
-        itemName: val.itemName,
+        itemName: itemName,
       };
 
       dispatch(addToCollection(newItem)).then((res) => {
@@ -54,12 +65,13 @@ const Toolbar = ({ collection }: any) => {
     },
   });
   useEffect(() => {
-    collectionParams.forEach((e: any) => {
-      setInitialValues({ ...initialValues, [e.name]: "" });
+    dispatch(getCollectionParams({ username, collection })).then((res) => {
+      collectionParams.forEach((e: any) => {
+        setInitialValues({ ...initialValues, [e.name]: "" });
+      });
+      setCheckboxes(new Array(collectionParams.length).fill(false));
+      setColors(new Array(collectionParams.length).fill("#000000"));
     });
-  }, [collectionParams]);
-  useEffect(() => {
-    dispatch(getCollectionParams({ username, collection }));
     dispatch(getTags());
     setInitialValues({});
   }, []);
@@ -101,23 +113,80 @@ const Toolbar = ({ collection }: any) => {
             <TextField
               id="itemName"
               required
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                setItemName(e.target.value);
+              }}
               label={lang === "Ru" ? "Имя предмета" : "Name of item"}
               variant="filled"
               fullWidth
             />
-            {collectionParams.map((e, i) => (
-              <TextField
-                fullWidth
-                label={e.name}
-                variant="filled"
-                key={i}
-                required
-                id={e.name}
-                type={e.type}
-                onChange={formik.handleChange}
-              />
-            ))}
+            {collectionParams.map((e, i) =>
+              e.type === "checkbox" ? (
+                <FormControl
+                  sx={{
+                    height: 40,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                  }}
+                  key={i}
+                >
+                  <Input
+                    id={e.name}
+                    onChange={(a) => {
+                      let copy = checkboxes;
+                      // @ts-ignore
+                      copy[i] = a.target.checked;
+                      setCheckboxes(copy);
+                    }}
+                    type={e.type}
+                  />
+                  <p>{e.name}</p>
+                </FormControl>
+              ) : e.type === "color" ? (
+                <TextField
+                  fullWidth
+                  label={e.name}
+                  variant="filled"
+                  defaultValue={"#000000"}
+                  key={i}
+                  required
+                  id={e.name}
+                  type={e.type}
+                  onChange={(e) => {
+                    let color = colors;
+                    color[i] = e.target.value;
+                    setColors(color);
+                  }}
+                />
+              ) : e.type === "date" ? (
+                <FormControl fullWidth>
+                  <Typography variant="subtitle2">{e.name}:</Typography>
+                  <TextField
+                    placeholder={e.name}
+                    fullWidth
+                    variant="filled"
+                    key={i}
+                    required
+                    id={e.name}
+                    type={"date"}
+                    onChange={formik.handleChange}
+                  />
+                </FormControl>
+              ) : (
+                <TextField
+                  fullWidth
+                  label={e.name}
+                  variant="filled"
+                  key={i}
+                  required
+                  id={e.name}
+                  type={e.type}
+                  onChange={formik.handleChange}
+                />
+              )
+            )}
             <Autocomplete
               multiple
               id="tags-filled"

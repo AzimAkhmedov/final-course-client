@@ -7,7 +7,7 @@ import { Box, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import Loading from "../../../shared/components/Loading";
 import { useNavigate } from "react-router-dom";
-
+import s from "./index.module.scss";
 const columns: GridColDef[] = [
   { field: "_id", headerName: "_id", width: 220 },
   { field: "collectionName", headerName: "Collection Name", width: 200 },
@@ -20,7 +20,7 @@ const columns: GridColDef[] = [
 ];
 const CollectionPage = () => {
   const [selected, setSelected] = useState<Array<GridRowId>>([]);
-  const { lang } = useAppSelector((state) => state.app);
+  const { lang, darkMode } = useAppSelector((state) => state.app);
   const { allCollections, loading } = useAppSelector((state) => state.admin);
   const token = useAppSelector((state) => state.user.adminToken);
   const dispatch = useAppDispatch();
@@ -28,16 +28,13 @@ const CollectionPage = () => {
   useEffect(() => {
     dispatch(getAllCollections());
   }, []);
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
   const handleGetRowId = (e: ICollection) => {
     return String(e._id);
   };
   return loading ? (
     <Loading />
   ) : (
-    <div className="container">
+    <div className={darkMode ? s.darkMode + " container " : "" + " container "}>
       <h1>{lang === "Ru" ? "Все коллекции" : "All Collections"}</h1>
       <p>
         {lang === "Ru"
@@ -51,6 +48,9 @@ const CollectionPage = () => {
         }}
         columns={columns}
         rows={allCollections}
+        sx={{
+          color: darkMode ? "#fff" : "",
+        }}
         pageSizeOptions={[10, 20]}
         getRowId={handleGetRowId}
         initialState={{
@@ -60,7 +60,14 @@ const CollectionPage = () => {
         }}
         checkboxSelection
       />
-      <Box sx={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          paddingTop: "20px",
+        }}
+      >
         <Button
           onClick={() => {
             if (
@@ -85,15 +92,16 @@ const CollectionPage = () => {
             }
           }}
           variant="contained"
+          color={darkMode ? "warning" : "primary"}
           disabled={!selected.length}
         >
           {lang === "Ru" ? "Удалить выбранное" : "Delete selected"}
         </Button>
         <Button
+          color={darkMode ? "warning" : "primary"}
           variant="contained"
           onClick={() => {
             const obj = allCollections.find((e) => e._id === selected[0]);
-            console.log(obj);
 
             navigate(
               "/admin/collections/" + obj?.collectionName + "/" + obj?.username

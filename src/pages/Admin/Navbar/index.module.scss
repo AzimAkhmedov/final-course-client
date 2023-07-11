@@ -16,11 +16,11 @@
     transition: 0.5s;
     line-height: 50px;
     &:hover {
-      color: #fff;
-      background: var(--blue);
+      color: inherit;
     }
     &.opened {
       transform: translateX(180px);
+      color: inherit;
     }
   }
   .leftHeader {
@@ -43,6 +43,17 @@
         &:hover {
           background: var(--blue);
           color: #fff;
+        }
+        &:nth-child(1) {
+          margin-right: 40px;
+          width: 120px;
+          height: 50px;
+        }
+        &:nth-child(2) {
+          margin-right: 40px;
+          padding: 0 5px;
+          width: auto;
+          height: 50px;
         }
         i {
           height: max-content;

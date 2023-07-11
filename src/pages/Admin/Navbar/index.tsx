@@ -1,15 +1,38 @@
-import { Avatar, IconButton } from "@mui/material";
+import { Avatar, IconButton, Switch } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { handleSidebar } from "../../../store/app";
+import { changeLang, changeMode, handleSidebar } from "../../../store/app";
 import styles from "./index.module.scss";
-import { Person, QueryStats, Menu, Close } from "@mui/icons-material";
+import {
+  Person,
+  QueryStats,
+  Menu,
+  Close,
+  NightShelter,
+  ModeNight,
+  LightMode,
+  DarkMode,
+} from "@mui/icons-material";
+import { ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const open = useAppSelector((state) => state.app.adminSidebar);
+  const { adminSidebar, darkMode, lang } = useAppSelector((state) => state.app);
 
+  const navigate = useNavigate();
+  const handleChangeMode = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeMode(e.target.checked));
+  };
+  const handleChangeLang = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeLang(e.target.checked));
+  };
   return (
-    <div className={styles.navbar}>
+    <div
+      className={styles.navbar + "  "}
+      style={{
+        background: darkMode ? "#000" : "",
+      }}
+    >
       <div
         className={styles.leftHeader}
         onClick={() => {
@@ -17,31 +40,48 @@ const Navbar = () => {
         }}
       >
         <IconButton
+          style={{
+            color: darkMode ? "#fff" : "",
+          }}
           className={`fa-solid fa-bars ${
-            !open
+            !adminSidebar
               ? styles.menuHamburger
               : styles.menuHamburger + " " + styles.opened
           }`}
         >
-          {open ? <Close /> : <Menu />}
+          {adminSidebar ? <Close /> : <Menu />}
         </IconButton>
       </div>
       <div className={styles.rightHeader}>
         <ul>
           <li>
-            <IconButton>
+            Ру
+            <Switch
+              onChange={handleChangeLang}
+              checked={lang === "En"}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            En
+          </li>
+
+          <li>
+            {lang === "En" ? "Light" : "День"}
+            <Switch
+              checked={darkMode}
+              onChange={handleChangeMode}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+            {lang === "En" ? "Dark" : "Ночь"}
+          </li>
+          <li>
+            <IconButton
+              onClick={() => {
+                navigate("/profile");
+              }}
+              color="inherit"
+            >
               <Person />
             </IconButton>
-          </li>
-          <li>
-            <i className="fas fa-cog">
-              <IconButton>
-                <QueryStats />
-              </IconButton>
-            </i>
-          </li>
-          <li>
-            <i className="fas fa-user"></i>
           </li>
         </ul>
       </div>

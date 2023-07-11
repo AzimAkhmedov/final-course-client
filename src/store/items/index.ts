@@ -68,7 +68,6 @@ export const writeComment = createAsyncThunk('writeComment', async (arg: ICommen
 export const getLikes = createAsyncThunk('getLikes', async (itemId: string, thunkAPI) => {
     try {
         const { data } = await api.getLikes(itemId)
-        console.log('likes', data);
 
 
         return data
@@ -79,7 +78,6 @@ export const getLikes = createAsyncThunk('getLikes', async (itemId: string, thun
 export const pressLike = createAsyncThunk('pressLike', async (like: ILike, thunkAPI) => {
     try {
         const { data } = await api.pressLike(like)
-        console.log(like);
 
         return { data, wholikes: like.wholikes }
     } catch (error) {

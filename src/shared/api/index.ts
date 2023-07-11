@@ -33,7 +33,6 @@ const api = {
         return await instance.get('collection/usercollection/' + username + "/" + collection).then(res => res)
     },
     async getCollectionParams(username: string, collection: string) {
-        console.log(username + "/" + collection);
 
         return await instance.get('collection/params/' + username + "/" + collection).then(res => res)
     },

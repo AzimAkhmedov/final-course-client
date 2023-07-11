@@ -1,11 +1,9 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { useFormik } from "formik";
 import { ILoginProps } from "../../../types";
 import { Login, isAdmin } from "../../../store/user";
 
-import { Button, Checkbox, Input } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
+import { Button,  Input } from "@mui/material";
 import s from "./Login.module.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,7 +23,6 @@ const LoginPage = () => {
         username,
         password,
       };
-      console.log(newUser);
 
       dispatch(Login(newUser)).then((res) => {
         if (res.meta.requestStatus == "fulfilled") {
@@ -50,13 +47,7 @@ const LoginPage = () => {
   ) : (
     <div className={"container " + s.root}>
       <form onSubmit={formik.handleSubmit}>
-        <div className="field">
-          <Button variant="outlined" color="secondary">
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-        </div>
-        <div className={s.field}>or</div>
+       
         <div className={s.field}>
           <Input
             placeholder="Your Username"
@@ -70,14 +61,7 @@ const LoginPage = () => {
             onChange={formik.handleChange}
             required
           />
-          <div className="checkbox">
-            <Checkbox
-              onChange={(e) => {
-                console.log(e.target.checked);
-              }}
-            />
-            <span>Stay Signed</span>
-          </div>
+        
           <Button type="submit" variant="contained">
             Log in
           </Button>

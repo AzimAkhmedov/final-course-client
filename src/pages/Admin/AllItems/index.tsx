@@ -53,11 +53,11 @@ const ItemsPage = () => {
             paginationModel: { page: 0, pageSize: 10 },
           },
         }}
+        pageSizeOptions={[5, 10]}
         checkboxSelection
         onRowSelectionModelChange={(e) => {
           // @ts-ignore
           setSelected(e);
-          console.log(e);
         }}
       />
       <Button

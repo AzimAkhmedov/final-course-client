@@ -22,14 +22,14 @@ export const Search = createAsyncThunk('Search', async (params: string) => {
 
 const slice = createSlice({
     initialState, name: "appSlice", reducers: {
-        changeLang(state) {
-            state.lang = state.lang === 'En' ? 'Ru' : 'En'
+        changeLang(state, action) {
+            state.lang = action.payload ? 'En' : 'Ru'
         },
         setLang(state, actions) {
             state.lang = actions.payload
         }
-        , changeMode(state) {
-            state.darkMode = state.darkMode ? false : true
+        , changeMode(state, action) {
+            state.darkMode = action.payload
         },
         handleSidebar(state) {
             state.adminSidebar = !state.adminSidebar

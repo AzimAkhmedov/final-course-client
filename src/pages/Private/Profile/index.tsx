@@ -66,7 +66,7 @@ const ProfilePage = () => {
             dispatch(logOut());
             localStorage.removeItem("token");
             localStorage.removeItem("admin");
-          
+
             navigate("/");
           }}
         >
@@ -93,6 +93,7 @@ const ProfilePage = () => {
                 collectionName={e.collectionName}
                 params={e.params}
                 username={e.username}
+                key={i}
               />
             ))
           )}

@@ -22,7 +22,6 @@ const Collection = ({
         <Button
           onClick={() => {
             dispatch(deleteCollection(String(_id)));
-            console.log(_id);
           }}
           variant="contained"
           color="warning"

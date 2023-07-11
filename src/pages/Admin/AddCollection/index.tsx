@@ -40,7 +40,6 @@ const NewCollectionPage = () => {
         toast("Добавьте хоть 1 параметр", { type: "warning" });
         return;
       }
-      console.log({ ...val, params, theme: selectedTheme });
 
       dispatch(
         createCollection({ ...val, params, theme: selectedTheme, username })
@@ -219,11 +218,9 @@ const NewCollectionPage = () => {
                   });
                   return;
                 }
-                console.log([...params, { name: input, type }]);
                 setParams([...params, { name: input, type }]);
 
                 setInput("");
-                // console.log(params);
               }}
             >
               +

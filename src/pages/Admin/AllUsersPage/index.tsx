@@ -23,8 +23,10 @@ const UsersPage = () => {
   const navigate = useNavigate();
   const { allUsers, loading, error } = useAppSelector((state) => state.admin);
   const token = useAppSelector((state) => state.user.adminToken);
-  const [filter, setFilter] = useState<"Admin" | "User" | "">("");
-  const lang = useAppSelector((state) => state.app.lang);
+  const [filter, setFilter] = useState<
+    "Admin" | "User" | "" | "Banned" | "Not-Banned"
+  >("");
+  const { lang, darkMode } = useAppSelector((state) => state.app);
   const username = useAppSelector((state) => state.user.username);
   useEffect(() => {
     dispatch(getAllUsers());
@@ -32,6 +34,11 @@ const UsersPage = () => {
   const handleFilter = (f: "Admin" | "User" | "") => (e: React.MouseEvent) => {
     setFilter(f);
   };
+
+  const handleFilterByStatus =
+    (f: "Banned" | "Not-Banned" | "") => (e: React.MouseEvent) => {
+      setFilter(f);
+    };
   const handleDelete = (_id?: string) => (e: React.MouseEvent) => {
     if (window.confirm(lang === "Ru" ? "Вы хотите удалить?" : "Are u sure?")) {
       dispatch(deleteUser({ id: _id, token })).then((res) => {
@@ -109,17 +116,35 @@ const UsersPage = () => {
     <Loading />
   ) : (
     <div className="container">
-      <TableContainer component={Paper}>
+      <TableContainer
+        color="warning"
+        sx={{
+          background: darkMode ? "#000" : "",
+          color: darkMode ? "#fff" : "",
+          transition: ".5s ease-in",
+        }}
+        component={Paper}
+      >
         <Button variant="outlined" onClick={handleFilter("Admin")}>
           {lang === "Ru" ? "Отфильтровать по Admin" : "Filter by Admin"}
         </Button>
         <Button variant="outlined" onClick={handleFilter("User")}>
           {lang === "Ru" ? "Отфильтровать по User" : "Filter by User"}
         </Button>
+        <Button variant="outlined" onClick={handleFilterByStatus("Banned")}>
+          {lang === "Ru" ? "Отфильтровать забаненных" : "Filter by banned"}
+        </Button>
+
+        <Button variant="outlined" onClick={handleFilterByStatus("Not-Banned")}>
+          {lang === "Ru"
+            ? "Отфильтровать не забаненных"
+            : "Filter by not-banned"}
+        </Button>
         <Button
           variant="outlined"
           disabled={filter === ""}
           onClick={handleFilter("")}
+          color={darkMode ? "warning" : "primary"}
         >
           {lang === "Ru" ? "Сбросить" : "Reset filter"}
         </Button>
@@ -127,43 +152,179 @@ const UsersPage = () => {
         <Table sx={{ width: "100%" }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>{lang === "En" ? "Username" : "Юзернейм"}</TableCell>
-              <TableCell>{lang === "En" ? "role" : "роль"}</TableCell>
-              <TableCell>{lang === "En" ? "Status" : "Статус"}</TableCell>
-              <TableCell>{lang === "En" ? "Action" : "Правление"}</TableCell>
+              <TableCell
+                sx={{
+                  color: darkMode ? "#fff" : "",
+                }}
+              >
+                {lang === "En" ? "Username" : "Юзернейм"}
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: darkMode ? "#fff" : "",
+                }}
+              >
+                {lang === "En" ? "role" : "роль"}
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: darkMode ? "#fff" : "",
+                }}
+              >
+                {lang === "En" ? "Status" : "Статус"}
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: darkMode ? "#fff" : "",
+                }}
+              >
+                {" "}
+                {lang === "En" ? "Action" : "Правление"}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filter === ""
               ? allUsers.map((e) => (
                   <TableRow key={e._id}>
-                    <TableCell>{e.username}</TableCell>
-                    <TableCell>{e.role}</TableCell>
-                    <TableCell>{e.status}</TableCell>
+                    <TableCell
+                      sx={{
+                        color: darkMode ? "#fff" : "",
+                      }}
+                    >
+                      {e.username}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: darkMode ? "#fff" : "",
+                      }}
+                    >
+                      {e.role}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: darkMode ? "#fff" : "",
+                      }}
+                    >
+                      {e.status}
+                    </TableCell>
 
-                    <TableCell>
-                      <IconButton onClick={handleDelete(e.username)}>
+                    <TableCell
+                      sx={{
+                        color: darkMode ? "#fff" : "",
+                      }}
+                    >
+                      <IconButton
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                        onClick={handleDelete(e.username)}
+                      >
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={handleSetStatus(e.status, e)}>
+                      <IconButton
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                        onClick={handleSetStatus(e.status, e)}
+                      >
                         {e.status === "Banned" ? <Undo /> : <Block />}
                       </IconButton>
                     </TableCell>
                   </TableRow>
                 ))
-              : allUsers
+              : filter === "Admin" || filter === "User"
+              ? allUsers
                   .filter((e) => e.role === filter)
                   .map((e) => (
                     <TableRow key={e._id}>
-                      <TableCell>{e.username}</TableCell>
-                      <TableCell>{e.role}</TableCell>
-                      <TableCell>{e.status}</TableCell>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.username}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.role}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.status}
+                      </TableCell>
 
-                      <TableCell>
-                        <IconButton>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        <IconButton
+                          sx={{
+                            color: darkMode ? "#fff" : "",
+                          }}
+                        >
                           <Delete />
                         </IconButton>
-                        <IconButton>
+                        <IconButton
+                          sx={{
+                            color: darkMode ? "#fff" : "",
+                          }}
+                        >
+                          <Block />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              : allUsers
+                  .filter((e) => e.status === filter)
+                  .map((e) => (
+                    <TableRow key={e._id}>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.username}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.role}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        {e.status}
+                      </TableCell>
+
+                      <TableCell
+                        sx={{
+                          color: darkMode ? "#fff" : "",
+                        }}
+                      >
+                        <IconButton
+                          sx={{
+                            color: darkMode ? "#fff" : "",
+                          }}
+                        >
+                          <Delete />
+                        </IconButton>
+                        <IconButton
+                          sx={{
+                            color: darkMode ? "#fff" : "",
+                          }}
+                        >
                           <Block />
                         </IconButton>
                       </TableCell>

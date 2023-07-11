@@ -18,9 +18,7 @@ function App() {
       dispatch(getToken(token));
     }
     if (adminToken) {
-      // @ts-ignore
 
-      console.log(jwtDecode(adminToken).role==='Admin');
 
       // @ts-ignore
       if (jwtDecode(adminToken).role === "Admin") {
