@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import {
   createAdmin,
+  deleteAdmin,
   deleteUser,
   getAllUsers,
   setStatus,
@@ -49,7 +50,50 @@ const UsersPage = () => {
         toast(lang === "Ru" ? "Ошибка" : "Error", { type: "error" });
       }
     });
+    dispatch(getAllUsers());
   };
+  const handleDeleteAdmin =
+    (u: string, _id: string | undefined) => (e: React.MouseEvent) => {
+      if (u === username) {
+        if (
+          window.confirm(
+            lang === "En"
+              ? "Sure to remove your admin?"
+              : "Уверенны в удалении себя из админов?"
+          )
+        ) {
+          dispatch(deleteAdmin({ _id, token })).then((res) => {
+            if (res.meta.requestStatus === "fulfilled") {
+              toast(lang === "Ru" ? "Админ удален" : "Admin removed", {
+                type: "success",
+              });
+              dispatch(logOut());
+            } else {
+              toast(lang === "Ru" ? "Ошибка" : "Error", { type: "error" });
+            }
+          });
+        }
+        return;
+      }
+      if (
+        window.confirm(
+          lang === "En"
+            ? "Sure to remove admin?"
+            : "Уверенны в удалении админа?"
+        )
+      ) {
+        dispatch(deleteAdmin({ _id, token })).then((res) => {
+          if (res.meta.requestStatus === "fulfilled") {
+            toast(lang === "Ru" ? "Админ удален" : "Admin removed", {
+              type: "success",
+            });
+          } else {
+            toast(lang === "Ru" ? "Ошибка" : "Error", { type: "error" });
+          }
+        });
+      }
+      dispatch(getAllUsers());
+    };
   const handleFilterByStatus =
     (f: "Banned" | "Not-Banned" | "") => (e: React.MouseEvent) => {
       setFilter(f);
@@ -246,11 +290,17 @@ const UsersPage = () => {
                         {e.status === "Banned" ? <Undo /> : <Block />}
                       </IconButton>
                       {e.role === "Admin" ? (
-                        <Button color="warning">
+                        <Button
+                          color="warning"
+                          onClick={handleDeleteAdmin(e.username, e._id)}
+                        >
                           {lang === "En" ? "Remove admin" : "Убрать админа"}
                         </Button>
                       ) : (
-                        <Button color="success" onClick={handleSetAdmin(e.username)} >
+                        <Button
+                          color="success"
+                          onClick={handleSetAdmin(e.username)}
+                        >
                           {lang === "En"
                             ? "Promote to admin"
                             : "Сделать админом"}

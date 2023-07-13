@@ -94,6 +94,7 @@ const Home = () => {
               </Button>
             ))}
             <Button
+              sx={{ minWidth: 120, maxWidth: 220 }}
               disabled={active === ""}
               onClick={() => {
                 dispatch(getLastCollections(currentPage));

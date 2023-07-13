@@ -74,7 +74,7 @@ const Item = ({
           )
         )}
         {Object.keys(params).length > 3 ? (
-          <Typography 
+          <Typography
             sx={{
               fontSize: 20,
             }}

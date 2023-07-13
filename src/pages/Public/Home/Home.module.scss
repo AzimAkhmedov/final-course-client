@@ -35,7 +35,8 @@
     flex-wrap: wrap;
     .large {
       img {
-        width: 300px;
+        max-width: 300px;
+        min-width: 280px;
         height: 290px;
       }
       padding: 10px 20px;
@@ -61,6 +62,7 @@
 
 @media (max-width: 978px) {
   .root {
+    padding-left: 10px;
     main {
       width: 100%;
 
@@ -89,6 +91,20 @@
           width: 180px;
           max-height: 200px;
           min-height: 170px;
+        }
+      }
+    }
+    .largest {
+      justify-content: center;
+      .large {
+        padding: 0 10px;
+        img {
+          max-width: 250px;
+          min-width: 200px;
+        }
+        p {
+          max-width: 250px;
+          min-width: 200px;
         }
       }
     }

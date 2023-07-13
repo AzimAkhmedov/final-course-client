@@ -64,6 +64,14 @@ export const createAdmin = createAsyncThunk('createAdmin', async (arg: any, thun
         return thunkAPI.rejectWithValue(e)
     }
 })
+export const deleteAdmin = createAsyncThunk('deleteAdmin', async (arg: any, thunkAPI) => {
+    try {
+        const { data } = await api.deleteAdmin(arg._id, arg.token)
+        return { data, id: arg._id }
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e)
+    }
+})
 const slice = createSlice({
     name: "admin", initialState, reducers: {}, extraReducers: (builder => {
         builder.addCase(getAllUsers.pending, (state) => {
@@ -117,9 +125,15 @@ const slice = createSlice({
             state.loading = true
         })
         builder.addCase(createAdmin.fulfilled, (state, action) => {
-            state.allUsers = [state.allUsers.filter(e => e.username !== action.payload.username), ...action.payload.data]
+            state.allUsers = state.allUsers.map(e => e.username === action.payload.username ? action.payload.data : e)
             state.loading = false
-
+        })
+        builder.addCase(deleteAdmin.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(deleteAdmin.fulfilled, (state, action) => {
+            state.loading = false
+            state.allUsers = state.allUsers.map(e => e._id === action.payload.id ? action.payload.data : e)
         })
     })
 })

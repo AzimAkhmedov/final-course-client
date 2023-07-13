@@ -101,6 +101,7 @@ const Header = () => {
             </li>
             <li style={{ width: "230px" }} className="search">
               <Autocomplete
+                fullWidth
                 sx={{
                   background: "#fff",
                   borderRadius: "5px",
