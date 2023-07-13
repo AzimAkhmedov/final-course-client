@@ -30,13 +30,21 @@
   }
 
   .largest {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     .large {
+      img {
+        width: 300px;
+        height: 290px;
+      }
       padding: 10px 20px;
       border: 2px solid var(--orange);
       h4 {
         margin-bottom: 10px;
       }
       p {
+        max-width: 300px;
         margin-bottom: 30px;
       }
       .link {

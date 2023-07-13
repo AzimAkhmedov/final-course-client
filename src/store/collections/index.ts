@@ -32,9 +32,9 @@ export const getCurrentCollection = createAsyncThunk('getCurrentCollection', asy
         return __thunkAPI.rejectWithValue(e)
     }
 })
-export const createCollection = createAsyncThunk('createCollection', async (collection: ICollection, __thunkAPI) => {
+export const createCollection = createAsyncThunk('createCollection', async (collection: any, __thunkAPI) => {
     try {
-        const { data } = await api.createNewCollection(collection)
+        const data = await api.createNewCollection(collection)
         return data
     } catch (e) {
         return __thunkAPI.rejectWithValue(e)

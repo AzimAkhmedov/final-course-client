@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { deleteUser, getAllUsers, setStatus } from "../../../store/admin";
+import {
+  createAdmin,
+  deleteUser,
+  getAllUsers,
+  setStatus,
+} from "../../../store/admin";
 import Loading from "../../../shared/components/Loading";
 import {
   Button,
@@ -34,7 +39,17 @@ const UsersPage = () => {
   const handleFilter = (f: "Admin" | "User" | "") => (e: React.MouseEvent) => {
     setFilter(f);
   };
-
+  const handleSetAdmin = (user: string) => (e: React.MouseEvent) => {
+    dispatch(createAdmin({ username: user, token })).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        toast(lang === "Ru" ? "Админ создан" : "promoted to Admin", {
+          type: "success",
+        });
+      } else {
+        toast(lang === "Ru" ? "Ошибка" : "Error", { type: "error" });
+      }
+    });
+  };
   const handleFilterByStatus =
     (f: "Banned" | "Not-Banned" | "") => (e: React.MouseEvent) => {
       setFilter(f);
@@ -230,6 +245,17 @@ const UsersPage = () => {
                       >
                         {e.status === "Banned" ? <Undo /> : <Block />}
                       </IconButton>
+                      {e.role === "Admin" ? (
+                        <Button color="warning">
+                          {lang === "En" ? "Remove admin" : "Убрать админа"}
+                        </Button>
+                      ) : (
+                        <Button color="success" onClick={handleSetAdmin(e.username)} >
+                          {lang === "En"
+                            ? "Promote to admin"
+                            : "Сделать админом"}
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))

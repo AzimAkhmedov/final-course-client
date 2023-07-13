@@ -144,8 +144,10 @@ const Home = () => {
         <div className={s.largest}>
           {largest.map((e, i) => (
             <div key={i} className={s.large}>
+              <img src={e.imgUrl} alt="Фотка не загрузжена" />
               <h4>{e.collectionName}</h4>
               <p>{lang === "En" ? "by " : "от " + e.username}</p>
+              <p>{e.description}</p>
               <p
                 className={s.link}
                 onClick={() => {

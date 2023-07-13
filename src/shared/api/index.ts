@@ -1,3 +1,4 @@
+import axios from "axios"
 import { IAuthProps, ICollection, IComment, IItem, ILike, ILoginProps } from "../../types"
 import { instance } from "./instance"
 
@@ -20,14 +21,18 @@ const api = {
     async getUserCollection(username: string) {
         return await instance.get('collection/' + username).then(res => res)
     },
-    async createNewCollection(collection: ICollection) {
-        return await instance.post('collection/', collection).then(res => res)
+    async createNewCollection(collection: any) {
+        return await axios.post('http://localhost:5000/upload', collection, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }).then(res => res.data)
     },
     async deleteCollection(_id: string) {
         return await instance.delete('collection/delete/' + _id).then(res => res)
     },
     async addToCollection(item: IItem) {
-        return await instance.post('collection/add', item).then(res => res)
+        return await instance.post('collection/add/', item).then(res => res)
     },
     async getCurrentCollection(username: string, collection: string) {
         return await instance.get('collection/usercollection/' + username + "/" + collection).then(res => res)
@@ -75,7 +80,7 @@ const api = {
         return await instance.get('collection/largest/mostFive/').then(res => res)
     },
     async createAdmin(arg: any) {
-        return await instance.post('admin/create', arg).then(res => res)
+        return await instance.put('admin/create', arg).then(res => res)
     },
     async deleteAdmin(id: string, token: string) {
         return await instance.delete("admin/removeFromAdmin/" + id + "/" + token).then(res => res)
@@ -104,7 +109,7 @@ const api = {
     async getAllItems(token: string) {
         return await instance.get('admin/item/' + token).then(res => res)
     },
-    async search(text:string){
+    async search(text: string) {
         return await instance.get('search/' + text).then(res => res)
     }
 

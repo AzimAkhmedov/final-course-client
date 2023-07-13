@@ -1,11 +1,12 @@
 import { useEffect, useState, Fragment } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import s from "./CreateItem.module.scss";
 import {
   Box,
   Card,
+  CardActions,
   CardContent,
   CardHeader,
   IconButton,
@@ -39,11 +40,10 @@ const CreateItem = () => {
   const [open, setOpen] = useState(false);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => (i: number) => {
     let newArr = new Array(items.length).fill(null);
-
     newArr[i] = event.currentTarget;
-
     setAnchorEl(newArr);
   };
+  const navigate = useNavigate();
   const handleClose = () => {
     setAnchorEl(new Array(items.length).fill(null));
   };
@@ -211,18 +211,28 @@ const CreateItem = () => {
                       </Typography>
                     )
                   )}
-                  Посмотреть предмет
                 </CardContent>
+                <CardActions
+                  onClick={() => {
+                    navigate("/item/" + e.username + "/" + e._id);
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                    variant="subtitle2"
+                  >
+                    {lang === "En" ? "See Item" : "Посмотреть Предмет"}
+                  </Typography>
+                </CardActions>
               </Card>
             ))}
           </Box>
           <aside>
             <Toolbar collection={collection} />
             <EditBar
-              collectionName={currentEdit.collectionName}
-              itemName={currentEdit.params.name}
-              params={currentEdit.params}
-              username={currentEdit.username}
+              collection={String(collection)}
               _id={currentEdit._id}
               open={open}
               setOpen={setOpen}

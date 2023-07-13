@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import {
   getComments,
@@ -66,7 +66,16 @@ const ItemPage = () => {
   ) : (
     <div className={"container " + s.root}>
       <Typography variant="h2">{currentItem.itemName}</Typography>
-      <Typography variant="subtitle1">{currentItem.collectionName}</Typography>
+      <NavLink 
+        to={
+          "/collection/" +
+          currentItem.username +
+          "/" +
+          currentItem.collectionName
+        }
+      >
+        {currentItem.collectionName}
+      </NavLink>
       <Typography variant="subtitle2">{currentItem.username}</Typography>
 
       <Box sx={{ mb: "150px" }} width={"50%"}>

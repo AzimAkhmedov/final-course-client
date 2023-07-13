@@ -36,6 +36,7 @@ export interface ICollection {
     params: any[]
     description: string
     theme?: string
+    imgUrl?: string
 }
 export interface IItem {
     itemName: string

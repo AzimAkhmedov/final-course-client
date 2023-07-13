@@ -10,6 +10,7 @@ const Collection = ({
   params,
   username,
   description,
+  imgUrl,
   _id,
 }: ICollection) => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Collection = ({
     <div className={s.root}>
       <h3>{collectionName}</h3>
       <p>{description}</p>
+      <img src={imgUrl} alt="" />
       <div className={s.actions}>
         <Button
           onClick={() => {

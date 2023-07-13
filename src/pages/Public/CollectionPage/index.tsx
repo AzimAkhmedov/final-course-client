@@ -5,7 +5,7 @@ import { getCurrentCollection } from "../../../store/collections";
 import Item from "../Home/Item";
 
 const CollectionPage = () => {
-  const { username, collection } = useParams();
+  const { username, collection, img } = useParams();
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.collections.currentCollection);
   useEffect(() => {
@@ -14,6 +14,8 @@ const CollectionPage = () => {
   return (
     <div className="container">
       <h1>{collection}</h1>
+      <img alt="Не загружено" src={img} />
+
       <div className="layout">
         {items.map((e) => (
           <Item
@@ -25,7 +27,7 @@ const CollectionPage = () => {
             _id={e._id}
             key={e._id}
           />
-        ))} 
+        ))}
       </div>
     </div>
   );

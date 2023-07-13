@@ -1,13 +1,30 @@
 .root {
   display: flex;
   justify-content: space-around;
+  padding: 40px 0;
+
+  .filters {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    .darkInput {
+      color: #fff !important;
+      input {
+        color: #fff !important;
+      }
+      fieldset {
+        color: #fff !important;
+      }
+    }
+  }
   aside {
-    width: 60%;
     // flex: 1 0;
     //  width: 100%;
   }
-  padding: 40px 0;
   aside {
+    width: 60%;
+
     a {
       color: var(--orange);
       text-decoration: none;

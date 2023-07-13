@@ -1,6 +1,10 @@
 .root {
   padding-top: 70px;
-
+  a {
+    font-size: 18px;
+    text-decoration: none;
+    color: inherit;
+  }
   .fill {
     .form {
       display: flex;

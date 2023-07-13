@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import {
   Input,
   Button,
@@ -20,6 +20,7 @@ const NewCollectionPage = () => {
   const [input, setInput] = useState<string>("");
   const [type, setType] = useState<string>("text");
   const [selectedTheme, setTheme] = useState("");
+  const [selectedFile, setSelectedFile] = useState<any>(null);
   const [params, setParams] = useState<Array<any>>([]);
   const { username } = useAppSelector((state) => state.user);
   const { darkMode, lang } = useAppSelector((state) => state.app);
@@ -37,24 +38,36 @@ const NewCollectionPage = () => {
         toast("Добавьте хоть 1 параметр", { type: "warning" });
         return;
       }
-      dispatch(createCollection({ ...val, params, theme: selectedTheme })).then(
-        (res) => {
-          if (res.meta.requestStatus === "fulfilled") {
-            toast("Успешно добавлено", { type: "success" });
-            navigate("/profile");
-          } else {
-            toast("Произошла ошибка, Убедитесь что у вас нет такой коллекции", {
-              type: "error",
-            });
-          }
+      if (selectedFile === null) {
+        toast("Добавьте фотографию коллекции", { type: "warning" });
+        return;
+      }
+      const formData = new FormData();
+      formData.append("filename", selectedFile);
+      formData.append("collectionName", val.collectionName);
+      formData.append("username", val.username);
+      formData.append("params", JSON.stringify(params));
+      formData.append("description", val.description);
+      formData.append("theme", selectedTheme);
+      console.log(formData);
+
+      dispatch(createCollection(formData)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          navigate("/profile");
         }
-      );
+      });
     },
   });
 
   useEffect(() => {
     dispatch(getThemes());
   }, []);
+
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
 
   return lang === "Ru" ? (
     <div className={"container " + s.root}>
@@ -71,8 +84,16 @@ const NewCollectionPage = () => {
           className={darkMode ? s.darCollectionName : s.collectionName}
           placeholder="Описание"
           id="description"
+          multiline
           required
           onChange={formik.handleChange}
+        />
+        <Input
+          className={darkMode ? s.darCollectionName : s.collectionName}
+          id="file"
+          type="file"
+          required
+          onChange={handleFileUpload}
         />
         <Box sx={{ minWidth: 220 }}>
           <FormControl fullWidth>
@@ -270,6 +291,7 @@ const NewCollectionPage = () => {
         <Input
           className={darkMode ? s.darCollectionName : s.collectionName}
           placeholder="Description "
+          multiline
           id="description"
           required
           onChange={formik.handleChange}
