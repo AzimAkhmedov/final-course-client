@@ -296,6 +296,14 @@ const NewCollectionPage = () => {
           required
           onChange={formik.handleChange}
         />
+        <Input
+          placeholder="Choose file"
+          className={darkMode ? s.darCollectionName : s.collectionName}
+          id="file"
+          type="file"
+          required
+          onChange={handleFileUpload}
+        />
         <Box sx={{ minWidth: 220 }}>
           <FormControl fullWidth>
             <InputLabel
@@ -403,8 +411,27 @@ const NewCollectionPage = () => {
 
                   return;
                 }
-                setParams([...params, input]);
+                setParams([...params, { name: input, type }]);
+
                 setInput("");
+                // onClick={() => {
+                //   if (input === "") {
+                //     toast("Вы должны заполнить поле параметра", {
+                //       type: "warning",
+                //     });
+                //     return;
+                //   }
+                //   const a = params.find((e) => e === input);
+                //   if (a !== undefined) {
+                //     toast("Похоже вы уже ввели такой параметр", {
+                //       type: "warning",
+                //     });
+
+                //     return;
+                //   }
+                //   setParams([...params, { name: input, type }]);
+
+                // }}
               }}
             >
               +

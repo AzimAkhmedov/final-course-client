@@ -94,6 +94,7 @@ const Header = () => {
             <li
               className={s.logo}
               onClick={() => {
+                setOpen(false);
                 navigate("/");
               }}
             >
@@ -160,7 +161,12 @@ const Header = () => {
             </li>
             <li>
               {isAuth ? (
-                <NavLink to={"/profile"}>
+                <NavLink
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  to={"/profile"}
+                >
                   {lang === "En" ? "Go to profile" : "Открыть профиль"}
                 </NavLink>
               ) : (
@@ -214,6 +220,7 @@ const Header = () => {
               <li
                 onClick={() => {
                   navigate("/admin");
+                  setOpen(false);
                 }}
               >
                 {lang === "Ru" ? "Админ" : "Admin"}

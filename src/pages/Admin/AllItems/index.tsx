@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { deleteItem, getAllItems } from "../../../store/admin";
 import { IItem } from "../../../types";
 import { Button } from "@mui/material";
-
+import s from "./index.module.scss";
 const columns: GridColDef[] = [
   { field: "_id", headerName: "_id", width: 220 },
   { field: "collectionName", headerName: "Collection Name", width: 200 },
@@ -20,7 +20,7 @@ const ItemsPage = () => {
   const [selected, setSelected] = useState<Array<string>>([]);
   const { allItems } = useAppSelector((state) => state.admin);
   const token = useAppSelector((state) => state.user.adminToken);
-  const { lang } = useAppSelector((state) => state.app);
+  const { lang, darkMode } = useAppSelector((state) => state.app);
   const [error, setError] = useState(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -43,8 +43,11 @@ const ItemsPage = () => {
   return error ? (
     <div className="container">{lang === "En" ? "Error" : "Ошибка"}</div>
   ) : (
-    <div className="container">
+    <div className={darkMode ? s.darkMode + " container " : "" + " container "}>
       <DataGrid
+        sx={{
+          color: darkMode ? "#fff" : "",
+        }}
         columns={columns}
         rows={allItems}
         getRowId={handleGetRowId}

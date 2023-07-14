@@ -89,3 +89,30 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .root {
+    form {
+      .collectionName {
+        width: 100%;
+      }
+      .darCollectionName {
+        width: 100%;
+        color: #fff;
+        border-bottom: 1px solid #fff;
+      }
+      .tools {
+        input {
+          width: 40% !important ;
+        }
+      }
+      .params {
+        width: 100%;
+        h2 {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

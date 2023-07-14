@@ -44,3 +44,33 @@
     }
   }
 }
+
+@media (max-width: 978px) {
+  .root {
+    flex-direction: column-reverse;
+    aside {
+      width: 100%;
+    }
+    .profile {
+      flex-direction: column;
+
+      margin-bottom: 30px;
+      button {
+        width: 200px;
+      }
+    }
+  }
+}
+@media (max-width: 1024px) {
+  .root {
+    padding-left: 10px;
+    .collections {
+      width: 100%;
+      gap: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      align-items: start;
+    }
+  }
+}
