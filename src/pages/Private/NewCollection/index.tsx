@@ -54,6 +54,10 @@ const NewCollectionPage = () => {
       dispatch(createCollection(formData)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           navigate("/profile");
+        } else {
+          toast("Error in collection " + res.payload, {
+            type: "error",
+          });
         }
       });
     },
