@@ -22,7 +22,7 @@ const api = {
         return await instance.get('collection/' + username).then(res => res)
     },
     async createNewCollection(collection: any) {
-        return await axios.post('http://localhost:5000/upload', collection, {
+        return await axios.post('https://finall-task.onrender.com/upload', collection, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
