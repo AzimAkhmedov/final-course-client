@@ -2,7 +2,7 @@ import s from "./Register.module.scss";
 import { Button, Input } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useFormik } from "formik";
-import { useAppDispatch } from "../../../shared/hooks";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { Registration } from "../../../store/user";
 import { IAuthProps } from "../../../types";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { LangHandler } from "../../../utils/checkLang";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { lang, darkMode } = useAppSelector((state) => state.app);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -32,21 +33,22 @@ const Register = () => {
   return (
     <div className={"container " + s.root}>
       <form onSubmit={formik.handleSubmit}>
-        <div className="field">
-          <Button variant="outlined" color="secondary">
-            <GoogleIcon />
-            Continue with Google
-          </Button>
-        </div>
-        <div className={s.field}>or</div>
         <div className={s.field}>
           <Input
+            sx={{
+              color: darkMode ? "#fff" : "",
+              border: darkMode ? "#fff 2px solid" : "",
+            }}
             placeholder={LangHandler("Ваш юзернейм", "Your username")}
             id="username"
             onChange={formik.handleChange}
             required
           />
           <Input
+            sx={{
+              color: darkMode ? "#fff" : "",
+              border: darkMode ? "#fff 2px solid" : "",
+            }}
             placeholder={LangHandler("Ваш пароль", "Your password")}
             type="password"
             id="password"

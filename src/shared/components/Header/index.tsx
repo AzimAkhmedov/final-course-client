@@ -170,7 +170,27 @@ const Header = () => {
                   {lang === "En" ? "Go to profile" : "Открыть профиль"}
                 </NavLink>
               ) : (
-                <BasicMenu />
+                <>
+                  <BasicMenu />
+                  <div
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                    className={s.basicMenu}
+                  >
+                    <p>
+                      {" "}
+                      <NavLink to={"/register"}>
+                        {lang === "En" ? "Register" : "Регистрация"}
+                      </NavLink>
+                    </p>
+                    <p>
+                      <NavLink to={"/login"}>
+                        {lang === "En" ? "Have a profile?" : "Есть профиль?"}
+                      </NavLink>
+                    </p>
+                  </div>
+                </>
               )}
             </li>
             <li>
