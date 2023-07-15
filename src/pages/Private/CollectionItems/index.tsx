@@ -232,6 +232,7 @@ const CreateItem = () => {
           <aside>
             <Toolbar collection={collection} />
             <EditBar
+              itemName={currentEdit.itemName}
               collection={String(collection)}
               _id={currentEdit._id}
               open={open}

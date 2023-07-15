@@ -13,6 +13,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import {
   AccountCircle,
+  Delete,
   Favorite,
   FavoriteBorder,
   Telegram,
@@ -30,6 +31,7 @@ const ItemPage = () => {
   const { lang, darkMode } = useAppSelector((state) => state.app);
   const authorName = useAppSelector((state) => state.user.username);
   const isAuth = useAppSelector((state) => state.user.isAuth);
+  const role = useAppSelector((state) => state.user.role);
   const { handleSubmit, handleChange } = useFormik({
     initialValues: {
       username: String(params.username),
@@ -66,7 +68,7 @@ const ItemPage = () => {
   ) : (
     <div className={"container " + s.root}>
       <Typography variant="h2">{currentItem.itemName}</Typography>
-      <NavLink 
+      <NavLink
         to={
           "/collection/" +
           currentItem.username +
@@ -137,13 +139,23 @@ const ItemPage = () => {
           </Button>
         </form>
         {comments.map((e: any) => (
-          <div className={s.comment} key={e._id}>
+          <div
+            className={e.authorName === authorName ? s.authors : s.comment}
+            key={e._id}
+          >
             <h4 className={s.subtitle}>
               <AccountCircle />
               {e.authorName}
             </h4>
             <h3 className={s.content}>{e.comment}</h3>
             <p className={s.time}>{e.time} </p>
+            {e.authorName === authorName || role === "Admin" ? (
+              <p className={s.actions}>
+                <Delete />
+              </p>
+            ) : (
+              <></>
+            )}
           </div>
         ))}
         {comments.length === 0 ? (

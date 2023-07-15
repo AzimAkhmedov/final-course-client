@@ -7,6 +7,7 @@ import CollectionPage from "./CollectionsPage";
 import Collection from "./Collection";
 import ItemsPage from "./AllItems";
 import NewCollectionPage from "./AddCollection";
+import AppControl from "./AppControl";
 
 const AdminRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AdminRoutes = () => {
               <Route path="/add" element={<NewCollectionPage />} />
 
               <Route path="/items" element={<ItemsPage />} />
+              <Route path="/app" element={<AppControl />} />
             </Routes>
           </div>
         </div>

@@ -3,11 +3,14 @@ import styles from "./index.module.scss";
 import { useState } from "react";
 import {
   Add,
+  AppBlocking,
   Home,
   InsertDriveFile,
   List,
+  OnlinePredictionSharp,
   People,
   PlusOne,
+  Settings,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useAppSelector } from "../../../shared/hooks";
@@ -118,7 +121,27 @@ const SideBar = () => {
             <ul className={`${styles.subMenu} ${styles.blank}`}>
               <li>
                 <NavLink to="/" className={styles.link_name}>
-                  Домашняя страница
+                  Управление
+                </NavLink>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : ""
+              }
+              to={"/admin/app"}
+            >
+              <IconButton>
+                <Settings />
+              </IconButton>
+              <span className={styles.link_name}> Управление</span>
+            </NavLink>
+            <ul className={`${styles.subMenu} ${styles.blank}`}>
+              <li>
+                <NavLink to="/admin/app" className={styles.link_name}>
+                  Управление
                 </NavLink>
               </li>
             </ul>

@@ -1,20 +1,73 @@
-import { Box, FormControl, Input, SwipeableDrawer, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  SwipeableDrawer,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../shared/hooks";
-import { getCollectionParams, getTags } from "../../../../store/collections";
+import {
+  getCollectionParams,
+  getTags,
+  updateItem,
+} from "../../../../store/collections";
+import { useFormik } from "formik";
+import { IItem } from "../../../../types";
+import { toast } from "react-toastify";
 interface IEditProps {
   collection: string;
   _id?: string;
   open: boolean;
   setOpen: Function;
+  itemName: string;
 }
-const EditBar = ({ collection, open, setOpen, _id }: IEditProps) => {
+const EditBar = ({ collection, open, setOpen, _id, itemName }: IEditProps) => {
   const dispatch = useAppDispatch();
-  const [initialValues, setInitialValues] = useState<any>([]);
+  const [initialValues, setInitialValues] = useState<any>({});
+  const [itemNamechange, setItemName] = useState("");
   const [checkboxes, setCheckboxes] = useState<Array<boolean>>([]);
   const [colors, setColors] = useState<Array<string>>([]);
   const [initialTags, setInitialTags] = useState<Array<string>>([]);
 
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (val) => {
+      let params = val;
+      collectionParams.forEach((e: any, i) => {
+        if (e.type === "checkbox") {
+          params = { ...params, [e.name]: Boolean(checkboxes[i]) };
+        } else if (e.type === "color") {
+          params = { ...params, [e.name]: colors[i] };
+        }
+      });
+      const newItem: IItem = {
+        username,
+        _id,
+        collectionName: collection,
+        params,
+        tags: initialTags,
+        itemName: itemNamechange,
+      };
+      dispatch(updateItem(newItem)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          toast(lang === "En" ? "Saved" : "Сохранено", {
+            type: "success",
+          });
+          setOpen(false);
+        } else {
+          toast(
+            lang === "En" ? "Error, try later" : "Ошибка, повторите позже",
+            {
+              type: "error",
+            }
+          );
+        }
+      });
+    },
+  });
   const collectionParams = useAppSelector(
     (state) => state.collections.collectionParams
   );
@@ -58,10 +111,14 @@ const EditBar = ({ collection, open, setOpen, _id }: IEditProps) => {
         }}
         role="presentation"
       >
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <TextField
             id="name"
-            label={lang === "Ru" ? "Имя предмета" : "Name of item"}
+            fullWidth
+            label={itemName}
+            onChange={(e) => {
+              setItemName(e.target.value);
+            }}
           />
           {collectionParams.map((e, i) =>
             e.type === "checkbox" ? (
@@ -104,17 +161,16 @@ const EditBar = ({ collection, open, setOpen, _id }: IEditProps) => {
                 }}
               />
             ) : e.type === "date" ? (
-              <FormControl fullWidth>
+              <FormControl fullWidth key={i}>
                 <Typography variant="subtitle2">{e.name}:</Typography>
                 <TextField
                   placeholder={e.name}
                   fullWidth
                   variant="filled"
-                  key={i}
                   required
                   id={e.name}
                   type={"date"}
-                  // onChange={formik.handleChange}
+                  onChange={formik.handleChange}
                 />
               </FormControl>
             ) : (
@@ -126,10 +182,13 @@ const EditBar = ({ collection, open, setOpen, _id }: IEditProps) => {
                 required
                 id={e.name}
                 type={e.type}
-                // onChange={formik.handleChange}
+                onChange={formik.handleChange}
               />
             )
           )}
+          <Button type="submit" variant="contained">
+            {lang === "En" ? "Confirm Edit" : "Сохранить изменения"}
+          </Button>
         </form>
       </Box>
     </SwipeableDrawer>

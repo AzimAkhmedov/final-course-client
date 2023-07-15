@@ -32,6 +32,7 @@ export const getCurrentCollection = createAsyncThunk('getCurrentCollection', asy
         return __thunkAPI.rejectWithValue(e)
     }
 })
+
 export const createCollection = createAsyncThunk('createCollection', async (collection: any, __thunkAPI) => {
     try {
         const data = await api.createNewCollection(collection)
@@ -97,6 +98,14 @@ export const getLargestFive = createAsyncThunk('getLargestFive', async () => {
         return error
     }
 })
+export const updateItem = createAsyncThunk('updateItem', async (arh: any, thunkAPI) => {
+    try {
+        const { data } = await api.updateItem(arh)
+        return { data, id: arh.id }
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e)
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -147,6 +156,13 @@ const slice = createSlice({
         })
         builder.addCase(getLargestFive.fulfilled, (state, action) => {
             state.largestCollections = action.payload
+        })
+        builder.addCase(updateItem.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(updateItem.fulfilled, (state, action) => {
+            state.loading = false
+            state.currentCollection = state.currentCollection.map(e => e._id === action.payload.id ? { ...action.payload.data, _id: e._id } : e)
         })
     }
 })

@@ -42,4 +42,31 @@
       right: 20px;
     }
   }
+
+  .authors {
+    position: relative;
+    .subtitle {
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .content {
+      font-size: 18px;
+      min-height: 100px;
+    }
+    .time {
+      font-size: 10px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 20px;
+    }
+    .actions {
+      font-size: 10px;
+      position: absolute;
+      right: 20px;
+      top: 5px;
+    }
+  }
 }

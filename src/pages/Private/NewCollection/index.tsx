@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { createCollection, getThemes } from "../../../store/collections";
 import s from "./NewCollection.module.scss";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../../shared/components/Loading";
 
 const NewCollectionPage = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ const NewCollectionPage = () => {
   const [type, setType] = useState<string>("text");
   const [selectedTheme, setTheme] = useState("");
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [loader, setLoader] = useState(false);
   const [params, setParams] = useState<Array<any>>([]);
   const { username } = useAppSelector((state) => state.user);
   const { darkMode, lang } = useAppSelector((state) => state.app);
@@ -49,15 +51,18 @@ const NewCollectionPage = () => {
       formData.append("params", JSON.stringify(params));
       formData.append("description", val.description);
       formData.append("theme", selectedTheme);
-      console.log(formData);
 
+      setLoader(true);
       dispatch(createCollection(formData)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
+          setLoader(false);
+
           navigate("/profile");
         } else {
           toast("Error in collection " + res.payload, {
             type: "error",
           });
+          setLoader(false);
         }
       });
     },
@@ -73,7 +78,9 @@ const NewCollectionPage = () => {
     }
   };
 
-  return lang === "Ru" ? (
+  return loader ? (
+    <Loading />
+  ) : lang === "Ru" ? (
     <div className={"container " + s.root}>
       <h1>Создать Коллекцию</h1>
       <form onSubmit={formik.handleSubmit}>
@@ -349,7 +356,7 @@ const NewCollectionPage = () => {
           )}
           {params.map((e, i) => (
             <p key={i}>
-              <span>{e}</span>{" "}
+              <span>{e.name}</span>{" "}
               <button
                 type="button"
                 onClick={() => {

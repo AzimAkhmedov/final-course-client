@@ -161,13 +161,12 @@ const Toolbar = ({ collection }: any) => {
                   }}
                 />
               ) : e.type === "date" ? (
-                <FormControl fullWidth>
+                <FormControl key={i} fullWidth>
                   <Typography variant="subtitle2">{e.name}:</Typography>
                   <TextField
                     placeholder={e.name}
                     fullWidth
                     variant="filled"
-                    key={i}
                     required
                     id={e.name}
                     type={"date"}

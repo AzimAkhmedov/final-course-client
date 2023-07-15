@@ -102,8 +102,10 @@
         border-bottom: 1px solid #fff;
       }
       .tools {
+        width: 100% !important;
         input {
           width: 40% !important ;
+          font-size: 12px;
         }
       }
       .params {
