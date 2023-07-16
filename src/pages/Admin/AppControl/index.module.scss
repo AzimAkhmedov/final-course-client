@@ -1,0 +1,21 @@
+.root {
+  .darkInput {
+    input {
+      color: #fff;
+    }
+    div {
+      color: #fff;
+      &:hover {
+        border: 2px solid #fff !important;
+      }
+
+      fieldset {
+        border: 2px solid white;
+        color: #fff;
+      }
+      label {
+        color: #fff;
+      }
+    }
+  }
+}

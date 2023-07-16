@@ -28,6 +28,9 @@ const Item = ({
   const navigate = useNavigate();
   return (
     <Card
+      onClick={() => {
+        navigate("/item/" + username + "/" + _id);
+      }}
       sx={{
         transition: ".5s",
         width: 320,

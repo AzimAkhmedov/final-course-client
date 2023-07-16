@@ -1,5 +1,5 @@
 import axios from "axios"
-import { IAuthProps, ICollection, IComment, IItem, ILike, ILoginProps } from "../../types"
+import { IAuthProps, ICollection, IComment, IItem, ILike, ILoginProps, ITheme } from "../../types"
 import { instance } from "./instance"
 
 const api = {
@@ -111,9 +111,13 @@ const api = {
     },
     async search(text: string) {
         return await instance.get('search/' + text).then(res => res)
+    },
+    async createTheme(theme: ITheme) {
+        return await instance.post('theme/', theme).then(res => res)
+    },
+    async getCollectionImg(username: string, collection: string) {
+        return await instance.get('collection/img/' + username + "/" + collection).then(res => res.data)
     }
-
-
 }
 
 export default api

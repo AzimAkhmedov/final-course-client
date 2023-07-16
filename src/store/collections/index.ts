@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ICollection, ICollectionState, IItem } from "../../types";
+import { ICollection, ICollectionState, IItem, ITheme } from "../../types";
 import api from "../../shared/api";
 import { toast } from "react-toastify";
 
@@ -106,6 +106,14 @@ export const updateItem = createAsyncThunk('updateItem', async (arh: any, thunkA
         return thunkAPI.rejectWithValue(e)
     }
 })
+export const createTheme = createAsyncThunk('createTheme', async (theme: any, thunkAPI) => {
+    try {
+        const { data } = await api.createTheme(theme)
+        return data
+    } catch (e) {
+        return thunkAPI.rejectWithValue(e)
+    }
+})
 const slice = createSlice({
     initialState,
     name: 'collectionSlice',
@@ -163,6 +171,9 @@ const slice = createSlice({
         builder.addCase(updateItem.fulfilled, (state, action) => {
             state.loading = false
             state.currentCollection = state.currentCollection.map(e => e._id === action.payload.id ? { ...action.payload.data, _id: e._id } : e)
+        })
+        builder.addCase(createTheme.fulfilled, (state, action) => {
+            state.themes = [...state.themes, action.payload]
         })
     }
 })

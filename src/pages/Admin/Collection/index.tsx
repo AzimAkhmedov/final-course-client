@@ -19,8 +19,8 @@ import Toolbar from "./Toolbar";
 import Loading from "../../../shared/components/Loading";
 import { MoreVert } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import EditBar from "./EditBar";
 import { IItem } from "../../../types";
+import EditBar from "../../Private/CollectionItems/EditBar";
 const CreateItem = () => {
   const { collection, username } = useParams();
   const [anchorEl, setAnchorEl] = useState<Array<HTMLElement | null>>([]);
@@ -205,13 +205,11 @@ const CreateItem = () => {
           <aside>
             <Toolbar collection={collection} username={username} />
             <EditBar
-              collectionName={currentEdit.collectionName}
-              itemName={currentEdit.params.name}
-              params={currentEdit.params}
-              username={currentEdit.username}
-              _id={currentEdit._id}
+              collection={String(collection)}
+              itemName={currentEdit.itemName}
               open={open}
               setOpen={setOpen}
+              _id={currentEdit._id}
             />
           </aside>
         </div>

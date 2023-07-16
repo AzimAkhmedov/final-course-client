@@ -54,15 +54,14 @@ const ItemPage = () => {
       }
     },
   });
-
+  useEffect(() => {
+    dispatch(getIsLiked({ itemId: params._id, wholikes: authorName }));
+  }, [likes]);
   useEffect(() => {
     dispatch(getSingleItem(String(params._id)));
     dispatch(getLikes(String(params._id)));
     dispatch(getComments(String(params._id)));
   }, []);
-  useEffect(() => {
-    dispatch(getIsLiked({ itemId: params._id, wholikes: authorName }));
-  }, [likes]);
   return itemsLoader ? (
     <Loading />
   ) : (
