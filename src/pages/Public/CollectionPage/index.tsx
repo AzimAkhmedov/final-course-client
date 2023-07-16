@@ -4,23 +4,39 @@ import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getCurrentCollection } from "../../../store/collections";
 import Item from "../Home/Item";
 import api from "../../../shared/api";
+import { Box } from "@mui/material";
+import { LangHandler } from "../../../utils/checkLang";
 
 const CollectionPage = () => {
   const { username, collection } = useParams();
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.collections.currentCollection);
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState({ imgUrl: "" });
   useEffect(() => {
     dispatch(getCurrentCollection({ username, collection }));
     api.getCollectionImg(String(username), String(collection)).then((res) => {
-      setImg(res.data.imgUrl);
+      setImg(res);
     });
   }, []);
   return (
     <div className="container">
       <h1>{collection}</h1>
-      <img src={img} alt="" />
+      <Box sx={{ maxWidth: "250px", maxHeight: "300px" }}>
+        <img
+          style={{
+            maxWidth: "350px",
+            maxHeight: "300px",
+          }}
+          src={img.imgUrl}
+          alt=""
+        />
+      </Box>{" "}
       <div className="layout">
+        {items.length === 0 ? (
+          <h2>{LangHandler("Коллекция Пуста", "Collection is empty")}</h2>
+        ) : (
+          <></>
+        )}
         {items.map((e) => (
           <Item
             collectionName={e.collectionName}
