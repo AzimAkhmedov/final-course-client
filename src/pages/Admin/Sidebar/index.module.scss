@@ -234,8 +234,13 @@
     }
   }
   @media (max-width: 420px) {
+    .dashboardSideBar {
+      width: 0;
+    }
     .sidebar.close {
+      display: none;
       .navLinks {
+        display: none;
         li {
           .subMenu {
             display: none;

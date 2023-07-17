@@ -7,6 +7,7 @@ import ItemPage from "./ItemPage";
 import { useAppSelector } from "../../shared/hooks";
 import { Header } from "../../shared/components";
 import CollectionPage from "./CollectionPage";
+import ResultPage from "./SearchResult";
 
 const PublicRoutes = () => {
   const lang = useAppSelector((state) => state.app.lang);
@@ -31,6 +32,7 @@ const PublicRoutes = () => {
             </div>
           }
         />
+        <Route path="/search/:type" element={<ResultPage />} />
       </Routes>
     </>
   );

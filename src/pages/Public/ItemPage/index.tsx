@@ -32,7 +32,7 @@ const ItemPage = () => {
   const authorName = useAppSelector((state) => state.user.username);
   const isAuth = useAppSelector((state) => state.user.isAuth);
   const role = useAppSelector((state) => state.user.role);
-  const { handleSubmit, handleChange } = useFormik({
+  const { handleSubmit, handleChange, handleReset } = useFormik({
     initialValues: {
       username: String(params.username),
       authorName,
@@ -111,7 +111,12 @@ const ItemPage = () => {
       </Box>
       <Box className={s.fill}>
         <h2>{lang === "En" ? "Сomments" : "Коментраии"}</h2>
-        <form className={s.form} onSubmit={handleSubmit}>
+        <form
+          className={s.form}
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
           <Textarea
             placeholder={
               lang === "Ru" ? "Ваш коментраий..." : "Your comments..."

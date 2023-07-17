@@ -9,3 +9,17 @@
     }
   }
 }
+
+@media (max-width: 420px) {
+  .admin {
+    width: 100%;
+
+    .content {
+      margin-left: 0;
+
+      .routes {
+        margin-top: 50px;
+      }
+    }
+  }
+}
