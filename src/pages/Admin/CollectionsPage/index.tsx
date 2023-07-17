@@ -34,7 +34,7 @@ const CollectionPage = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div className={darkMode ? s.darkMode + " container " : "" + " container "}>
+    <div className={darkMode ? s.darkMode + " " : "" + "  "}>
       <h1>{lang === "Ru" ? "Все коллекции" : "All Collections"}</h1>
       <p>
         {lang === "Ru"
@@ -48,6 +48,7 @@ const CollectionPage = () => {
         }}
         columns={columns}
         rows={allCollections}
+        
         sx={{
           color: darkMode ? "#fff" : "",
         }}

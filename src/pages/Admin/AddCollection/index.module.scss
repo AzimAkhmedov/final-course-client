@@ -1,92 +1,120 @@
 .root {
+  padding: 70px 0;
+  form {
     padding: 70px 0;
-    form {
-      padding: 70px 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    .collectionName {
+      width: 50%;
+    }
+    .darCollectionName {
+      width: 50%;
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+    .tools {
+      width: 100%;
       display: flex;
       align-items: center;
+      justify-content: center;
+      .input {
+        width: 20% !important;
+      }
+      padding: 20px 0;
+    }
+    .darkTools {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      .input {
+        width: 20% !important;
+
+        color: #fff;
+        border-bottom: 1px solid #fff;
+      }
+      padding: 20px 0;
+    }
+    .params {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-direction: column;
-      gap: 20px;
-      .collectionName {
+      h2 {
         width: 50%;
+        text-align: center;
+      }
+      p {
+        padding: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.4s;
+        cursor: pointer;
+
+        button {
+          display: none;
+          transition: 0.4s;
+        }
+        &:hover {
+          color: var(--orange);
+          button {
+            display: block;
+            background: var(--orange);
+            border: none;
+            padding: 5px 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    [type="submit"] {
+      padding: 20px 40px;
+      background-color: var(--blue);
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.4s;
+      &:hover {
+        color: var(--orange);
+        background-color: var(--light-blue);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    form {
+      .collectionName {
+        width: 100%;
       }
       .darCollectionName {
-        width: 50%;
+        width: 100%;
         color: #fff;
         border-bottom: 1px solid #fff;
       }
       .tools {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .input {
-          width: 20% !important;
+        width: 100% !important;
+        input {
+          width: 40% !important ;
+          font-size: 12px;
         }
-        padding: 20px 0;
-      }
-      .darkTools {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        .input {
-          width: 20% !important;
-  
-          color: #fff;
-          border-bottom: 1px solid #fff;
-        }
-        padding: 20px 0;
       }
       .params {
         width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
         h2 {
-          width: 50%;
+          width: 100%;
           text-align: center;
-        }
-        p {
-          padding: 5px 0;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          transition: 0.4s;
-          cursor: pointer;
-  
-          button {
-            display: none;
-            transition: 0.4s;
-          }
-          &:hover {
-            color: var(--orange);
-            button {
-              display: block;
-              background: var(--orange);
-              border: none;
-              padding: 5px 5px;
-              cursor: pointer;
-            }
-          }
-        }
-      }
-      [type="submit"] {
-        padding: 20px 40px;
-        background-color: var(--blue);
-        border: none;
-        color: #fff;
-        font-size: 20px;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.4s;
-        &:hover {
-          color: var(--orange);
-          background-color: var(--light-blue);
         }
       }
     }
   }
-  
+}

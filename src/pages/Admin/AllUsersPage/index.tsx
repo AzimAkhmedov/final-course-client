@@ -24,6 +24,8 @@ import { toast } from "react-toastify";
 import { IUser } from "../../../types";
 import { logOut } from "../../../store/user";
 import { useNavigate } from "react-router-dom";
+import s from "./index.module.scss";
+
 const UsersPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -175,7 +177,7 @@ const UsersPage = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div>
+    <div className={s.root}>
       <TableContainer
         color="warning"
         sx={{
@@ -250,6 +252,7 @@ const UsersPage = () => {
                     <TableCell
                       sx={{
                         color: darkMode ? "#fff" : "",
+                        maxWidth: "200px",
                       }}
                     >
                       {e.username}

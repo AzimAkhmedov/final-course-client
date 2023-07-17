@@ -1,0 +1,30 @@
+@media (max-width: 786px) {
+  .root {
+    table {
+      tr {
+        td {
+          font-size: 12px !important;
+          button {
+            font-size: 12px !important;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .root {
+    table {
+      tr {
+        td {
+          font-size: 10px !important;
+          max-width: 100px !important;
+          word-wrap: break-word;
+          button {
+            max-width: 100px;
+          }
+        }
+      }
+    }
+  }
+}
