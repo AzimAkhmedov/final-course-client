@@ -60,7 +60,10 @@ const ItemPage = () => {
   useEffect(() => {
     dispatch(getSingleItem(String(params._id)));
     dispatch(getLikes(String(params._id)));
-    dispatch(getComments(String(params._id)));
+    const interval = setInterval(() => {
+      dispatch(getComments(String(params._id)));
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
   return itemsLoader ? (
     <Loading />

@@ -69,6 +69,7 @@ const UsersPage = () => {
               toast(lang === "Ru" ? "Админ удален" : "Admin removed", {
                 type: "success",
               });
+              localStorage.removeItem("admin");
               dispatch(logOut());
             } else {
               toast(lang === "Ru" ? "Ошибка" : "Error", { type: "error" });
