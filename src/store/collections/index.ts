@@ -51,6 +51,14 @@ export const getCollectionParams = createAsyncThunk('getCollectionParams', async
     }
 
 })
+export const getCurrentCollectionById = createAsyncThunk('getCurrentCollectionById', async (_id: string | undefined, __thunkAPI) => {
+    try {
+        const { data } = await api.getCollectionById(_id)
+        return data
+    } catch (e) {
+        return __thunkAPI.rejectWithValue(e)
+    }
+})
 export const deleteCollection = createAsyncThunk('deleteCollection', async (_id: string, __thunkAPI) => {
     try {
         const { data } = await api.deleteCollection(_id)
@@ -175,6 +183,9 @@ const slice = createSlice({
         builder.addCase(createTheme.fulfilled, (state, action) => {
             state.themes = [...state.themes, action.payload]
         })
+        // builder.addCase(getCurrentCollectionById.fulfilled, (state, action) => {
+        //     state.currentCollection = action.payload
+        // })
     }
 })
 

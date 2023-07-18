@@ -43,6 +43,7 @@ const Header = () => {
         label: e.itemName + " " + itemtMark + e.username,
         username: e.username,
         itemId: e._id,
+        type: "item",
       });
     });
     searchResult.resultCollectionNames.forEach((e) => {
@@ -50,6 +51,7 @@ const Header = () => {
         label: e.collectionName + " " + collectiontMark,
         username: e.username,
         itemId: e._id,
+        type: "collection",
       });
     });
     searchResult.resultCommentMessages.forEach((e) => {
@@ -57,6 +59,7 @@ const Header = () => {
         label: e.comment + " " + commentMark,
         username: e.username,
         itemId: e.itemId,
+        type: "comment",
       });
     });
     searchResult.resultItemNames.forEach((e) => {
@@ -64,6 +67,7 @@ const Header = () => {
         label: e.itemName + " " + itemtMark,
         username: e.username,
         itemId: e._id,
+        type: "item",
       });
     });
     return resultc;
@@ -119,7 +123,7 @@ const Header = () => {
                   <span
                     {...props}
                     onClick={(e) => {
-                      navigate("item/" + option.username + "/" + option.itemId);
+                      navigate("search/" + option.type + "/" + option.itemId);
                     }}
                   >
                     {option.label}

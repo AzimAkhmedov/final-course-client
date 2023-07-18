@@ -24,6 +24,8 @@ const PublicRoutes = () => {
           path="/collection/:username/:collection"
           element={<CollectionPage />}
         />
+        <Route path="/search/:type/:id" element={<ResultPage />} />
+
         <Route
           path="/*"
           element={
@@ -32,7 +34,6 @@ const PublicRoutes = () => {
             </div>
           }
         />
-        <Route path="/search/:type" element={<ResultPage />} />
       </Routes>
     </>
   );

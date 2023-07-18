@@ -12,11 +12,14 @@ const CollectionPage = () => {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.collections.currentCollection);
   const [img, setImg] = useState({ imgUrl: "" });
+  const { lang } = useAppSelector((state) => state.app);
   useEffect(() => {
     dispatch(getCurrentCollection({ username, collection }));
-    api.getCollectionImg(String(username), String(collection)).then((res) => {
-      setImg(res);
-    });
+    api
+      .getCollectionImg(username as string, collection as string)
+      .then((res) => {
+        setImg(res);
+      });
   }, []);
   return (
     <div className="container">
@@ -33,7 +36,7 @@ const CollectionPage = () => {
       </Box>{" "}
       <div className="layout">
         {items.length === 0 ? (
-          <h2>{LangHandler("Коллекция Пуста", "Collection is empty")}</h2>
+          <h2>{lang === "En" ? "Collection is empty" : "Пустая коллекция"}</h2>
         ) : (
           <></>
         )}

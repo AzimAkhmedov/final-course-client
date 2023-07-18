@@ -1,5 +1,5 @@
 import axios from "axios"
-import { IAuthProps, ICollection, IComment, IItem, ILike, ILoginProps, ITheme } from "../../types"
+import { IAuthProps, IComment, IItem, ILike, ILoginProps, ITheme } from "../../types"
 import { instance } from "./instance"
 
 const api = {
@@ -9,9 +9,7 @@ const api = {
     async login(user: ILoginProps) {
         return await instance.post('auth/login', user).then((res) => res)
     },
-    async tokenCheck() {
 
-    },
     async isAdmin(argv: any) {
         return await instance.post('admin/', argv).then(res => res)
     },
@@ -19,7 +17,11 @@ const api = {
         return await instance.get('auth/users').then((res) => res)
     },
     async getUserCollection(username: string) {
-        return await instance.get('collection/' + username).then(res => res)
+        return await instance.get('collection/user/' + username).then(res => res)
+    },
+    async getCollectionById(_id?: string) {
+        return await instance.get('collection/current/' + _id).then(res => res)
+
     },
     async createNewCollection(collection: any) {
         return await axios.post('https://finall-task.onrender.com/upload', collection, {
