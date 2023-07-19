@@ -3,23 +3,22 @@ import { NavLink, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getComments, getSingleItem } from "../../../store/items";
 import { Box } from "@mui/material";
-import {
-  getCurrentCollection,
-  getCurrentCollectionById,
-} from "../../../store/collections";
+import { getCurrentCollectionById } from "../../../store/collections";
 import Item from "../Home/Item";
-
+import Loading from "../../../shared/components/Loading";
+import s from "./index.module.scss";
 const ResultPage = () => {
   const params = useParams();
   const [loader, setLoader] = useState(true);
   const dispatch = useAppDispatch();
-  const { currentItem, comments, isLiked, likes } = useAppSelector(
-    (state) => state.items
-  );
+  const { currentItem, comments } = useAppSelector((state) => state.items);
   const currentCollection = useAppSelector(
     (state) => state.collections.currentCollection
   );
+  const lang = useAppSelector((state) => state.app.lang);
   const handleGetCurrentItem = () => {
+    setLoader(true);
+
     dispatch(getSingleItem(params.id as string)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
         setLoader(false);
@@ -27,6 +26,8 @@ const ResultPage = () => {
     });
   };
   const handleGetComments = () => {
+    setLoader(true);
+
     dispatch(getSingleItem(params.id as string));
     dispatch(getComments(params.id as string)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
@@ -35,7 +36,13 @@ const ResultPage = () => {
     });
   };
   const handleGetCurrentCollection = () => {
-    dispatch(getCurrentCollectionById(params.id));
+    setLoader(true);
+
+    dispatch(getCurrentCollectionById(params.id)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") {
+        setLoader(false);
+      }
+    });
   };
   useEffect(() => {
     if (params.type === "item") {
@@ -46,8 +53,10 @@ const ResultPage = () => {
       handleGetCurrentCollection();
     }
   }, [params.id]);
-  return (
-    <div className="container">
+  return loader ? (
+    <Loading />
+  ) : (
+    <div className={"container " + s.root}>
       <h1>Результат поиска</h1>
       {params.type === "item" ? (
         <>
@@ -64,20 +73,38 @@ const ResultPage = () => {
         </>
       ) : params.type === "comment" ? (
         <>
-          <h2>Комментарий</h2>
-          <h1>{currentItem.itemName}</h1>
-          <p>{currentItem.username}</p>
-          {Object.keys(currentItem.params).map((e) => (
-            <p>
-              {e}:{currentItem.params[e]}
-            </p>
-          ))}
-          <Box>
-            {comments.map((e) => (
+          <Box
+            sx={{
+              marginBottom: "40px",
+            }}
+          >
+            <h2>Комментарий</h2>
+            <h1>{currentItem.itemName}</h1>
+            <p>{currentItem.username}</p>
+            {Object.keys(currentItem.params).map((e) => (
               <p>
-                {e.comment} <span>{e.authorName}</span>
+                {e}:{currentItem.params[e]}
               </p>
             ))}
+            <NavLink to={"/item/" + currentItem._id}>
+              Посмотреть предмет{" "}
+            </NavLink>
+          </Box>
+          <Box>
+            <h3>
+              {lang === "En"
+                ? "Comments (search found text here)"
+                : "Коментарии к предмету (поиск нашел тут)"}
+            </h3>
+            <div className={s.comments}>
+              {comments.map((e) => (
+                <div>
+                  <p> {e.authorName} </p>
+
+                  <p> {e.comment} </p>
+                </div>
+              ))}
+            </div>
           </Box>
         </>
       ) : (

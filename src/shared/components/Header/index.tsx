@@ -33,7 +33,7 @@ const Header = () => {
   };
   const handleResults = () => {
     let resultc: Array<any> = [];
-    const commentMark = lang === "En" ? "-- comment в " : "-- в";
+    const commentMark = lang === "En" ? "-- comment in " : "-- комментр в ";
     const itemtMark = lang === "En" ? "-- item by " : "-- предмет от ";
     const collectiontMark =
       lang === "En" ? "-- collection of" : "-- коллекция из";
@@ -60,6 +60,7 @@ const Header = () => {
         username: e.username,
         itemId: e.itemId,
         type: "comment",
+        collectionName: e.collectionName,
       });
     });
     searchResult.resultItemNames.forEach((e) => {
@@ -126,7 +127,9 @@ const Header = () => {
                       navigate("search/" + option.type + "/" + option.itemId);
                     }}
                   >
-                    {option.label}
+                    {option.type === "comment"
+                      ? option.label + option.collectionName
+                      : option.label}
                   </span>
                 )}
                 renderInput={(params) => (

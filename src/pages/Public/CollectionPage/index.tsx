@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { getCurrentCollection } from "../../../store/collections";
 import Item from "../Home/Item";
 import api from "../../../shared/api";
 import { Box } from "@mui/material";
-import { LangHandler } from "../../../utils/checkLang";
+import Loading from "../../../shared/components/Loading";
 
 const CollectionPage = () => {
   const { username, collection } = useParams();
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.collections.currentCollection);
   const [img, setImg] = useState({ imgUrl: "" });
+  const [loader, setLoader] = useState(true);
   const { lang } = useAppSelector((state) => state.app);
   useEffect(() => {
     dispatch(getCurrentCollection({ username, collection }));
@@ -19,9 +20,12 @@ const CollectionPage = () => {
       .getCollectionImg(username as string, collection as string)
       .then((res) => {
         setImg(res);
+        setLoader(false);
       });
   }, []);
-  return (
+  return loader ? (
+    <Loading />
+  ) : (
     <div className="container">
       <h1>{collection}</h1>
       <Box sx={{ maxWidth: "250px", maxHeight: "300px" }}>
